@@ -9,7 +9,7 @@ import {
 } from "react-native"; //Importando os elementos da biblioteca react native
 
 //Componente tela de login
-export default function TelaLogin() {
+export default function TelaLogin({navigation}) {//Objeto fornecido pelo React Navigation que contém métodos para gerenciar a nevegação. Ele funciona como uma propriedade no componente.
   return (
     //Container Principal
     <View style={styles.container}>
@@ -30,10 +30,15 @@ export default function TelaLogin() {
       </View>
       {/* Container do botão */}
       <View style={styles.buttonContainer}>
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => navigation.navigate("Tela Menu")}//Método para navegar para uma tela específica. OnPress é o evento que aciona a nevegação quando o usuário interage com um componente.
+        >
           <Text style={styles.buttonText}>Entrar</Text>
         </TouchableOpacity>
-        <Text style={styles.RecuperacaoSenhaText}>Esqueceu a sua senha?</Text>
+        <TouchableOpacity>
+          <Text style={styles.RecuperacaoSenhaText}>Esqueceu a sua senha?</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -44,6 +49,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1, // Garante que o container preencha toda a tela
     width: "100%",
+    backgroundColor: "#283949",
 
     // Style da image da tela de login
   },
