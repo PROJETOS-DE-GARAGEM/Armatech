@@ -1,20 +1,39 @@
 import React from "react"; //Importando a biblioteca React
-import { View, Text, StyleSheet, Image, TextInput } from "react-native"; //Importando os elementos da biblioteca react native
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  TextInput,
+  TouchableOpacity,
+} from "react-native"; //Importando os elementos da biblioteca react native
 
 //Componente tela de login
 export default function TelaLogin() {
   return (
-    //Tag para uma caixa para colocar elementos
+    //Container Principal
     <View style={styles.container}>
-      {/* Logo da tela de login */}
-      <Image
-        source={require("../../assets/images/tela-login.png")}
-        style={styles.logo}
-      />
-      <Text style={styles.text}>ArmaTech</Text>
+      {/* Container da logo */}
+      <View>
+        <Image
+          source={require("../../assets/images/tela-login.png")}
+          style={styles.logo}
+        />
+        <Text style={styles.tituloLogo}>ArmaTech</Text>
+      </View>
+      {/* Text Container */}
       <View style={styles.textContainer}>
-        <Text style={styles.emailText}>Email</Text>
-        
+        <Text style={styles.textLogin}>Email</Text>
+        <TextInput style={styles.inputLogin} />
+        <Text style={styles.textLogin}>Senha</Text>
+        <TextInput style={styles.inputLogin} />
+      </View>
+      {/* Container do botão */}
+      <View style={styles.buttonContainer}>
+        <TouchableOpacity style={styles.button}>
+          <Text style={styles.buttonText}>Entrar</Text>
+        </TouchableOpacity>
+        <Text style={styles.RecuperacaoSenhaText}>Esqueceu a sua senha?</Text>
       </View>
     </View>
   );
@@ -26,18 +45,18 @@ const styles = StyleSheet.create({
     flex: 1, // Garante que o container preencha toda a tela
     width: "100%",
 
-    // Style da imagel da tela de login
+    // Style da image da tela de login
   },
   logo: {
     width: 240,
     height: 240,
-    marginTop: 50,
+    marginTop: 30,
     marginBottom: 15,
     alignSelf: "center",
   },
 
   //Style do titulo da tela de login
-  text: {
+  tituloLogo: {
     fontSize: 45,
     color: "#fafafa",
     fontFamily: "Inter",
@@ -47,18 +66,70 @@ const styles = StyleSheet.create({
     alignSelf: "center",
   },
 
+  //Style do container de texto de login e senha
   textContainer: {
     width: "100%",
     paddingHorizontal: 18,
   },
 
-  emailText: {
+  //Style do do texto do email
+  textLogin: {
     textAlign: "left",
-    marginRight: 5,
-    fontSize: 20,
+    marginLeft: 7,
+    fontSize: 15,
     color: "white",
     fontFamily: "Roboto",
     fontWeight: "700",
-    marginTop: 50,
+    marginTop: 35,
+    marginBottom: 10,
+  },
+
+  //Style do input do email e senha
+  inputLogin: {
+    backgroundColor: "white",
+    borderRadius: 9999,
+    width: "100%",
+    height: 45,
+    padding: 10,
+    fontFamily: "Roboto",
+    lineHeight: 14,
+    fontSize: 15,
+  },
+
+  //Style do container do botão
+  buttonContainer: {
+    width: "100%",
+    paddingHorizontal: 18,
+    justifyContent: "flex-end",
+    flex: 1,
+    marginBottom: 50,
+  },
+
+  //Style do botão
+  button: {
+    height: 50,
+    backgroundColor: "white",
+    borderRadius: 9999,
+    alignItems: "center",
+    paddingVertical: 15,
+  },
+
+  //Style do texto do botão
+  buttonText: {
+    color: "#e87225",
+    textAlign: "center",
+    fontFamily: "Roboto",
+    fontSize: 20,
+    fontWeight: "700",
+  },
+
+  //Style do link da recuperação de senha
+  RecuperacaoSenhaText: {
+    color: "white",
+    fontFamily: "Roboto",
+    fontSize: 15,
+    fontWeight: "bold",
+    textAlign: "center",
+    marginTop: 15,
   },
 });
