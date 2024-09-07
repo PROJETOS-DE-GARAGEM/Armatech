@@ -1,6 +1,7 @@
 import React from "react";
-import { View, Text, TouchableOpacity, Image, StyleSheet } from "react-native";
+import { View, Text, TouchableOpacity, Image} from "react-native";
 import Header from "../../components/Header/Header";
+import styles from "./TelaMenuStyle";
 
 export default function TelaMenu() {
   return (
@@ -13,9 +14,4 @@ export default function TelaMenu() {
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#283949",
-  },
-});
+

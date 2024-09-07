@@ -7,7 +7,7 @@ import TelaMenu from "../pages/Menu/TelaMenu"; //Tela de Menu
 //Passando a função para uma constante para utilizar as suas funcionalidades
 const stack = createStackNavigator();
 
-export default function AppNavigation() {
+export default function Routes() {
   return (
     // Onde ficas todas as telas e gerência o estado de nevegação
     <NavigationContainer>

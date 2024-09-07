@@ -1,5 +1,6 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text } from "react-native";
+import styles from "./HeaderStyle";
 
 export default function Header({ titulo }) {
   return (
@@ -9,14 +10,3 @@ export default function Header({ titulo }) {
   );
 }
 
-const styles = StyleSheet.create({
-  header: {
-    backgroundColor: "white",
-    height: 50,
-    width: "100%",
-  },
-  headerImage: {
-    width: 50,
-    color: "black",
-  },
-});
