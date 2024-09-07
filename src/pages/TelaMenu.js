@@ -1,22 +1,21 @@
 import React from "react";
 import { View, Text, TouchableOpacity, Image, StyleSheet } from "react-native";
+import Header from "../components/Header";
 
 export default function TelaMenu() {
   return (
-    <View styles={styles.conatiner}>
+    <View style={styles.container}>
+      <Header titulo="Armatech" />
       <TouchableOpacity>
-        <Image
-        
-        />
         <Text>Tela Menu</Text>
       </TouchableOpacity>
     </View>
   );
 }
 
-
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-    }
-})
+  container: {
+    flex: 1,
+    backgroundColor: "#283949",
+  },
+});
