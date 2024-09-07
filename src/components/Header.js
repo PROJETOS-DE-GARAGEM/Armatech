@@ -1,12 +1,9 @@
 import React from "react";
-import { View, Text, StyleSheet, Image } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 
 export default function Header({ titulo }) {
   return (
     <View style={styles.header}>
-      
-      
-      <Svg></Svg>
       <Text>{titulo}</Text>
     </View>
   );
@@ -20,6 +17,6 @@ const styles = StyleSheet.create({
   },
   headerImage: {
     width: 50,
-    color: 'black'
-  }
+    color: "black",
+  },
 });
