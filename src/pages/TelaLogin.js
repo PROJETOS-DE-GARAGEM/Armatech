@@ -6,6 +6,7 @@ import {
   Image,
   TextInput,
   TouchableOpacity,
+  StatusBar
 } from "react-native"; //Importando os elementos da biblioteca react native
 
 //Componente tela de login
@@ -56,7 +57,7 @@ const styles = StyleSheet.create({
   logo: {
     width: 240,
     height: 240,
-    marginTop: 30,
+    marginTop: 5,
     marginBottom: 15,
     alignSelf: "center",
   },
@@ -108,7 +109,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 18,
     justifyContent: "flex-end",
     flex: 1,
-    marginBottom: 50,
+    marginBottom: 14,
   },
 
   //Style do botão
@@ -125,7 +126,7 @@ const styles = StyleSheet.create({
     color: "#e87225",
     textAlign: "center",
     fontFamily: "Roboto",
-    fontSize: 20,
+    fontSize: 19,
     fontWeight: "700",
   },
 
