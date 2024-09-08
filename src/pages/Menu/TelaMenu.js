@@ -1,5 +1,6 @@
 import React from "react";
 import { View, Text, TouchableOpacity, Image } from "react-native";
+import * as Animatable from "react-native-animatable";
 import Header from "../../components/Header/Header";
 import styles from "./TelaMenuStyle";
 import Footer from "../../components/Footer/Footer";
@@ -10,6 +11,7 @@ import ChartBarSvg from "../../../assets/svg/ChartBarSvg";
 import TruckSvg from "../../../assets/svg/TruckSvg";
 import SyncSvg from "../../../assets/svg/SyncSvg";
 import UsersSvg from "../../../assets/svg/UsersSvg";
+
 
 const MenuItens = [
   { id: 1, icon: <BoxSvg />, label: "Registro de Produtos" },
@@ -27,7 +29,9 @@ export default function TelaMenu() {
       {/* Componente header */}
       <Header titulo="Armatech" />
       {/* Componente Card */}
-      <View style={styles.cardContainer}>
+      <Animatable.View 
+      animation="fadeInUp"
+      style={styles.cardContainer}>
         {MenuItens.map((item) => (
           <TouchableOpacity key={item.id}>
             <View style={styles.card}>
@@ -36,7 +40,7 @@ export default function TelaMenu() {
             </View>
           </TouchableOpacity>
         ))}
-      </View>
+      </Animatable.View>
 
       {/* componente das telas  */}
 
