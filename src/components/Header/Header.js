@@ -1,7 +1,8 @@
 import React from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity } from "react-native";
 import BarsSvg from "../../../assets/svg/BarsSvg";
 import UserSvg from "../../../assets/svg/UserSvg";
+import styles from "./HeaderStyle";
 
 export default function Header({ titulo }) {
   return (
@@ -19,19 +20,3 @@ export default function Header({ titulo }) {
     </View>
   );
 }
-const styles = StyleSheet.create({
-  header: {
-    height: "8%",
-    backgroundColor: "#fff",
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    paddingHorizontal: 15,
-    borderBottomLeftRadius: 10,
-    borderBottomRightRadius: 10,
-  },
-  headerTitle: {
-    fontSize: 25,
-    fontWeight: "bold",
-  },
-});
