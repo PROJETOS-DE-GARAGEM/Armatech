@@ -6,6 +6,7 @@ import BoxPackingSvg from "../../../assets/svg/BoxPackingSvg";
 import ChartLineSvg from "../../../assets/svg/CharLineSvg";
 import GearSvg from "../../../assets/svg/GearSvg";
 
+//Lista de objetos com as os icones e textos
 const footerItems = [
   { id: 1, icon: <HomeSvg />, label: "Home" },
   { id: 2, icon: <BoxPackingSvg />, label: "Estoque" },
@@ -13,9 +14,11 @@ const footerItems = [
   { id: 4, icon: <GearSvg />, label: "Ajustes" },
 ];
 
+
 export default function Footer() {
   return (
     <View style={styles.Footer}>
+      {/* Função que irá iterar a cada item listado no objeto */}
       {footerItems.map((item) => (
         <View key={item.id} style={styles.IconContainer}>
           <TouchableOpacity>{item.icon}</TouchableOpacity>
