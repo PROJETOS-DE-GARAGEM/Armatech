@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity, TextInput } from "react-native";
 import styles from "./LoginStyle";
 import * as Animatable from "react-native-animatable";
 
-export default function BemVindo() {
+export default function BemVindo({navigation}) {
   return (
     <View style={styles.container}>
       <Animatable.View
@@ -25,7 +25,9 @@ export default function BemVindo() {
           placeholder="Digite sua senha..."
           style={styles.input}
         ></TextInput>
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity style={styles.button}
+        onPress={() => navigation.navigate("Tela Menu")}
+        >
           <Text style={styles.buttonText}>Acessar</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.buttonRegister}>
