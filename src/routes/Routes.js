@@ -4,8 +4,8 @@ import { createStackNavigator } from "@react-navigation/stack"; // É uma funç�
 import Welcome from "../pages/Welcome/Welcome";
 import Login from "../pages/Login/Login";
 import TelaMenu from "../pages/Menu/TelaMenu";
-import ProductRegister from "../pages/RegistroDeProdutos/ProductRegister";
-import InventoryMenagement from "../pages/GerencimentoDeEstoque/InventoryManagement";
+import RegistroDeProdutos from "../pages/RegistroDeProdutos/RegistroDeProdutos";
+import GerenciamentoDeEstoque from "../pages/GerencimentoDeEstoque/GerenciamentoDeEstoque";
 
 //Passando a função para uma constante para utilizar as suas funcionalidades
 const stack = createStackNavigator();
@@ -35,12 +35,12 @@ export default function Routes() {
         />
         <stack.Screen
           name="RegistroDeProdutos"
-          component={ProductRegister}
+          component={RegistroDeProdutos}
           options={{ headerShown: false }}
         />
         <stack.Screen
           name="GerenciamentoDeEstoque"
-          component={InventoryMenagement}
+          component={GerenciamentoDeEstoque}
           options={{ headerShown: false }}
         />
       </stack.Navigator>
