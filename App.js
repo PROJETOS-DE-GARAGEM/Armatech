@@ -1,21 +1,18 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
-import TelaLogin from './src/pages/TelaLogin';
+import { StyleSheet, SafeAreaView, StatusBar } from "react-native";
+import Routes from "./src/routes/Routes"
+
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <TelaLogin/>
-      <StatusBar style="auto" />
-    </View>
+    <SafeAreaView style={styles.container} >
+      <Routes/>
+      <StatusBar />
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'orange',
-    alignItems: 'center',
-    justifyContent: 'center',
   },
 });
