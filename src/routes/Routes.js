@@ -6,6 +6,7 @@ import Login from "../pages/Login/Login";
 import TelaMenu from "../pages/Menu/TelaMenu";
 import RegistroDeProdutos from "../pages/RegistroDeProdutos/RegistroDeProdutos";
 import GerenciamentoDeEstoque from "../pages/GerencimentoDeEstoque/GerenciamentoDeEstoque";
+import CadastroConta from "../pages/CadastroConta/CadastroConta";
 
 //Passando a função para uma constante para utilizar as suas funcionalidades
 const stack = createStackNavigator();
@@ -28,6 +29,13 @@ export default function Routes() {
           component={Login}
           options={{ headerShown: false }}
         />
+
+        <stack.Screen
+          name="CadastroConta"
+          component={CadastroConta}
+          options={{ headerShown: false }}
+        />
+
         <stack.Screen
           name="TelaMenu"
           component={TelaMenu}
