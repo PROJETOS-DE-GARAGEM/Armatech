@@ -5,7 +5,7 @@ import Welcome from "../pages/Welcome/Welcome";
 import Login from "../pages/Login/Login";
 import TelaMenu from "../pages/Menu/TelaMenu";
 import ProductRegister from "../pages/RegistroDeProdutos/ProductRegister";
-import InvetoryMenagement from "../pages/GerencimentoDeEstoque/InvetoryManagement";
+import InventoryMenagement from "../pages/GerencimentoDeEstoque/InventoryManagement";
 
 //Passando a função para uma constante para utilizar as suas funcionalidades
 const stack = createStackNavigator();
@@ -17,6 +17,7 @@ export default function Routes() {
       {/* Este compo utiliza o metodo navigation para definir a navegação e envolver as telas */}
       <stack.Navigator>
         {/* Para definir uma tela especifica, cada screen representa uma rota */}
+        {/* Telas Principais */}
         <stack.Screen
           name="Welcome"
           component={Welcome}
@@ -39,7 +40,7 @@ export default function Routes() {
         />
         <stack.Screen
           name="GerenciamentoDeEstoque"
-          component={InvetoryMenagement}
+          component={InventoryMenagement}
           options={{ headerShown: false }}
         />
       </stack.Navigator>
