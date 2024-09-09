@@ -2,8 +2,10 @@ import React from "react";
 import { NavigationContainer } from "@react-navigation/native"; // Componente do React Navigation que gerencia o estado de navegação de envolve todas as telas
 import { createStackNavigator } from "@react-navigation/stack"; // É uma função do React Navigatio para criar um navegador, é onde vai ficar todas as telas
 import Welcome from "../pages/Welcome/Welcome";
-import Login from "../pages/Login/Login"
-import TelaMenu from "../pages/Menu/TelaMenu"; //Tela de Menu
+import Login from "../pages/Login/Login";
+import TelaMenu from "../pages/Menu/TelaMenu";
+import ProductRegister from "../pages/RegistroDeProdutos/ProductRegister";
+import InvetoryMenagement from "../pages/GerencimentoDeEstoque/InvetoryManagement";
 
 //Passando a função para uma constante para utilizar as suas funcionalidades
 const stack = createStackNavigator();
@@ -20,15 +22,25 @@ export default function Routes() {
           component={Welcome}
           options={{ headerShown: false }}
         />
-         <stack.Screen
+        <stack.Screen
           name="Login"
           component={Login}
-          options={{ headerShown: false }} //Para nao exibir o nome da tela Menu
+          options={{ headerShown: false }}
         />
         <stack.Screen
-          name="Tela Menu"
+          name="TelaMenu"
           component={TelaMenu}
-          options={{ headerShown: false }} //Para nao exibir o nome da tela Menu
+          options={{ headerShown: false }}
+        />
+        <stack.Screen
+          name="RegistroDeProdutos"
+          component={ProductRegister}
+          options={{ headerShown: false }}
+        />
+        <stack.Screen
+          name="GerenciamentoDeEstoque"
+          component={InvetoryMenagement}
+          options={{ headerShown: false }}
         />
       </stack.Navigator>
     </NavigationContainer>

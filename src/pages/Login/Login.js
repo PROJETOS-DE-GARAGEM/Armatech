@@ -26,7 +26,7 @@ export default function BemVindo({navigation}) {
           style={styles.input}
         ></TextInput>
         <TouchableOpacity style={styles.button}
-        onPress={() => navigation.navigate("Tela Menu")}
+        onPress={() => navigation.navigate("TelaMenu")}
         >
           <Text style={styles.buttonText}>Acessar</Text>
         </TouchableOpacity>

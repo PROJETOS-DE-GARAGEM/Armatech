@@ -11,9 +11,11 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 10,
   },
   headerTitle: {
-    fontSize: 25,
+    fontSize: 20,
     fontWeight: "bold",
   },
 });
 
 export default styles;
+
+
