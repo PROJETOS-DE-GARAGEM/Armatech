@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./WelcomeStyle"; //Importando a biblioteca React
-import { View, Text, Image, TouchableOpacity } from "react-native"; //Importando os elementos da biblioteca react native
+import { View, Text, TouchableOpacity } from "react-native"; //Importando os elementos da biblioteca react native
 import * as Animatable from "react-native-animatable";// Animações do react-native
 //Componente tela de login
 export default function TelaLogin({ navigation }) {

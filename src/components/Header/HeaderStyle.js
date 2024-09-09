@@ -1,14 +1,21 @@
 import { StyleSheet } from "react-native";
 const styles = StyleSheet.create({
   header: {
-    backgroundColor: "white",
-    height: 50,
-    width: "100%",
+    height: "8%",
+    backgroundColor: "#fff",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    paddingHorizontal: 15,
+    borderBottomLeftRadius: 10,
+    borderBottomRightRadius: 10,
   },
-  headerImage: {
-    width: 50,
-    color: "black",
+  headerTitle: {
+    fontSize: 20,
+    fontWeight: "bold",
   },
 });
 
 export default styles;
+
+
