@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -8,10 +8,29 @@ import {
   KeyboardAvoidingView,
   Platform,
 } from "react-native";
+import { autenticar } from "../../../service/AutenticacaoLogin";
 import styles from "./LoginStyle";
 import * as Animatable from "react-native-animatable";
 
-export default function BemVindo({ navigation }) {
+//Componente recebe a propriedade navigation para utilizar suas funcionalidades
+export default function Login({ navigation }) {
+  // Armazena e atualiza o estado dos dados infromado pelo usuário
+  const [email, setEmail] = useState("");
+  const [senha, setSenha] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  /*Função para lidar com a outra função auttenticar para validar os dados, 
+  retorna os dados caso estiver ok e passa para tela de de menu chaou retorna uma mensagem de erro caso houver*/
+  const handleLogin = async () => {
+    try {
+      const userData = await autenticar(email, senha);
+      console.log("Login bem-sucedido: ", userData);
+      navigation.navigate("TelaMenu");
+    } catch (error) {
+      setErrorMessage("Login falhou. Verifique suas credenciais.");
+      console.error("Erro de login", error);
+    }
+  };
+
   return (
     <KeyboardAvoidingView
       style={{ flex: 1 }}
@@ -35,16 +54,26 @@ export default function BemVindo({ navigation }) {
             <TextInput
               placeholder="Digite seu email..."
               style={styles.input}
-            ></TextInput>
+              value={email} //Define o valor do TextImput com o estado do email
+              onChangeText={setEmail} //Atualiza o estado de email
+              keyboardType="email-address" //Define o teclado para o email
+              autoCapitalize="none" //Evita a capitalização automática no início
+            />
             <Text style={styles.title}>Senha</Text>
             <TextInput
               placeholder="Digite sua senha..."
               style={styles.input}
-            ></TextInput>
-            <TouchableOpacity
-              style={styles.button}
-              onPress={() => navigation.navigate("TelaMenu")}
-            >
+              value={senha} //Define o valor do TextInput com o estado de
+              onChange={setSenha} //Atualiza o estado da senha
+              secureTextEntry={true}//Ocultar a senha digitada pelo usuário
+            />
+            {/* Exibe mensagem de texto se houver */}
+            {errorMessage ? ( 
+              <Text style={{ color: "red", marginBottom: 10 }}>
+                {errorMessage}
+              </Text>
+            ) : null}
+            <TouchableOpacity style={styles.button} onPress={handleLogin}>
               <Text style={styles.buttonText}>Acessar</Text>
             </TouchableOpacity>
             <TouchableOpacity

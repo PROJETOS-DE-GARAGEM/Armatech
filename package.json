@@ -6,7 +6,8 @@
     "start": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
-    "web": "expo start --web"
+    "web": "expo start --web",
+    "start:server": "json-server --watch db.json --port 3000"
   },
   "dependencies": {
     "@expo/metro-runtime": "~3.2.3",
