@@ -7,6 +7,7 @@ import TelaMenu from "../pages/Menu/TelaMenu";
 import RegistroDeProdutos from "../pages/RegistroDeProdutos/RegistroDeProdutos";
 import GerenciamentoDeEstoque from "../pages/GerencimentoDeEstoque/GerenciamentoDeEstoque";
 import CadastroConta from "../pages/CadastroConta/CadastroConta";
+import ProcessamentoDeCompras from "../pages/ProcessamentoDeCompras/ProcessamentoDeCompras";
 
 //Passando a função para uma constante para utilizar as suas funcionalidades
 const stack = createStackNavigator();
@@ -35,12 +36,14 @@ export default function Routes() {
           component={CadastroConta}
           options={{ headerShown: false }}
         />
-
+        {/* Rota Menu */}
         <stack.Screen
           name="TelaMenu"
           component={TelaMenu}
           options={{ headerShown: false }}
         />
+
+        {/* Rotas das Pages */}
         <stack.Screen
           name="RegistroDeProdutos"
           component={RegistroDeProdutos}
@@ -49,6 +52,11 @@ export default function Routes() {
         <stack.Screen
           name="GerenciamentoDeEstoque"
           component={GerenciamentoDeEstoque}
+          options={{ headerShown: false }}
+        />
+        <stack.Screen
+          name="ProcessamentoDeCompras"
+          component={ProcessamentoDeCompras}
           options={{ headerShown: false }}
         />
       </stack.Navigator>
