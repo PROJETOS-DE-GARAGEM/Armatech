@@ -2,28 +2,10 @@
   "users": [
     {
       "id": "1",
-      "name": "John Doe",
       "email": "john@example.com",
-      "senha": "password123"
-    },
-    {
-      "id": "2",
-      "name": "Jane Smith",
-      "email": "jane@example.com",
-      "senha": "securepass456"
-    },
-    {
-      "id": "3",
-      "name": "Alice Johnson",
-      "email": "alice@example.com",
-      "senha": "alicepass789"
-    },
-    {
-      "id": "4",
-      "name": "Bob Brown",
-      "email": "bob@example.com",
-      "senha": "bobsecurepass321"
+      "senha": "123"
     }
+   
   ],
   "posts": [
     {
