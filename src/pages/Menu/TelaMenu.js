@@ -13,16 +13,51 @@ import SyncSvg from "../../../assets/svg/SyncSvg";
 import UsersSvg from "../../../assets/svg/UsersSvg";
 
 const MenuItens = [
-  { id: 1, icon: <BoxSvg />, label: "Registro de Produtos", screen: "RegistroDeProdutos" },
-  { id: 2, icon: <WarehousSvg />, label: "Gerenciamento de Estoque", screen: "GerenciamentoDeEstoque" },
-  { id: 3, icon: <ShoppingCartSvg />, label: "Processamento de Compras", screen: "ProcessamentoDeCompras" },
-  { id: 4, icon: <ChartBarSvg />, label: "Relatórios e Analises", screen: "RelatorioDeAnalises" },
-  { id: 5, icon: <TruckSvg />, label: "Controle de Fornecedores", screen: "ControleDeFornecedores" },
-  { id: 6, icon: <SyncSvg />, label: "Integração de vendas", screen: "IntegracaoDeVendas" },
-  { id: 7, icon: <UsersSvg />, label: "Usuários e Permissões", screen: "UsuariosEPermissoes" },
+  {
+    id: 1,
+    icon: <BoxSvg />,
+    label: "Registro de Produtos",
+    screen: "RegistroDeProdutos",
+  },
+  {
+    id: 2,
+    icon: <WarehousSvg />,
+    label: "Gerenciamento de Estoque",
+    screen: "GerenciamentoDeEstoque",
+  },
+  {
+    id: 3,
+    icon: <ShoppingCartSvg />,
+    label: "Processamento de Compras",
+    screen: "ProcessamentoDeCompras",
+  },
+  {
+    id: 4,
+    icon: <ChartBarSvg />,
+    label: "Relatórios e Analises",
+    screen: "RelatorioDeAnalises",
+  },
+  {
+    id: 5,
+    icon: <TruckSvg />,
+    label: "Controle de Fornecedores",
+    screen: "ControleDeFornecedores",
+  },
+  {
+    id: 6,
+    icon: <SyncSvg />,
+    label: "Integração de vendas",
+    screen: "IntegracaoDeVendas",
+  },
+  {
+    id: 7,
+    icon: <UsersSvg />,
+    label: "Usuários e Permissões",
+    screen: "UsuariosEPermissoes",
+  },
 ];
 
-export default function TelaMenu({navigation}) {
+export default function TelaMenu({ navigation }) {
   return (
     <View style={styles.container}>
       {/* Componente header */}
@@ -30,9 +65,10 @@ export default function TelaMenu({navigation}) {
       {/* Componente Card */}
       <Animatable.View animation="fadeInUp" style={styles.cardContainer}>
         {MenuItens.map((item) => (
-          <TouchableOpacity 
-          onPress={() => navigation.navigate(item.screen)}
-          key={item.id}>
+          <TouchableOpacity
+            onPress={() => navigation.navigate(item.screen)}
+            key={item.id}
+          >
             <View style={styles.card}>
               <View style={styles.iconContainer}>{item.icon}</View>
               <Text style={styles.MenuText}>{item.label}</Text>
@@ -40,8 +76,6 @@ export default function TelaMenu({navigation}) {
           </TouchableOpacity>
         ))}
       </Animatable.View>
-
-      {/* componente das telas  */}
 
       {/* Componente footer */}
       <Footer />
