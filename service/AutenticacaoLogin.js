@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "http://192.168.18.14:3000";
+const API_URL = "http://192.168.1.5:8081:3000";//Passar a URL da maquina que estiver usando
 console.log(API_URL);
 
 export const autenticar = async (email, senha) => {
