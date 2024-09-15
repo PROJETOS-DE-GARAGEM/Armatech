@@ -6,7 +6,7 @@ import {
   TextInput,
   ScrollView,
   KeyboardAvoidingView,
-  Platform,
+  Platform, Alert
 } from "react-native";
 import { autenticar } from "../../../service/AutenticacaoLogin";
 import styles from "./LoginStyle";
@@ -17,17 +17,22 @@ export default function Login({ navigation }) {
   // Armazena e atualiza o estado dos dados infromado pelo usuário
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
-  /*Função para lidar com a outra função auttenticar para validar os dados, 
-  retorna os dados caso estiver ok e passa para tela de de menu chaou retorna uma mensagem de erro caso houver*/
+
   const handleLogin = async () => {
-    try {
-      const userData = await autenticar(email, senha);
-      console.log("Login bem-sucedido: ", userData);
-      navigation.navigate("TelaMenu");
-    } catch (error) {
-      setErrorMessage("Login falhou. Verifique suas credenciais.");
-      console.error("Erro de login", error);
+
+    console.log('E-mail fornecido pelo usuario', email);
+    console.log('Senha fornecida pelo usuario', senha);
+
+    const result = await autenticar(email, senha);
+
+    if (result.success) {
+      console.log('Usuário autenticado com sucesso:', result.user);
+     
+      
+      // Alert.alert('Sucesso', `Usuário autenticado: ${result.user.email}`);
+    } else {
+      console.log('Falha na autenticação:', result.message);
+      Alert.alert('Erro', result.message);
     }
   };
 
@@ -64,15 +69,15 @@ export default function Login({ navigation }) {
               placeholder="Digite sua senha..."
               style={styles.input}
               value={senha} //Define o valor do TextInput com o estado de
-              onChange={setSenha} //Atualiza o estado da senha
+              onChangeText={setSenha} //Atualiza o estado da senha
               secureTextEntry={true}//Ocultar a senha digitada pelo usuário
             />
             {/* Exibe mensagem de texto se houver */}
-            {errorMessage ? ( 
+            {/* {errorMessage ? ( 
               <Text style={{ color: "red", marginBottom: 10 }}>
                 {errorMessage}
               </Text>
-            ) : null}
+            ) : null} */}
             <TouchableOpacity style={styles.button} onPress={handleLogin}>
               <Text style={styles.buttonText}>Acessar</Text>
             </TouchableOpacity>

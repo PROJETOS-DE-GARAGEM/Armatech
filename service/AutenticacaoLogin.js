@@ -1,26 +1,32 @@
 import axios from "axios";
 
-const API_URL = "http://192.168.1.5:8081:3000";//Passar a URL da maquina que estiver usando
+const API_URL = "http://192.168.1.5:3000/users";//Passar a URL da maquina que estiver usando
 console.log(API_URL);
 
 export const autenticar = async (email, senha) => {
   try {
-    // Passa os parâmetros usando a opção `params`
-    const response = await axios.get(`${API_URL}/users`, {
-      params: { email, senha },
-    });
-    
-    // Verifica a estrutura da resposta
-    console.log("Resposta da API:", response.data);
-    
-    if (response.data.length > 0) {
-      return response.data[0]; // Retorna o primeiro usuário encontrado
-    } else {
-      throw new Error("Usuário não encontrado");
+    const response = await axios.get(API_URL);
+
+    console.log('Dados retornados pela API:', response.data);
+
+    const users =  response.data;
+    console.log('E-mail fornecido:', email);
+    console.log('Senha fornecida:', senha);
+
+    const user = users.find(
+      (user) => user.email === email && user.senha === senha);
+
+      if (user) {
+        console.log('Usuario autenticado com sucesso', user)
+        return { success: true, user };
+      } else {
+        return { success: false, message: 'E-mail ou senha incorretos.' };
+      }
+    } catch (error) {
+      return { success: false, message: 'Erro ao conectar com o servidor.' };
     }
-  } catch (error) {
-    console.error("Erro de autenticação:", error);
-    throw new Error("Falha na autenticação");
-  }
 };
+
+
+
 
