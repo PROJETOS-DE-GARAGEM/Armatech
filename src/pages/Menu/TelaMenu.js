@@ -78,7 +78,7 @@ export default function TelaMenu({ navigation }) {
       </Animatable.View>
 
       {/* Componente footer */}
-      <Footer />
+      <Footer navigation={navigation} />
     </View>
   );
 }

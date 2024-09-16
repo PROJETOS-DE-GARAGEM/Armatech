@@ -5,13 +5,13 @@ import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
 
 
-export default function GerenciamentoDeEstoque() {
+export default function GerenciamentoDeEstoque({navigation}) {
   return (
     <View style={style.container}>
       <Header titulo="Gerenciamento de Estoque"/>
       <View>
       </View>
-      <Footer/>
+      <Footer navigation={navigation}/>
     </View>
   );
 }
