@@ -7,9 +7,39 @@ import TelaMenu from "../pages/Menu/TelaMenu";
 import RegistroDeProdutos from "../pages/RegistroDeProdutos/RegistroDeProdutos";
 import GerenciamentoDeEstoque from "../pages/GerencimentoDeEstoque/GerenciamentoDeEstoque";
 import CadastroConta from "../pages/CadastroConta/CadastroConta";
+import { createDrawerNavigator } from "@react-navigation/drawer";
+import DrawerContent from "./DrawerContent";
 
 //Passando a função para uma constante para utilizar as suas funcionalidades
 const stack = createStackNavigator();
+const Drawer = createDrawerNavigator();
+
+function DrawerNavigation() {
+  return (
+    <Drawer.Navigator
+    drawerContent={(props) => <DrawerContent {...props} />} // Usa o conteúdo customizado
+
+    initialRouteName="TelaMenu">
+      <Drawer.Screen
+        //Desabilita o drawer padrão do react drawer
+        options={{ headerShown: false }}
+        name="Tela Menu"
+        component={TelaMenu}
+      />
+      <Drawer.Screen
+        options={{ headerShown: false }}
+        name="RegistroDeProdutos"
+        component={RegistroDeProdutos}
+      />
+      <Drawer.Screen
+        options={{ headerShown: false }}
+        name="GerenciamentoDeEstoque"
+        component={GerenciamentoDeEstoque}
+      />
+      {/* Adicione outras telas conforme necessário */}
+    </Drawer.Navigator>
+  );
+}
 
 export default function Routes() {
   return (
@@ -36,20 +66,14 @@ export default function Routes() {
           options={{ headerShown: false }}
         />
 
+        {/*Tela que dá acesso as telas principais  */}
         <stack.Screen
-          name="TelaMenu"
-          component={TelaMenu}
-          options={{ headerShown: false }}
-        />
-        <stack.Screen
-          name="RegistroDeProdutos"
-          component={RegistroDeProdutos}
-          options={{ headerShown: false }}
-        />
-        <stack.Screen
-          name="GerenciamentoDeEstoque"
-          component={GerenciamentoDeEstoque}
-          options={{ headerShown: false }}
+          name="Home"
+          component={DrawerNavigation}
+          options={{
+            headerShown: false,
+            gestureEnabled: false, // Desativa o gesto de voltar
+          }}
         />
       </stack.Navigator>
     </NavigationContainer>
