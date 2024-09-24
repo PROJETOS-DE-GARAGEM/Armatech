@@ -12,7 +12,7 @@ import CadastroConta from "../pages/CadastroConta/CadastroConta";
 import ProcessoDeVendas from "../pages/ProcessamentoDeCompras/ProcessoDeCompras";
 import RelatorioEAnalises from "../pages/RelatoriosEAnalises/RelatorioEAnalises";
 import ControleDeFornecedores from "../pages/ControleDeFornecedores/ControleDeForncedores";
-
+import UsuariosEPermissoes from "../pages/UsuariosEPermissoes/UsuariosEPermissoes";
 
 //Passando a função para uma constante para utilizar as suas funcionalidades
 const stack = createStackNavigator();
@@ -98,6 +98,11 @@ export default function Routes() {
             headerShown: false,
             gestureEnabled: false, // Desativa o gesto de voltar
           }}
+        />
+        <stack.Screen
+          name="UsuariosEPermissoes"
+          component={UsuariosEPermissoes}
+          options={{ headerShown: false }}
         />
       </stack.Navigator>
     </NavigationContainer>

@@ -6,30 +6,33 @@ import {
   TouchableOpacity, 
   TouchableWithoutFeedback, 
   Alert, 
-  Keyboard, 
-  KeyboardAvoidingView, 
-  Platform, 
+  Keyboard,
 } from "react-native";
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
+import Select from "../../components/Select/Select";
 import style from "./../RegistroDeProdutos/RegistroDeProdutosStyle";
 
-
 export default function RegistroDeProdutos({navigation}) {
+
   //Criando os estados
   const [name, setName] = useState ();
   const [description, setDescription] = useState();
   const [price, setPrice] = useState();
   const [amount, setAmount] = useState();
+  const [size, setSize] = useState();
+
   //Funções para setar o valor digitado dentro do estado "set"
   function changeName(name){ setName(name);}
   function changeDescription(description){ setDescription(description);}
   function changePrice(price){ setPrice(price);}
   function changeAmount(amount){ setAmount(amount);}
+  function changeSize(size){ setSize(size);}
   
   function register() { //Se os campos não forem preenchidos, informar ao usuário.
-    if( name === '' || description === '' 
-      || price === '' || amount === ''){
+    if( name === undefined || description === undefined
+      || price === undefined|| amount === undefined
+      || size === undefined){
           Alert.alert("Preencha todos os campos!")
           return;
         }
@@ -38,12 +41,11 @@ export default function RegistroDeProdutos({navigation}) {
     setDescription();
     setPrice();
     setAmount();
+    setSize();
   }
 
   return (
-    <KeyboardAvoidingView style={style.keyboardAvoid}
-    behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-    >
+    
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
     <View style={style.container}>
       <Header titulo="Registro de Produtos" navigation={navigation}  />
@@ -52,24 +54,30 @@ export default function RegistroDeProdutos({navigation}) {
 
       <View style={style.boxContainer}>
 
-      <View>
+      <View style={style.boxDescription}>
       <Text style={style.text}>Nome do Produto</Text>
       <TextInput style={style.Input} 
       placeholder="Nome do Produto"
-      onChangeText={(Input) => changeName(Input.toUpperCase())}       //Tranformando input em letras maiúsculas
+      onChangeText={(Input) => changeName()} 
       value={name}>
       </TextInput>
       </View>
       
-      <View>
+      <View style={style.boxDescription}>
       <Text style={style.text}>Descrição</Text>
       <TextInput style={style.Input} 
       placeholder="Descrição"
-      onChangeText={(Input) => changeDescription(Input.toUpperCase())} //Tranformando input em letras maiúsculas
+      onChangeText={(Input) => changeDescription()} 
       value={description}>
       </TextInput>
+      
       </View>
 
+      <Select onChangeSelect={(id) => changeSize()}
+        text="Selecione o tamanho"
+        value={size}
+        />
+      
       <View style={style.boxRow}>
 
       <View style={style.boxTitle}> 
@@ -79,13 +87,13 @@ export default function RegistroDeProdutos({navigation}) {
 
       <View style={style.boxInput}>
       <TextInput keyboardType="numeric" 
-      style={style.Input2} placeholder="Preço"
+      style={style.Input2} placeholder="R$"
       onChangeText={changePrice}
       value={price}>
       </TextInput>
 
       <TextInput keyboardType="numeric" 
-      style={style.Input2} placeholder="Quantidade"
+      style={style.Input2} placeholder="Un"
       onChangeText={changeAmount}
       value={amount}>
       </TextInput>
@@ -112,7 +120,6 @@ export default function RegistroDeProdutos({navigation}) {
       <Footer />
     </View>
     </TouchableWithoutFeedback>
-    </KeyboardAvoidingView>
   );
 }
 
