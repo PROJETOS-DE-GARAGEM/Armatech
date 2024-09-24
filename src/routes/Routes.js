@@ -136,6 +136,11 @@ export default function Routes() {
             gestureEnabled: false, // Desativa o gesto de voltar
           }}
         />
+        <stack.Screen
+          name="UsuariosEPermissoes"
+          component={UsuariosEPermissoes}
+          options={{ headerShown: false }}
+        />
       </stack.Navigator>
     </NavigationContainer>
   );

@@ -13,18 +13,21 @@ const style = StyleSheet.create({
         flexDirection: "column",
         gap: 25,
     },
+    boxDescription: {
+        gap: 10,
+    },
     Title: {
         paddingTop: "10%",
         marginLeft: "5%",
         color: "#fff",
-        fontSize: 28,
+        fontSize: 23,
         fontWeight: "bold",
         flexDirection: "row",
     },
     text: {
         marginLeft: "5%",
         color: "#fff",
-        fontSize: 20,
+        fontSize: 17,
         fontWeight: "bold",
     },
     Input: {
@@ -39,7 +42,6 @@ const style = StyleSheet.create({
         borderRadius: 10,
         paddingHorizontal: 9,
     },
-
     boxRow: {
         paddingTop: "8%",
         flexDirection: "column",
@@ -49,13 +51,12 @@ const style = StyleSheet.create({
     boxTitle: {
         flexDirection: "row",
         alignItems: "center",
-        justifyContent: "space-between",
-        paddingHorizontal: 41,
+        justifyContent: 'space-around',
     },
     boxInput: {
         flexDirection: "row",
         alignItems: "center",
-        justifyContent: "space-between",
+        justifyContent: 'space-around',
         paddingHorizontal: 7,
         borderWidthBotton: 1,
     },
@@ -68,8 +69,6 @@ const style = StyleSheet.create({
         height: 40,
         borderBottomWidth: 1,
         borderColor: "#fff",
-        marginStart: "5%",
-        marginEnd: "5%",
         backgroundColor: "#fff",
         borderRadius: 10,
     },
