@@ -7,7 +7,7 @@ const UserSvg = (props) => (
       width: 24,
       height: 24,
       overflow: "visible",
-      fill: "rgb(3, 3, 3)",
+      fill: "rgb(149, 149, 149)",
     }}
     viewBox="0 0 448 512"
     {...props}

@@ -1,15 +1,10 @@
-import React from "react";
-import { View } from "react-native";
-import style from "./ControleDeForncedoresStyle";
-import Header from "../../components/Header/Header";
-import Footer from "../../components/Footer/Footer";
+import { StyleSheet } from "react-native";
 
-export default function IntegracaoDeVendas({navigation}){
-    return (
-        <View style={style.container}>
-        <Header titulo="Gerenciamento de Estoque" navigation={navigation} />
-        <View></View>
-        <Footer />
-      </View>
-    );
-}
+const style = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: "#283949",
+    }
+})
+
+export default style;
