@@ -7,6 +7,7 @@ import TelaMenu from "../pages/Menu/TelaMenu";
 import RegistroDeProdutos from "../pages/RegistroDeProdutos/RegistroDeProdutos";
 import GerenciamentoDeEstoque from "../pages/GerencimentoDeEstoque/GerenciamentoDeEstoque";
 import CadastroConta from "../pages/CadastroConta/CadastroConta";
+import UsuariosEPermissoes from "../pages/UsuariosEPermissoes/UsuariosEPermissoes";
 
 //Passando a função para uma constante para utilizar as suas funcionalidades
 const stack = createStackNavigator();
@@ -49,6 +50,11 @@ export default function Routes() {
         <stack.Screen
           name="GerenciamentoDeEstoque"
           component={GerenciamentoDeEstoque}
+          options={{ headerShown: false }}
+        />
+        <stack.Screen
+          name="UsuariosEPermissoes"
+          component={UsuariosEPermissoes}
           options={{ headerShown: false }}
         />
       </stack.Navigator>
