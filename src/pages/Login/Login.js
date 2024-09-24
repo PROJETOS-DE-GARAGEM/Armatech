@@ -72,8 +72,7 @@ export default function Login({ navigation }) {
 
             <TouchableOpacity
               style={styles.button}
-              // Quando o usuário clicar e passar na autenticação irá para a tela Home que não é uma tela comum, essa tela dará acesso as telas principais do projeto
-              onPress={() => navigation.navigate("Home")}
+              onPress={() => navigation.navigate("TelaMenu")}
             >
               <Text style={styles.buttonText}>Acessar</Text>
             </TouchableOpacity>

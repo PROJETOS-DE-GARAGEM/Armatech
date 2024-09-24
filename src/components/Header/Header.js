@@ -4,12 +4,12 @@ import BarsSvg from "../../../assets/svg/BarsSvg";
 import UserSvg from "../../../assets/svg/UserSvg";
 import styles from "./HeaderStyle";
 
-export default function Header({ titulo, navigation }) {
+export default function Header({ titulo }) {
   return (
     // Container do componente header
     <View style={styles.header}>
       {/* Icon da da barra de menu */}
-      <TouchableOpacity onPress={() => navigation.openDrawer()}>
+      <TouchableOpacity>
         <BarsSvg />
       </TouchableOpacity>
       <Text style={styles.headerTitle}>{titulo}</Text>

@@ -61,7 +61,7 @@ export default function TelaMenu({ navigation }) {
   return (
     <View style={styles.container}>
       {/* Componente header */}
-      <Header titulo="Armatech" navigation={navigation} />
+      <Header titulo="Armatech" />
       {/* Componente Card */}
       <Animatable.View animation="fadeInUp" style={styles.cardContainer}>
         {MenuItens.map((item) => (

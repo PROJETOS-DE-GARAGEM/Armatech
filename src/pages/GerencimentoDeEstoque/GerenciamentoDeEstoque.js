@@ -5,10 +5,10 @@ import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
 
 
-export default function GerenciamentoDeEstoque({navigation}) {
+export default function GerenciamentoDeEstoque() {
   return (
     <View style={style.container}>
-      <Header titulo="Gerenciamento de Estoque" navigation={navigation} />
+      <Header titulo="Gerenciamento de Estoque"/>
       <View>
       </View>
       <Footer/>
