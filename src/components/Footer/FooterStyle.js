@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "space-between",
+    justifyContent: "space-around",
     paddingHorizontal: 15,
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
@@ -19,7 +19,9 @@ const styles = StyleSheet.create({
 
   IconContainer:{
     alignItems: "center",
-  }
+  }, 
+
+
 });
 
 export default styles;
