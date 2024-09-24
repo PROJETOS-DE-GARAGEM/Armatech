@@ -13,7 +13,8 @@ import Footer from "../../components/Footer/Footer";
 import Select from "../../components/Select/Select";
 import style from "./../RegistroDeProdutos/RegistroDeProdutosStyle";
 
-export default function RegistroDeProdutos() {
+export default function RegistroDeProdutos({navigation}) {
+
   //Criando os estados
   const [name, setName] = useState ();
   const [description, setDescription] = useState();
@@ -47,7 +48,7 @@ export default function RegistroDeProdutos() {
     
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
     <View style={style.container}>
-      <Header titulo="Registro de Produtos" />
+      <Header titulo="Registro de Produtos" navigation={navigation}  />
 
       <Text style={style.Title}>Adicionar novo Produto</Text>
 
