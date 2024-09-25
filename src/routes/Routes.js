@@ -10,10 +10,12 @@ import TelaMenu from "../pages/Menu/TelaMenu";
 import RegistroDeProdutos from "../pages/RegistroDeProdutos/RegistroDeProdutos";
 import GerenciamentoDeEstoque from "../pages/GerencimentoDeEstoque/GerenciamentoDeEstoque";
 import CadastroConta from "../pages/CadastroConta/CadastroConta";
-import ProcessoDeVendas from "../pages/ProcessamentoDeCompras/ProcessoDeCompras";
-import RelatorioEAnalises from "../pages/RelatoriosEAnalises/RelatorioEAnalises";
+import ProcessamentoDeVendas from "../pages/ProcessamentoDeCompras/ProcessamentoDeCompras";
+import RelatoriosEAnalises from "../pages/RelatoriosEAnalises/RelatoriosEAnalises";
 import ControleDeFornecedores from "../pages/ControleDeFornecedores/ControleDeForncedores";
 import IntegracaoDeVendas from "../pages/IntegracaoDeVendas/IntegracaoDeVendas";
+import UsuariosEPermissoes from "../pages/UsuariosEPermissoes/UsuariosEPermissoes";
+import ProcessamentoDeCompras from "../pages/ProcessamentoDeCompras/ProcessamentoDeCompras";
 
 //Passando a função para uma constante para utilizar as suas funcionalidades
 const stack = createStackNavigator();
@@ -35,14 +37,14 @@ const drawerScreens = [
     icon: "cube",
   },
   {
-    name: "ProcessamentoDeVendas",
-    component: ProcessoDeVendas,
+    name: "ProcessamentoDeCompras",
+    component: ProcessamentoDeCompras,
     label: "Compras",
     icon: "cart",
   },
   {
-    name: "RelatorioEAnalises",
-    component: RelatorioEAnalises,
+    name: "RelatoriosEAnalises",
+    component: RelatoriosEAnalises,
     label: "Relatórios",
     icon: "stats-chart",
   },
@@ -57,6 +59,12 @@ const drawerScreens = [
     component: IntegracaoDeVendas,
     label: "Vendas",
     icon: "cash",
+  },
+  {
+    name: "UsuariosEPermissoes",
+    component: UsuariosEPermissoes,
+    label: "Usuários",
+    icon: "person",
   },
 ];
 
@@ -135,11 +143,6 @@ export default function Routes() {
             headerShown: false,
             gestureEnabled: false, // Desativa o gesto de voltar
           }}
-        />
-        <stack.Screen
-          name="UsuariosEPermissoes"
-          component={UsuariosEPermissoes}
-          options={{ headerShown: false }}
         />
       </stack.Navigator>
     </NavigationContainer>

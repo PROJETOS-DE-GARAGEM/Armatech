@@ -35,7 +35,7 @@ const MenuItens = [
     id: 4,
     icon: <ChartBarSvg />,
     label: "Relatórios e Analises",
-    screen: "RelatorioDeAnalises",
+    screen: "RelatoriosEAnalises",
   },
   {
     id: 5,

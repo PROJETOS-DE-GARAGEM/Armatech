@@ -7,7 +7,7 @@ import Footer from "../../components/Footer/Footer";
 export default function ControleDeFornecedores({navigation}){
     return (
         <View style={style.container}>
-        <Header titulo="Gerenciamento de Estoque" navigation={navigation} />
+        <Header titulo="Controle de Fornecedores" navigation={navigation} />
         <View></View>
         <Footer />
       </View>

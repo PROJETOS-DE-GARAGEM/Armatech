@@ -6,7 +6,7 @@ import ProfileSvg from "../../../assets/svg/ProfileSvg";
 import styles from "./UsuariosEPermissoesStyle";
 
 
-export default function UsuariosEPermissoes() {
+export default function UsuariosEPermissoes({navigation}) {
     const [user, setUser] = useState ([
       {id: 1, nome: 'Ana Lúcia', conta: 'Administrador'},
       {id: 2, nome: 'Adécio Farias', conta: 'Administrador'},
@@ -17,7 +17,7 @@ export default function UsuariosEPermissoes() {
 
   return (
     <View style={styles.container}>
-      <Header titulo="Usuários e Permissões"/>
+      <Header titulo="Usuários e Permissões" navigation={navigation}/>
       <View style={styles.ViewCenter}>
         <Text style={styles.Title}>Lista de Usuários</Text>
 
