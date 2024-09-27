@@ -8,9 +8,9 @@ import {
   Alert, 
   Keyboard,
 } from "react-native";
+import { Dropdown } from "react-native-element-dropdown";
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
-import Select from "../../components/Select/Select";
 import style from "./../RegistroDeProdutos/RegistroDeProdutosStyle";
 
 export default function RegistroDeProdutos({navigation}) {
@@ -20,28 +20,37 @@ export default function RegistroDeProdutos({navigation}) {
   const [description, setDescription] = useState();
   const [price, setPrice] = useState();
   const [amount, setAmount] = useState();
-  const [size, setSize] = useState();
+
+  const [size, setSize] = useState(null)
+
+    const data = [
+         {label: 'PP', value: "1"},
+         {label: 'P', value: "2"},
+         {label: 'M', value: "2"},
+         {label: 'G', value: "2"},
+         {label: 'GG', value: "2"},
+ ];
 
   //Funções para setar o valor digitado dentro do estado "set"
   function changeName(name){ setName(name);}
   function changeDescription(description){ setDescription(description);}
   function changePrice(price){ setPrice(price);}
   function changeAmount(amount){ setAmount(amount);}
-  function changeSize(size){ setSize(size);}
+  function changeSize(size){setSize(size);}
   
   function register() { //Se os campos não forem preenchidos, informar ao usuário.
-    if( name === undefined || description === undefined
+    if( name === '' || description === ''
       || price === undefined|| amount === undefined
-      || size === undefined){
+      || size === ''){
           Alert.alert("Preencha todos os campos!")
           return;
         }
   //Função ao clicar no botão os valores que estão nos estados "set" serão atrbuídos aos valores iniciais.
-    setName();
-    setDescription();
-    setPrice();
-    setAmount();
-    setSize();
+    setName('');
+    setDescription('');
+    setPrice( );
+    setAmount( );
+    setSize('');
   }
 
   return (
@@ -52,71 +61,81 @@ export default function RegistroDeProdutos({navigation}) {
 
       <Text style={style.Title}>Adicionar novo Produto</Text>
 
-      <View style={style.boxContainer}>
+    <View style={style.boxContainer}>
 
-      <View style={style.boxDescription}>
+    <View style={style.boxDescription}>
       <Text style={style.text}>Nome do Produto</Text>
       <TextInput style={style.Input} 
-      placeholder="Nome do Produto"
-      onChangeText={(Input) => changeName()} 
-      value={name}>
+        placeholder="Nome do Produto"
+        onChangeText={(Input) => changeName()} 
+        value={name}>
       </TextInput>
-      </View>
+    </View>
       
-      <View style={style.boxDescription}>
+    <View style={style.boxDescription}>
       <Text style={style.text}>Descrição</Text>
       <TextInput style={style.Input} 
-      placeholder="Descrição"
-      onChangeText={(Input) => changeDescription()} 
-      value={description}>
+        placeholder="Descrição"
+        onChangeText={(Input) => changeDescription()} 
+        value={description}>
       </TextInput>
-      
-      </View>
+    </View>
 
-      <Select onChangeSelect={(id) => changeSize()}
-        text="Selecione o tamanho"
+    <View style={style.boxDescription}>
+    <Text style={style.text}>Tamanho</Text>
+      <Dropdown
+        style={style.dropdown}
+        placeholderStyle={style.placeholderStyle}
+        selectedTextStyle={style.selectedTextStyle}
+        inputSearchStyle={style.inputSearchStyle}
+        iconStyle={style.iconStyle}
+        data={data} // Definindo a variável de dados
+        maxHeight={300}
+        labelField="label"
+        valueField="size"
+        placeholder="Selecione o Tamanho..."
         value={size}
-        />
-      
-      <View style={style.boxRow}>
+        onChange={(item) => {
+        setSize(item.size);
+        }}
+        containerStyle={style.dropDownContainerStyle}
+      />
+    </View>
 
-      <View style={style.boxTitle}> 
-      <Text style={style.text}>Preço</Text>
+    <View style={style.boxDescription}>
+       <Text style={style.text}>Preço</Text>
+          <TextInput keyboardType="numeric" 
+          style={style.Input} placeholder="R$"
+          onChangeText={changePrice}
+          value={price}>
+          </TextInput>
+    </View>
+
+    <View style={style.boxDescription}>
       <Text style={style.text}>Quantidade</Text>
-      </View>
-
-      <View style={style.boxInput}>
       <TextInput keyboardType="numeric" 
-      style={style.Input2} placeholder="R$"
-      onChangeText={changePrice}
-      value={price}>
+        style={style.Input} placeholder="Unidades"
+        onChangeText={changeAmount}
+        value={amount}>
       </TextInput>
+    </View>
 
-      <TextInput keyboardType="numeric" 
-      style={style.Input2} placeholder="Un"
-      onChangeText={changeAmount}
-      value={amount}>
-      </TextInput>
-      </View>
+    </View>
 
-      </View>
-
-      <View style={style.btnBox}>
+    <View style={style.btnBox}>
 
       <TouchableOpacity onPress={ () => register()} style={[style.btn, {backgroundColor: '#32bc9b'}]}>
-      <View style={style.btnArea}>
+    <View style={style.btnArea}>
         <Text style={style.btnText}>Salvar</Text>
-      </View>
+    </View>
       </TouchableOpacity>
 
       <TouchableOpacity style={[style.btn, {backgroundColor: '#ff784b'}]}>
-      <View style={style.btnArea}>
+    <View style={style.btnArea}>
       <Text style={style.btnText}>Cancelar</Text>
-      </View>
+    </View>
       </TouchableOpacity>
-      </View>
-      </View>
-      
+    </View>
       <Footer />
     </View>
     </TouchableWithoutFeedback>
