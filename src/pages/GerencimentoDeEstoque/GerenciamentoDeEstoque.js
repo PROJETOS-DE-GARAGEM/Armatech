@@ -6,7 +6,6 @@ import { Dropdown } from "react-native-element-dropdown";
 
 import style from "./GerenciamentoDeEstoqueStyle";
 import Header from "../../components/Header/Header";
-import Footer from "../../components/Footer/Footer";
 
 
 export default function GerenciamentoDeEstoque({navigation}) {
@@ -84,7 +83,6 @@ function renderOption(item){
 
       </View>
 
-      <Footer/>
     </View>
   );
 }

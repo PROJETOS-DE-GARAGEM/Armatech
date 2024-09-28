@@ -1,10 +1,15 @@
+import React from "react";
 import { StyleSheet, SafeAreaView, StatusBar } from "react-native";
-import Routes from "./src/routes/Routes";
+import { NavigationContainer } from "@react-navigation/native";
+
+import Routes from './src/routes';
 
 export default function App() {
   return (
     <SafeAreaView style={styles.container}>
-      <Routes />
+      <NavigationContainer>
+        <Routes />
+      </NavigationContainer>
       <StatusBar />
     </SafeAreaView>
   );

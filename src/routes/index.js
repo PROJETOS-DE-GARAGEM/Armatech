@@ -1,29 +1,34 @@
-import React from "react";
-import { NavigationContainer } from "@react-navigation/native"; // Componente do React Navigation que gerencia o estado de navegação de envolve todas as telas
-import { createStackNavigator } from "@react-navigation/stack"; // É uma função do React Navigatio para criar um navegador, é onde vai ficar todas as telas
+import React from "react"; // Componente do React Navigation que gerencia o estado de navegação de envolve todas as telas
+import { createStackNavigator } from "@react-navigation/stack";
 import { createDrawerNavigator } from "@react-navigation/drawer";
-import { Ionicons } from '@expo/vector-icons';
-import DrawerContent from "../components/DrawerContent/DrawerContent";
+import { Ionicons } from '@expo/vector-icons'; // É uma função do React Navigatio para criar um navegador, é onde vai ficar todas as telas
 import Welcome from "../pages/Welcome/Welcome";
 import Login from "../pages/Login/Login";
+import CadastroConta from "../pages/CadastroConta/CadastroConta";
+import DrawerContent from "../components/DrawerContent/DrawerContent";
 import TelaMenu from "../pages/Menu/TelaMenu";
 import RegistroDeProdutos from "../pages/RegistroDeProdutos/RegistroDeProdutos";
 import GerenciamentoDeEstoque from "../pages/GerencimentoDeEstoque/GerenciamentoDeEstoque";
-import CadastroConta from "../pages/CadastroConta/CadastroConta";
 import ProcessamentoDeVendas from "../pages/ProcessamentoDeCompras/ProcessamentoDeCompras";
 import RelatoriosEAnalises from "../pages/RelatoriosEAnalises/RelatoriosEAnalises";
 import ControleDeFornecedores from "../pages/ControleDeFornecedores/ControleDeForncedores";
 import IntegracaoDeVendas from "../pages/IntegracaoDeVendas/IntegracaoDeVendas";
 import UsuariosEPermissoes from "../pages/UsuariosEPermissoes/UsuariosEPermissoes";
 import ProcessamentoDeCompras from "../pages/ProcessamentoDeCompras/ProcessamentoDeCompras";
+import BottomTabNavigator from './BottomTabNavigator';
+
 
 //Passando a função para uma constante para utilizar as suas funcionalidades
-const stack = createStackNavigator();
+const Stack = createStackNavigator();
 const drawer = createDrawerNavigator();
 
-//Definindo as rotas do Drawer em um array para mapear
+
 const drawerScreens = [
-  { name: "TelaMenu", component: TelaMenu, label: "Menu", icon: "home" },
+  { name: "TelaMenu", 
+    component: TelaMenu, 
+    label: "Menu", 
+    icon: "home" 
+  },
   {
     name: "RegistroDeProdutos",
     component: RegistroDeProdutos,
@@ -94,7 +99,7 @@ function DrawerNavigation() {
         <drawer.Screen
           key={index}
           name={screen.name}
-          component={screen.component}
+          component={screen.name === "TelaMenu" ? BottomTabNavigator : screen.component}
           options={{
             headerShown: false,
             drawerLabel: screen.label,
@@ -108,35 +113,30 @@ function DrawerNavigation() {
     </drawer.Navigator>
   );
 }
-
 // Rotas Principais
 export default function Routes() {
   return (
-    // Onde ficas todas as telas e gerência o estado de nevegação
-    <NavigationContainer>
-      {/* Este compo utiliza o metodo navigation para definir a navegação e envolver as telas */}
-      <stack.Navigator>
-        {/* Para definir uma tela especifica, cada screen representa uma rota */}
-        {/* Telas Principais */}
-        <stack.Screen
+
+      <Stack.Navigator>
+        <Stack.Screen
           name="Welcome"
           component={Welcome}
           options={{ headerShown: false }}
         />
-        <stack.Screen
+        <Stack.Screen
           name="Login"
           component={Login}
           options={{ headerShown: false }}
         />
 
-        <stack.Screen
+        <Stack.Screen
           name="CadastroConta"
           component={CadastroConta}
           options={{ headerShown: false }}
         />
 
         {/*Tela que dá acesso as telas principais  */}
-        <stack.Screen
+        <Stack.Screen
           name="Home"
           component={DrawerNavigation}
           options={{
@@ -144,7 +144,6 @@ export default function Routes() {
             gestureEnabled: false, // Desativa o gesto de voltar
           }}
         />
-      </stack.Navigator>
-    </NavigationContainer>
+      </Stack.Navigator>
   );
 }
