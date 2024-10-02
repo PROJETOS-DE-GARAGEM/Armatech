@@ -11,7 +11,7 @@ const style = StyleSheet.create({
     boxContainer: {
         paddingTop: "10%",
         flexDirection: "column",
-        gap: 20,
+        gap: 10,
     },
     boxDescription: {
         gap: 2,
@@ -40,7 +40,7 @@ const style = StyleSheet.create({
         backgroundColor: "#e5e7eb",
         borderRadius: 999,
         paddingHorizontal: 9,
-        width: 375,
+        fontSize: 15,
     },
     dropdown: {
         color: "#000",
@@ -51,7 +51,6 @@ const style = StyleSheet.create({
         backgroundColor: "#e5e7eb",
         borderRadius: 999,
         paddingHorizontal: 9,
-        width: 375,
         marginVertical: 5,
       },
     
