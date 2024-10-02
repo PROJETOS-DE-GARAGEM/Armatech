@@ -10,23 +10,25 @@ const Tab = createBottomTabNavigator();
 
 export default function BottomTabNavigator(){
     return(
+      //Confugurações globais do Tab Navigator
         <Tab.Navigator
           screenOptions={{
           headerShown: false,
           tabBarHideOnKeyboard: true,
-          tabBarActiveTintColor: '#283949',
+          tabBarActiveTintColor: '#007',
           tabBarStyle: {
             borderTopWidth: 0,
           }
         }}
-        initialRouteName="Menu"
+        initialRouteName="Menu" //Iniciando o TabNavigator pela tela Menu
         >
+          {/* Opções e rotas que serão acessíveis pelo Tab Navigator */}
         <Tab.Screen
             name="Perfil"
             component={Perfil}
             options={{
               tabBarIcon: ({ color, size}) => {
-                return <Ionicons name="person" size={size}/>
+                return <Ionicons name="person" size={size} color={color}/>
               }
           }}
           />
@@ -35,7 +37,7 @@ export default function BottomTabNavigator(){
             component={TelaMenu}
             options={{
               tabBarIcon: ({ color, size}) => {
-                return <Ionicons name="home" size={size}/>
+                return <Ionicons name="home" size={size} color={color}/>
               }
           }}
           />
@@ -44,7 +46,7 @@ export default function BottomTabNavigator(){
             component={Ajustes}
             options={{
               tabBarIcon: ({ color, size}) => {
-                return <Ionicons name="settings" size={size}/>
+                return <Ionicons name="settings" size={size} color={color}/>
               }
           }}
           />

@@ -40,7 +40,6 @@ const style = StyleSheet.create({
         backgroundColor: "#e5e7eb",
         borderRadius: 999,
         paddingHorizontal: 9,
-        width: 375,
     },
     dropdown: {
         color: "#000",
@@ -51,7 +50,6 @@ const style = StyleSheet.create({
         backgroundColor: "#e5e7eb",
         borderRadius: 999,
         paddingHorizontal: 9,
-        width: 375,
         marginVertical: 5,
       },
     
@@ -92,7 +90,6 @@ const style = StyleSheet.create({
       },
       boxSell: {
         backgroundColor: "#fff",
-        width: 370,
         height: 250,
         borderRadius: 10,
         padding: "4%",

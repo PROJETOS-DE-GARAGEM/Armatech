@@ -7,6 +7,7 @@ import Routes from './src/routes';
 export default function App() {
   return (
     <SafeAreaView style={styles.container}>
+      {/* Navegação Global Navigation */}
       <NavigationContainer>
         <Routes />
       </NavigationContainer>
