@@ -2,16 +2,14 @@ import React from "react";
 import { View, Text, TouchableOpacity } from "react-native";
 import styles from "./FooterStyle";
 import HomeSvg from "../../../assets/svg/HomeSvg";
-import BoxPackingSvg from "../../../assets/svg/BoxPackingSvg";
-import ChartLineSvg from "../../../assets/svg/CharLineSvg";
+import UserSvg from "../../../assets/svg/UserSvg";
 import GearSvg from "../../../assets/svg/GearSvg";
 
 //Lista de objetos com as os icones e textos
 const footerItems = [
-  { id: 1, icon: <HomeSvg />, label: "Home" },
-  { id: 2, icon: <BoxPackingSvg />, label: "Estoque" },
-  { id: 3, icon: <ChartLineSvg />, label: "Relatórios" },
-  { id: 4, icon: <GearSvg />, label: "Ajustes" },
+  { id: 1, icon: <UserSvg />, label: "Perfil" },
+  { id: 2, icon: <HomeSvg />, label: "Home" },
+  { id: 3, icon: <GearSvg />, label: "Ajustes" },
 ];
 
 

@@ -35,7 +35,7 @@ const MenuItens = [
     id: 4,
     icon: <ChartBarSvg />,
     label: "Relatórios e Analises",
-    screen: "RelatorioDeAnalises",
+    screen: "RelatoriosEAnalises",
   },
   {
     id: 5,
@@ -61,7 +61,7 @@ export default function TelaMenu({ navigation }) {
   return (
     <View style={styles.container}>
       {/* Componente header */}
-      <Header titulo="Armatech" />
+      <Header titulo="Armatech" navigation={navigation} />
       {/* Componente Card */}
       <Animatable.View animation="fadeInUp" style={styles.cardContainer}>
         {MenuItens.map((item) => (
