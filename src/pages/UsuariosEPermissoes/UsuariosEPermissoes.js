@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { View, Text, FlatList, TouchableOpacity } from "react-native";
 import Header from "../../components/Header/Header";
-import Footer from "../../components/Footer/Footer";
 import ProfileSvg from "../../../assets/svg/ProfileSvg";
 import styles from "./UsuariosEPermissoesStyle";
 
@@ -30,7 +29,6 @@ export default function UsuariosEPermissoes({navigation}) {
         </View>
 
       </View>
-      <Footer/>
     </View>
   );
 }

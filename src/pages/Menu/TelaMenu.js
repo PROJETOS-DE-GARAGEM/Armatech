@@ -3,7 +3,6 @@ import { View, Text, TouchableOpacity, Image } from "react-native";
 import * as Animatable from "react-native-animatable";
 import Header from "../../components/Header/Header";
 import styles from "./TelaMenuStyle";
-import Footer from "../../components/Footer/Footer";
 import BoxSvg from "../../../assets/svg/BoxSvg";
 import WarehousSvg from "../../../assets/svg/WarehoseSvg";
 import ShoppingCartSvg from "../../../assets/svg/ShoppingCartSvg";
@@ -78,7 +77,6 @@ export default function TelaMenu({ navigation }) {
       </Animatable.View>
 
       {/* Componente footer */}
-      <Footer />
     </View>
   );
 }

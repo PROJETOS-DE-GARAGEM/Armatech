@@ -9,7 +9,6 @@ import {
 } from "react-native";
 import styles from "./IntegracaoDeVendasStyle";
 import Header from "../../components/Header/Header";
-import Footer from "../../components/Footer/Footer";
 import { Dropdown } from "react-native-element-dropdown";
 
 export default function IntegracaoDeVendas({ navigation }) {
@@ -101,7 +100,6 @@ export default function IntegracaoDeVendas({ navigation }) {
           </View>
         </View>
 
-        <Footer />
       </View>
     </TouchableWithoutFeedback>
   );

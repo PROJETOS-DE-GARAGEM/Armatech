@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import { Dropdown } from "react-native-element-dropdown";
 import Header from "../../components/Header/Header";
-import Footer from "../../components/Footer/Footer";
+import BottomTabNavigator from "../../routes/BottomTabNavigator";
 import style from "./../RegistroDeProdutos/RegistroDeProdutosStyle";
 
 export default function RegistroDeProdutos({navigation}) {
@@ -214,7 +214,6 @@ export default function RegistroDeProdutos({navigation}) {
     </View>
       </TouchableOpacity>
     </View>
-      <Footer />
     </View>
     </TouchableWithoutFeedback>
   );
