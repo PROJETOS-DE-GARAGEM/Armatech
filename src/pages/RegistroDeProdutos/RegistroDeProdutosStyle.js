@@ -11,7 +11,7 @@ const style = StyleSheet.create({
     boxContainer: {
         paddingTop: "10%",
         flexDirection: "column",
-        gap: 20,
+        gap: 10,
     },
     boxDescription: {
         gap: 2,
