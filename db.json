@@ -5,7 +5,85 @@
       "email": "john@example.com",
       "senha": "123"
     }
-   
+  ],
+  "produtos": [
+    {
+      "id": "dd21"
+    },
+    {
+      "id": "a62d"
+    },
+    {
+      "id": "1",
+      "name": "moises"
+    },
+    {
+      "id": "1",
+      "name": "moises"
+    },
+    {
+      "id": "1932",
+      "nomeDoProduto": "Kdjdjdbd",
+      "descricao": "",
+      "preco": "",
+      "quantidade": "",
+      "tamanho": "",
+      "tipo": "1"
+    },
+    {
+      "id": "b25e",
+      "nomeDoProduto": "Ggxhx",
+      "descricao": "Najxjxbx",
+      "preco": "20,00",
+      "quantidade": "1",
+      "tamanho": "1",
+      "tipo": "1"
+    },
+    {
+      "id": "788b",
+      "nomeDoProduto": "Hfhff",
+      "descricao": "",
+      "preco": "",
+      "quantidade": "",
+      "tamanho": "",
+      "tipo": ""
+    },
+    {
+      "id": "a0fc",
+      "nomeDoProduto": "Jhhdhxbd",
+      "descricao": "",
+      "preco": "",
+      "quantidade": "",
+      "tamanho": "",
+      "tipo": ""
+    },
+    {
+      "id": "c961",
+      "nomeDoProduto": "Bcgdhd",
+      "descricao": "Gcbxhxb",
+      "preco": "20,00",
+      "quantidade": "1",
+      "tamanho": "2",
+      "tipo": "1"
+    },
+    {
+      "id": "5dfe",
+      "nomeDoProduto": "Hghxh",
+      "descricao": "Vbvbcb",
+      "preco": "20,00",
+      "quantidade": "5",
+      "tamanho": "2",
+      "tipo": "2"
+    },
+    {
+      "id": "1c8e",
+      "nomeDoProduto": "Gfhx",
+      "descricao": "Gdhx",
+      "preco": "20,00",
+      "quantidade": "8",
+      "tamanho": "3",
+      "tipo": "2"
+    }
   ],
   "posts": [
     {
