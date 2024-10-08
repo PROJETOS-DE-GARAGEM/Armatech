@@ -12,7 +12,7 @@ import { Dropdown } from "react-native-element-dropdown";
 import Header from "../../components/Header/Header";
 import BottomTabNavigator from "../../routes/BottomTabNavigator";
 import style from "./../RegistroDeProdutos/RegistroDeProdutosStyle";
-import { cadastrarProduto, ProdutoService } from "../../../service/CasdastrarProdutos";
+import {ProdutoService} from "../../../service/CasdastrarProdutos";
 
 export default function RegistroDeProdutos({ navigation }) {
   //Criando os estados
@@ -67,18 +67,9 @@ export default function RegistroDeProdutos({ navigation }) {
     service = new ProdutoService()
   //Se os campos não forem preenchidos, informar ao usuário.
   function register() {
-    if (
-      name === "" ||
-      description === "" ||
-      price === "" ||
-      amount === "" ||
-      size === "" ||
-      type === ""
-      || sizeNumber === "" //corrigir mudar para tanto size quanto sizeNumber ir para o size assim não precisa validar os dois
-    ) {
-      console.log('name',name, 'description',description,'price', price, 'amount', amount , 'size',size,'type', type , 'sizeNumber', sizeNumber)
+    if (!name || !description || !price || !amount || !(size || sizeNumber) || !type) {
       Alert.alert("Preencha todos os campos!");
-      return ;
+      return;
     }
 
     //Cria o objeto produtos com os dados do usuário.
