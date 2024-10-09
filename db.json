@@ -8,29 +8,6 @@
   ],
   "produtos": [
     {
-      "id": "dd21"
-    },
-    {
-      "id": "a62d"
-    },
-    {
-      "id": "1",
-      "name": "moises"
-    },
-    {
-      "id": "1",
-      "name": "moises"
-    },
-    {
-      "id": "1932",
-      "nomeDoProduto": "Kdjdjdbd",
-      "descricao": "",
-      "preco": "",
-      "quantidade": "",
-      "tamanho": "",
-      "tipo": "1"
-    },
-    {
       "id": "b25e",
       "nomeDoProduto": "Ggxhx",
       "descricao": "Najxjxbx",
@@ -83,6 +60,15 @@
       "quantidade": "8",
       "tamanho": "3",
       "tipo": "2"
+    },
+    {
+      "id": "0d3c",
+      "nomeDoProduto": "Camisa Rosa ",
+      "descricao": "Blusa feito com algodão ",
+      "preco": "10,00",
+      "quantidade": "5",
+      "tamanho": "1",
+      "tipo": "1"
     }
   ],
   "posts": [
