@@ -1,11 +1,11 @@
 import axios from "axios";
 
-//URL principal 
+//URL principal
 const API_URL = "http://192.168.18.14:3000";
 
 //Classe para realizar requisições pegando os dados a partir da URL principal
 export class CoreService {
-  //Define o endpoint especifico 
+  //Define o endpoint especifico
   get resource() {
     return;
   }
@@ -20,4 +20,16 @@ export class CoreService {
       throw error; //Lança o erro para ser tratado na camada que chamou
     }
   }
+
+   //Função listar Produtos
+   async ListarProdutos(document) {
+    try {
+      const response = await axios.get(`${API_URL}${this.resource}`, document);
+      console.log(`${API_URL}${this.resource}`);
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  }
+ 
 }
