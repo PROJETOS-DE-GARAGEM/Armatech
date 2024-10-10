@@ -12,6 +12,7 @@ export default function GerenciamentoDeEstoque({ navigation }) {
   const [produtoSelecionado, setProdutoSelecionado] = useState(null); //Irá armazenar o produto selecionado
   const [produtos, setProdutos] = useState([]); // Irá armazenar a lista de produtos que será carregada da API
   const [produtosFiltrados, setProdutosFiltrados] = useState([]); //Irá armazenar os produtos que serão exibidos na tela após a aplicação de um filtro
+  const [erro, setErro] = useState(""); //Armazena possíveis erros ao carregar ou filtrar produtos
 
   useEffect(() => {
     //Função para buscar prosdutos ao carregar a tela do estoque
@@ -19,9 +20,13 @@ export default function GerenciamentoDeEstoque({ navigation }) {
       try {
         const produtoService = new ProdutoService();
         const produtoListados = await produtoService.ListarProdutos(); //Buscar os produtos da API
-        setProdutos(produtoListados); //Armazena a lista completa para uso futuro
+        setProdutos([
+          { id: 0, nomeDoProduto: "Todos os Produtos" },
+          ...produtoListados,
+        ]); // Adiciona a opção "Todos os Produtos"
         setProdutosFiltrados(produtoListados); //Inicia exibindo todos os produtos mas poderá ao pesquisar um produto especifico
       } catch (error) {
+        setErro("Erro ao carregar produtos");
         console.error("Erro ao carregar produtos: ", error);
       }
     }
@@ -53,12 +58,11 @@ export default function GerenciamentoDeEstoque({ navigation }) {
     );
   }
 
-  //TO DO: Listar todos os produtos caso a search fique vazia.
-
   //Função para filtrar os produtos com base na seleção do dropdown
+  //Terá que ser tratado no beck end
   const filtrarProdutos = (produtoSelecionado) => {
-    if (!produtoSelecionado || produtoSelecionado.trim() === "") {
-      setProdutosFiltrados(produtos); // Irá mostrar todos os produtos se nada for selecionado
+    if (!produtoSelecionado || produtoSelecionado === "Todos os Produtos") {
+      setProdutosFiltrados(produtos.filter((produto) => produto.id !== 0)); // Mostra todos os produtos, exceto a opção "Todos os Produtos"
     } else {
       const produtosFiltrados = produtos.filter((produto) => {
         return produto.nomeDoProduto
@@ -78,7 +82,7 @@ export default function GerenciamentoDeEstoque({ navigation }) {
       <View style={style.ViewTitle}>
         <Text style={style.textTitle}>Lista de Produtos</Text>
         <TouchableOpacity style={style.buttonAddProduct}>
-          <Text style={style.textButton}>Adicionar +</Text>
+          <Text style={style.textButton}>Adicionar</Text>
         </TouchableOpacity>
       </View>
       <View style={style.containerDropdown}>
@@ -105,9 +109,13 @@ export default function GerenciamentoDeEstoque({ navigation }) {
           containerStyle={style.dropDownContainerStyle}
         />
       </View>
+
+      {/* Exibe erro caso exista */}
+      {erro ? <Text style={style.errorText}>{erro}</Text> : null}
+
       <View style={style.ViewFlatlist}>
         <FlatList
-          data={produtosFiltrados.slice(0, 3)} //Mostra apenas os três primeiros produtos
+          data={produtosFiltrados} //Mostra apenas os três primeiros produtos
           keyExtractor={(item) => String(item.id)}
           renderItem={({ item }) => renderOption(item)}
         />
