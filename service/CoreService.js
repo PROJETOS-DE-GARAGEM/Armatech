@@ -31,5 +31,15 @@ export class CoreService {
       throw error;
     }
   }
- 
+
+  //Função para editar o Produto
+  async ListarProdutos(document) {
+    try {
+      const response = await axios.put(`${API_URL}${this.resource}`, document);
+      console.log(`${API_URL}${this.resource}`);
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  }
 }

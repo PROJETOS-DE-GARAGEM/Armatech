@@ -50,7 +50,7 @@ export default function GerenciamentoDeEstoque({ navigation }) {
           <TouchableOpacity>
             <Ionicons name="trash" size={30} color="#ff784b" />
           </TouchableOpacity>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={()=> abrirModalEdicao(item)}>
             <FontAwesome name="edit" size={30} color="#32bc9b" />
           </TouchableOpacity>
         </View>
