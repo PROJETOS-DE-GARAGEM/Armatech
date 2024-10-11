@@ -7,12 +7,14 @@ import {
   TouchableWithoutFeedback,
   Alert,
   Keyboard,
+  ScrollView,
+  KeyboardAvoidingView,
+  Platform,
 } from "react-native";
 import { Dropdown } from "react-native-element-dropdown";
 import Header from "../../components/Header/Header";
-import BottomTabNavigator from "../../routes/BottomTabNavigator";
 import style from "./../RegistroDeProdutos/RegistroDeProdutosStyle";
-import {ProdutoService} from "../../../service/CasdastrarProdutos";
+import { ProdutoService } from "../../../service/CasdastrarProdutos";
 
 export default function RegistroDeProdutos({ navigation }) {
   //Criando os estados
@@ -30,9 +32,8 @@ export default function RegistroDeProdutos({ navigation }) {
 
   //Listas de objetos para colocar nas opções dos seletores
   const tipo = [
-    { label: "Short", value: "1" },
-    { label: "Saia", value: "2" },
-    { label: "Calça", value: "3" },
+    { label: "Short/Saia", value: "1" },
+    { label: "Calça", value: "2" },
   ];
 
   const data = [
@@ -59,12 +60,13 @@ export default function RegistroDeProdutos({ navigation }) {
     setDescription(description);
   }
   function changePrice(price) {
-    setPrice(price);
+    let priceFormatted = price.replace(",", ".")
+    setPrice(priceFormatted)
   }
   function changeAmount(amount) {
     setAmount(amount);
   }
-    service = new ProdutoService()
+  service = new ProdutoService()
   //Se os campos não forem preenchidos, informar ao usuário.
   function register() {
     if (!name || !description || !price || !amount || !(size || sizeNumber) || !type) {
@@ -104,150 +106,172 @@ export default function RegistroDeProdutos({ navigation }) {
       });
   }
 
+  //Chama a função após clicar no botão "limpar".
+  function clear() {
+    setName("");
+    setDescription("");
+    setPrice("");
+    setAmount("");
+    setSize("");
+    setType("");
+    setSizeNumber("");
+  }
+
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <View style={style.container}>
+      <KeyboardAvoidingView
+        style={style.container}
+        behavior={Platform.OS === "ios" ? "padding" : "heigth"} //Ajuste para o teclado não ficar sobre os formulários
+        keyboardVerticalOffset={60}
+      >
+
         <Header titulo="Registro de Produtos" navigation={navigation} />
+        <ScrollView
+          contentContainerStyle={style.contentContainer}
+          showsVerticalScrollIndicator={false}
+        >
+          <Text style={style.Title}>Adicionar novo Produto</Text>
 
-        <Text style={style.Title}>Adicionar novo Produto</Text>
-
-        <View style={style.boxContainer}>
-          <View style={style.boxDescription}>
-            <Text style={style.text}>Tipo de Produto</Text>
-            <Dropdown
-              style={style.dropdown}
-              placeholderStyle={style.placeholderStyle}
-              selectedTextStyle={style.selectedTextStyle}
-              inputSearchStyle={style.inputSearchStyle}
-              iconStyle={style.iconStyle}
-              data={tipo} // Definindo a variável de dados
-              maxHeight={300}
-              labelField="label"
-              valueField="value"
-              placeholder="Tipo de Produto..."
-              value={type}
-              onChange={(item) => {
-                setType(item.value);
-                // Se o item 3 "Calça" for selecionado, ele passa para a varável de estado, disponibiliza o input "selecione o número".
-                setSizeNumberEnable(item.value === "3");
-                setSizeDisable(item.value === "3");
-              }}
-              containerStyle={style.dropDownContainerStyle}
-            />
-          </View>
-
-          <View style={style.boxDescription}>
-            <Text style={style.text}>Nome do Produto</Text>
-            <TextInput
-              style={style.Input}
-              placeholder="Nome do Produto"
-              placeholderTextColor="gray"
-              onChangeText={(Input) => changeName(Input)}
-              value={name}
-            ></TextInput>
-          </View>
-
-          <View style={style.boxDescription}>
-            <Text style={style.text}>Descrição</Text>
-            <TextInput
-              style={style.Input}
-              placeholder="Descrição"
-              placeholderTextColor="gray"
-              onChangeText={(Input) => changeDescription(Input)} //Transferindo valor digitado para a variável de estado
-              value={description}
-            ></TextInput>
-          </View>
-
-          {!isSizeDisable && (
-            //
+          <View style={style.boxContainer}>
             <View style={style.boxDescription}>
-              <Text style={style.text}>Tamanho</Text>
+              <Text style={style.text}>Tipo de Produto</Text>
               <Dropdown
                 style={style.dropdown}
                 placeholderStyle={style.placeholderStyle}
                 selectedTextStyle={style.selectedTextStyle}
                 inputSearchStyle={style.inputSearchStyle}
                 iconStyle={style.iconStyle}
-                data={data} // Definindo a variável de dados
+                data={tipo} // Definindo a variável de dados
                 maxHeight={300}
                 labelField="label"
                 valueField="value"
-                placeholder="Selecione o Tamanho..."
-                value={size}
+                placeholder="Tipo de Produto..."
+                value={type}
                 onChange={(item) => {
-                  setSize(item.value);
+                  setType(item.value);
+                  // Se o item 2 "Calça" for selecionado, ele passa para a varável de estado, disponibiliza o input "selecione o número".
+                  setSizeNumberEnable(item.value === "2");
+                  setSizeDisable(item.value === "2");
                 }}
-                disable={isSizeDisable} //Desabilitando a funcionalidade caso SizeDisable seja true.
                 containerStyle={style.dropDownContainerStyle}
               />
             </View>
-          )}
 
-          {isSizeNumberEnable && (
             <View style={style.boxDescription}>
-              <Text style={style.text}>Tamanho</Text>
-              <Dropdown
-                style={style.dropdown}
-                placeholderStyle={style.placeholderStyle}
-                selectedTextStyle={style.selectedTextStyle}
-                inputSearchStyle={style.inputSearchStyle}
-                iconStyle={style.iconStyle}
-                data={numeracao} // Definindo a variável de dados
-                maxHeight={300}
-                labelField="label"
-                valueField="value"
-                placeholder="Selecione o Número..."
-                value={sizeNumber}
-                onChange={(item) => {
-                  setSizeNumber(item.value);
-                }}
-                containerStyle={style.dropDownContainerStyle}
-              />
+              <Text style={style.text}>Nome do Produto</Text>
+              <TextInput
+                style={style.Input}
+                placeholder="Nome do Produto"
+                placeholderTextColor="gray"
+                onChangeText={(Input) => changeName(Input)}
+                value={name}
+              ></TextInput>
             </View>
-          )}
 
-          <View style={style.boxDescription}>
-            <Text style={style.text}>Preço</Text>
-            <TextInput
-              keyboardType="numeric"
-              style={style.Input}
-              placeholder="R$"
-              placeholderTextColor="gray"
-              onChangeText={changePrice}
-              value={price}
-            ></TextInput>
+            <View style={style.boxDescription}>
+              <Text style={style.text}>Descrição</Text>
+              <TextInput
+                style={style.Input}
+                placeholder="Descrição"
+                placeholderTextColor="gray"
+                onChangeText={(Input) => changeDescription(Input)} //Transferindo valor digitado para a variável de estado
+                value={description}
+              ></TextInput>
+            </View>
+
+            {!isSizeDisable && (
+              //
+              <View style={style.boxDescription}>
+                <Text style={style.text}>Tamanho</Text>
+                <Dropdown
+                  style={style.dropdown}
+                  placeholderStyle={style.placeholderStyle}
+                  selectedTextStyle={style.selectedTextStyle}
+                  inputSearchStyle={style.inputSearchStyle}
+                  iconStyle={style.iconStyle}
+                  data={data} // Definindo a variável de dados
+                  maxHeight={300}
+                  labelField="label"
+                  valueField="value"
+                  placeholder="Selecione o Tamanho..."
+                  value={size}
+                  onChange={(item) => {
+                    setSize(item.value);
+                  }}
+                  disable={isSizeDisable} //Desabilitando a funcionalidade caso SizeDisable seja true.
+                  containerStyle={style.dropDownContainerStyle}
+                />
+              </View>
+            )}
+
+            {isSizeNumberEnable && (
+              <View style={style.boxDescription}>
+                <Text style={style.text}>Tamanho</Text>
+                <Dropdown
+                  style={style.dropdown}
+                  placeholderStyle={style.placeholderStyle}
+                  selectedTextStyle={style.selectedTextStyle}
+                  inputSearchStyle={style.inputSearchStyle}
+                  iconStyle={style.iconStyle}
+                  data={numeracao} // Definindo a variável de dados
+                  maxHeight={300}
+                  labelField="label"
+                  valueField="value"
+                  placeholder="Selecione o Número..."
+                  value={sizeNumber}
+                  onChange={(item) => {
+                    setSizeNumber(item.value);
+                  }}
+                  containerStyle={style.dropDownContainerStyle}
+                />
+              </View>
+            )}
+
+            <View style={style.boxDescription}>
+              <Text style={style.text}>Preço</Text>
+              <TextInput
+                keyboardType="numeric"
+                style={style.Input}
+                placeholder="R$"
+                placeholderTextColor="gray"
+                onChangeText={changePrice}
+                value={price}
+              ></TextInput>
+            </View>
+
+            <View style={style.boxDescription}>
+              <Text style={style.text}>Quantidade</Text>
+              <TextInput
+                keyboardType="numeric"
+                style={style.Input}
+                placeholder="Unidades"
+                placeholderTextColor="gray"
+                onChangeText={changeAmount}
+                value={amount}
+              ></TextInput>
+            </View>
           </View>
 
-          <View style={style.boxDescription}>
-            <Text style={style.text}>Quantidade</Text>
-            <TextInput
-              keyboardType="numeric"
-              style={style.Input}
-              placeholder="Unidades"
-              placeholderTextColor="gray"
-              onChangeText={changeAmount}
-              value={amount}
-            ></TextInput>
+          <View style={style.btnBox}>
+            <TouchableOpacity
+              onPress={() => register()}
+              style={[style.btn, { backgroundColor: "#32bc9b" }]}
+            >
+              <View style={style.btnArea}>
+                <Text style={style.btnText}>Salvar</Text>
+              </View>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              onPress={() => clear()}
+              style={[style.btn, { backgroundColor: "#ff784b" }]}>
+              <View style={style.btnArea}>
+                <Text style={style.btnText}>Limpar</Text>
+              </View>
+            </TouchableOpacity>
           </View>
-        </View>
-
-        <View style={style.btnBox}>
-          <TouchableOpacity
-            onPress={() => register()}
-            style={[style.btn, { backgroundColor: "#32bc9b" }]}
-          >
-            <View style={style.btnArea}>
-              <Text style={style.btnText}>Salvar</Text>
-            </View>
-          </TouchableOpacity>
-
-          <TouchableOpacity style={[style.btn, { backgroundColor: "#ff784b" }]}>
-            <View style={style.btnArea}>
-              <Text style={style.btnText}>Cancelar</Text>
-            </View>
-          </TouchableOpacity>
-        </View>
-      </View>
+        </ScrollView>
+      </KeyboardAvoidingView>
     </TouchableWithoutFeedback>
   );
 }
