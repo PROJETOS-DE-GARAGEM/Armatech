@@ -1,7 +1,7 @@
 import axios from "axios";
 
 //URL principal
-const API_URL = "http://192.168.18.14:3000";
+const API_URL = "http://192.168.1.6:3000";
 
 //Classe para realizar requisições pegando os dados a partir da URL principal
 export class CoreService {
@@ -22,7 +22,7 @@ export class CoreService {
   }
 
    //Função listar Produtos
-   async ListarProdutos(document) {
+   async listarProdutos(document) {
     try {
       const response = await axios.get(`${API_URL}${this.resource}`, document);
       console.log(`${API_URL}${this.resource}`);
@@ -33,10 +33,10 @@ export class CoreService {
   }
 
   //Função para editar o Produto
-  async ListarProdutos(document) {
+  async editarProduto(id, document) {
     try {
-      const response = await axios.put(`${API_URL}${this.resource}`, document);
-      console.log(`${API_URL}${this.resource}`);
+      const response = await axios.put(`${API_URL}${this.resource}/${id}`, document); //Pega o dado pelo o ID
+      console.log(`${API_URL}${this.resource}/${id}`);
       return response.data;
     } catch (error) {
       throw error;

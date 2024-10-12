@@ -7,19 +7,24 @@ import { Dropdown } from "react-native-element-dropdown";
 import style from "./GerenciamentoDeEstoqueStyle";
 import Header from "../../components/Header/Header";
 import { ProdutoService } from "../../../service/CasdastrarProdutos";
+import ModalEditarProduto from "../../components/ModalEditarProduto/ModalEditarProduto";
 
 export default function GerenciamentoDeEstoque({ navigation }) {
   const [produtoSelecionado, setProdutoSelecionado] = useState(null); //Irá armazenar o produto selecionado
   const [produtos, setProdutos] = useState([]); // Irá armazenar a lista de produtos que será carregada da API
   const [produtosFiltrados, setProdutosFiltrados] = useState([]); //Irá armazenar os produtos que serão exibidos na tela após a aplicação de um filtro
+  const [editarProduto, setEditarProduto] = useState(null); //Produto a ser editado
+  const [modalVisible, setModalVisible] = useState(false); //controle do modal
   const [erro, setErro] = useState(""); //Armazena possíveis erros ao carregar ou filtrar produtos
+
+  const produtoService = new ProdutoService();
 
   useEffect(() => {
     //Função para buscar prosdutos ao carregar a tela do estoque
     async function carregarProdutos() {
       try {
-        const produtoService = new ProdutoService();
-        const produtoListados = await produtoService.ListarProdutos(); //Buscar os produtos da API
+        //const produtoService = new ProdutoService();
+        const produtoListados = await produtoService.listarProdutos(); //Buscar os produtos da API
         setProdutos([
           { id: 0, nomeDoProduto: "Todos os Produtos" },
           ...produtoListados,
@@ -32,6 +37,39 @@ export default function GerenciamentoDeEstoque({ navigation }) {
     }
     carregarProdutos();
   }, []); // O [] vazio indica que essa função séra executada apenas uma vez
+
+  // Abrir o modal de edição ao clicar no ícone de edição
+  const abrirModalEdicao = (produto) => {
+    setEditarProduto(produto); // Define o produto a ser editado
+    setModalVisible(true); // Exibe o modal
+  };
+
+  // Salvar as edições feitas no modal
+  const salvarEdicao = async () => {
+    try {
+      await produtoService.editarProduto(
+        editarProduto.id,
+        editarProduto
+      ); // Chama o serviço para editar o produto
+      setModalVisible(false); // Fecha o modal após salvar
+      // Atualiza a lista de produtos após a edição
+      setProdutos((produtos) =>
+        produtos.map((p) =>
+          p.id === editarProduto.id ? editarProduto : p
+        )
+      );
+    } catch (error) {
+      console.error("Erro ao salvar edição:", error);
+    }
+  };
+
+  // Atualiza o produto no estado conforme o usuário edita os campos no modal
+  const atualizarProduto = (campo, valor) => {
+    setEditarProduto({
+      ...editarProduto,
+      [campo]: valor,
+    });
+  };
 
   //Função para renderizar cada produto
   function renderOption(item) {
@@ -50,7 +88,7 @@ export default function GerenciamentoDeEstoque({ navigation }) {
           <TouchableOpacity>
             <Ionicons name="trash" size={30} color="#ff784b" />
           </TouchableOpacity>
-          <TouchableOpacity onPress={()=> abrirModalEdicao(item)}>
+          <TouchableOpacity onPress={() => abrirModalEdicao(item)}>
             <FontAwesome name="edit" size={30} color="#32bc9b" />
           </TouchableOpacity>
         </View>
@@ -120,6 +158,15 @@ export default function GerenciamentoDeEstoque({ navigation }) {
           renderItem={({ item }) => renderOption(item)}
         />
       </View>
+
+      {/* Modal de edição */}
+      <ModalEditarProduto
+        editarProduto={editarProduto}
+        atualizarProduto={atualizarProduto}
+        modalVisible={modalVisible}
+        setModalVisible={setModalVisible}
+        salvarEdicao={salvarEdicao}
+      />
     </View>
   );
 }
