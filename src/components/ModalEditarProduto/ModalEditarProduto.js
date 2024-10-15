@@ -4,16 +4,15 @@ import {
   View,
   Text,
   TextInput,
-  Button,
   SafeAreaView,
   TouchableOpacity,
   TouchableWithoutFeedback,
-  Keyboard
+  Keyboard,
 } from "react-native";
 import styles from "./ModalEditarProdutoStyle";
 
 const ModalEditarProduto = ({
-  produtoParaEditar,
+  produtoEditado,
   atualizarProduto,
   modalVisible,
   setModalVisible,
@@ -29,7 +28,7 @@ const ModalEditarProduto = ({
             <View style={styles.boxDescription}>
               <Text style={styles.text}>Nome do produto</Text>
               <TextInput
-                value={produtoParaEditar?.nomeDoProduto || ""}
+                value={produtoEditado?.nomeDoProduto || ""}
                 onChangeText={(valor) =>
                   atualizarProduto("nomeDoProduto", valor)
                 }
@@ -41,7 +40,7 @@ const ModalEditarProduto = ({
             <View style={styles.boxDescription}>
               <Text style={styles.text}>Preço</Text>
               <TextInput
-                value={produtoParaEditar?.preco || ""}
+                value={produtoEditado?.preco || ""}
                 onChangeText={(valor) =>
                   atualizarProduto("preco", parseFloat(valor))
                 }
@@ -54,7 +53,7 @@ const ModalEditarProduto = ({
             <View style={styles.boxDescription}>
               <Text style={styles.text}>Quantidade</Text>
               <TextInput
-                value={produtoParaEditar?.quantidade || ""}
+                value={produtoEditado?.quantidade || ""}
                 onChangeText={(valor) =>
                   atualizarProduto("quantidade", valor, parseInt(valor))
                 }

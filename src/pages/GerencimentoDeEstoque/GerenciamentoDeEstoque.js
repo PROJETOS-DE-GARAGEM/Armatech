@@ -13,7 +13,7 @@ export default function GerenciamentoDeEstoque({ navigation }) {
   const [produtoSelecionado, setProdutoSelecionado] = useState(null); //Irá armazenar o produto selecionado
   const [produtos, setProdutos] = useState([]); // Irá armazenar a lista de produtos que será carregada da API
   const [produtosFiltrados, setProdutosFiltrados] = useState([]); //Irá armazenar os produtos que serão exibidos na tela após a aplicação de um filtro
-  const [editarProduto, setEditarProduto] = useState(null); //Produto a ser editado
+  const [produtoEditado, setprodutoEditado] = useState(null); //Produto a ser editado
   const [modalVisible, setModalVisible] = useState(false); //controle do modal
   const [erro, setErro] = useState(""); //Armazena possíveis erros ao carregar ou filtrar produtos
 
@@ -38,24 +38,29 @@ export default function GerenciamentoDeEstoque({ navigation }) {
     carregarProdutos();
   }, []); // O [] vazio indica que essa função séra executada apenas uma vez
 
+
+
   // Abrir o modal de edição ao clicar no ícone de edição
   const abrirModalEdicao = (produto) => {
-    setEditarProduto(produto); // Define o produto a ser editado
+    console.log("produto selecionad: ", produto);
+    setprodutoEditado(produto); // Define o produto a ser editado
     setModalVisible(true); // Exibe o modal
   };
+
+
 
   // Salvar as edições feitas no modal
   const salvarEdicao = async () => {
     try {
       await produtoService.editarProduto(
-        editarProduto.id,
-        editarProduto
+        produtoEditado.id,
+        produtoEditado
       ); // Chama o serviço para editar o produto
       setModalVisible(false); // Fecha o modal após salvar
       // Atualiza a lista de produtos após a edição
       setProdutos((produtos) =>
         produtos.map((p) =>
-          p.id === editarProduto.id ? editarProduto : p
+          p.id === produtoEditado.id ? produtoEditado : p
         )
       );
     } catch (error) {
@@ -65,8 +70,8 @@ export default function GerenciamentoDeEstoque({ navigation }) {
 
   // Atualiza o produto no estado conforme o usuário edita os campos no modal
   const atualizarProduto = (campo, valor) => {
-    setEditarProduto({
-      ...editarProduto,
+    setprodutoEditado({
+      ...produtoEditado,
       [campo]: valor,
     });
   };
@@ -161,7 +166,7 @@ export default function GerenciamentoDeEstoque({ navigation }) {
 
       {/* Modal de edição */}
       <ModalEditarProduto
-        editarProduto={editarProduto}
+        produtoEditado={produtoEditado}
         atualizarProduto={atualizarProduto}
         modalVisible={modalVisible}
         setModalVisible={setModalVisible}

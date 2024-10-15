@@ -8,31 +8,24 @@
   ],
   "produtos": [
     {
-      "id": "b25e",
-      "nomeDoProduto": "S",
-      "descricao": "Najxjxbx",
-      "preco": "9",
-      "quantidade": "8",
-      "tamanho": "1",
-      "tipo": "1"
-    },
-    {
       "id": "788b",
-      "nomeDoProduto": "Hfhff",
+      "nomeDoProduto": "Ghghfjf",
       "descricao": "",
-      "preco": "",
-      "quantidade": "",
+      "preco": 20,
+      "quantidade": "2",
       "tamanho": "",
-      "tipo": ""
+      "tipo": "",
+      "_index": 1
     },
     {
       "id": "a0fc",
       "nomeDoProduto": "Jhhdhxbd",
       "descricao": "",
-      "preco": "",
-      "quantidade": "",
+      "preco": 200,
+      "quantidade": "3",
       "tamanho": "",
-      "tipo": ""
+      "tipo": "",
+      "_index": 2
     },
     {
       "id": "c961",
