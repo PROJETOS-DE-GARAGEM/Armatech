@@ -9,10 +9,10 @@
   "produtos": [
     {
       "id": "788b",
-      "nomeDoProduto": "Ghghfjf",
+      "nomeDoProduto": "Camisa preta ",
       "descricao": "",
-      "preco": 20,
-      "quantidade": "2",
+      "preco": 10,
+      "quantidade": "3",
       "tamanho": "",
       "tipo": "",
       "_index": 1
@@ -40,7 +40,7 @@
       "id": "5dfe",
       "nomeDoProduto": "Hghxh",
       "descricao": "Vbvbcb",
-      "preco": "20,00",
+      "preco": 20,
       "quantidade": "5",
       "tamanho": "2",
       "tipo": "2"

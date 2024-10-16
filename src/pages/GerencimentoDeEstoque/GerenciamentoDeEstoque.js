@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, TouchableOpacity, FlatList } from "react-native";
+import { View, Text, TouchableOpacity, FlatList, Alert } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { Dropdown } from "react-native-element-dropdown";
@@ -63,6 +63,7 @@ export default function GerenciamentoDeEstoque({ navigation }) {
           p.id === produtoEditado.id ? produtoEditado : p
         )
       );
+      Alert.alert("Sucesso", "Produto atualizado com sucesso!");
     } catch (error) {
       console.error("Erro ao salvar edição:", error);
     }
