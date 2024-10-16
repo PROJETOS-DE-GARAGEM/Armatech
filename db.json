@@ -7,62 +7,7 @@
     }
   ],
   "produtos": [
-    {
-      "id": "788b",
-      "nomeDoProduto": "Camisa preta ",
-      "descricao": "",
-      "preco": 10,
-      "quantidade": "3",
-      "tamanho": "",
-      "tipo": "",
-      "_index": 1
-    },
-    {
-      "id": "a0fc",
-      "nomeDoProduto": "Jhhdhxbd",
-      "descricao": "",
-      "preco": 200,
-      "quantidade": "3",
-      "tamanho": "",
-      "tipo": "",
-      "_index": 2
-    },
-    {
-      "id": "c961",
-      "nomeDoProduto": "Bcgdhd",
-      "descricao": "Gcbxhxb",
-      "preco": "20,00",
-      "quantidade": "1",
-      "tamanho": "2",
-      "tipo": "1"
-    },
-    {
-      "id": "5dfe",
-      "nomeDoProduto": "Hghxh",
-      "descricao": "Vbvbcb",
-      "preco": 20,
-      "quantidade": "5",
-      "tamanho": "2",
-      "tipo": "2"
-    },
-    {
-      "id": "1c8e",
-      "nomeDoProduto": "Gfhx",
-      "descricao": "Gdhx",
-      "preco": "20,00",
-      "quantidade": "8",
-      "tamanho": "3",
-      "tipo": "2"
-    },
-    {
-      "id": "0d3c",
-      "nomeDoProduto": "Camisa Rosa ",
-      "descricao": "Blusa feito com algodão ",
-      "preco": "10,00",
-      "quantidade": "5",
-      "tamanho": "1",
-      "tipo": "1"
-    }
+  
   ],
   "posts": [
     {

@@ -38,6 +38,18 @@ const ModalEditarProduto = ({
             </View>
 
             <View style={styles.boxDescription}>
+              <Text style={styles.text}>Descrição</Text>
+              <TextInput
+                value={produtoEditado?.descricao || ""}
+                onChangeText={(valor) =>
+                  atualizarProduto("descricao", valor)
+                }
+                placeholder="Nome do Produto"
+                style={styles.TextInput}
+              />
+            </View>
+
+            <View style={styles.boxDescription}>
               <Text style={styles.text}>Preço</Text>
               <TextInput
                 value={produtoEditado?.preco || ""}

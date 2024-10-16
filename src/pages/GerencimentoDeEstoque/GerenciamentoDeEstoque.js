@@ -19,26 +19,25 @@ export default function GerenciamentoDeEstoque({ navigation }) {
 
   const produtoService = new ProdutoService();
 
-  useEffect(() => {
-    //Função para buscar prosdutos ao carregar a tela do estoque
-    async function carregarProdutos() {
-      try {
-        //const produtoService = new ProdutoService();
-        const produtoListados = await produtoService.listarProdutos(); //Buscar os produtos da API
-        setProdutos([
-          { id: 0, nomeDoProduto: "Todos os Produtos" },
-          ...produtoListados,
-        ]); // Adiciona a opção "Todos os Produtos"
-        setProdutosFiltrados(produtoListados); //Inicia exibindo todos os produtos mas poderá ao pesquisar um produto especifico
-      } catch (error) {
-        setErro("Erro ao carregar produtos");
-        console.error("Erro ao carregar produtos: ", error);
-      }
+  //Função para buscar prosdutos ao carregar a tela do estoque
+  async function carregarProdutos() {
+    try {
+      //const produtoService = new ProdutoService();
+      const produtoListados = await produtoService.listarProdutos(); //Buscar os produtos da API
+      setProdutos([
+        { id: 0, nomeDoProduto: "Todos os Produtos" },
+        ...produtoListados,
+      ]); // Adiciona a opção "Todos os Produtos"
+      setProdutosFiltrados(produtoListados); //Inicia exibindo todos os produtos mas poderá ao pesquisar um produto especifico
+    } catch (error) {
+      setErro("Erro ao carregar produtos");
+      console.error("Erro ao carregar produtos: ", error);
     }
+  }
+
+  useEffect(() => {
     carregarProdutos();
   }, []); // O [] vazio indica que essa função séra executada apenas uma vez
-
-
 
   // Abrir o modal de edição ao clicar no ícone de edição
   const abrirModalEdicao = (produto) => {
@@ -47,21 +46,14 @@ export default function GerenciamentoDeEstoque({ navigation }) {
     setModalVisible(true); // Exibe o modal
   };
 
-
-
   // Salvar as edições feitas no modal
   const salvarEdicao = async () => {
     try {
-      await produtoService.editarProduto(
-        produtoEditado.id,
-        produtoEditado
-      ); // Chama o serviço para editar o produto
+      await produtoService.editarProduto(produtoEditado.id, produtoEditado); // Chama o serviço para editar o produto
       setModalVisible(false); // Fecha o modal após salvar
       // Atualiza a lista de produtos após a edição
       setProdutos((produtos) =>
-        produtos.map((p) =>
-          p.id === produtoEditado.id ? produtoEditado : p
-        )
+        produtos.map((p) => (p.id === produtoEditado.id ? produtoEditado : p))
       );
       Alert.alert("Sucesso", "Produto atualizado com sucesso!");
     } catch (error) {
@@ -75,6 +67,35 @@ export default function GerenciamentoDeEstoque({ navigation }) {
       ...produtoEditado,
       [campo]: valor,
     });
+  };
+
+  // Função para confirmar a exclusão do produto
+  const confirmarExclusao = (id) => {
+    Alert.alert(
+      "Excluir Produto",
+      "Tem certeza que deseja excluir este produto?",
+      [
+        {
+          text: "Sim",
+          onPress: () => excluirProduto(id), // Chama a função para excluir
+        },
+        { text: "Cancelar", style: "cancel" }, // Coloque "Cancelar" depois de "Sim"
+      ],
+      { cancelable: false }
+    );
+  };
+
+  // Função para excluir o produto
+  const excluirProduto = async (id) => {
+    try {
+      await produtoService.deletarProduto(id); // Chama o serviço para deletar o produto
+      setProdutos(produtos.filter((produto) => produto.id !== id)); // Remove o produto do banco de dado
+      Alert.alert("Sucesso", "Produto excluído com sucesso!");
+      carregarProdutos();
+    } catch (error) {
+      console.error("Erro ao excluir produto:", error);
+      Alert.alert("Erro", "Ocorreu um erro ao excluir o produto.");
+    }
   };
 
   //Função para renderizar cada produto
@@ -91,7 +112,7 @@ export default function GerenciamentoDeEstoque({ navigation }) {
         </View>
 
         <View style={style.boxIconStyle}>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => confirmarExclusao(item.id)}>
             <Ionicons name="trash" size={30} color="#ff784b" />
           </TouchableOpacity>
           <TouchableOpacity onPress={() => abrirModalEdicao(item)}>
