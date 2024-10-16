@@ -9,12 +9,10 @@
   "produtos": [
     {
       "id": "8dc8",
-      "nomeDoProduto": "Short azul",
-      "descricao": "Cottom",
-      "preco": 30,
-      "quantidade": "2",
-      "tamanho": "2",
-      "tipo": "1"
+      "nomeDoProduto": "Saia ",
+      "descricao": "Azul",
+      "preco": 20,
+      "quantidade": "2"
     }
   ],
   "posts": [
