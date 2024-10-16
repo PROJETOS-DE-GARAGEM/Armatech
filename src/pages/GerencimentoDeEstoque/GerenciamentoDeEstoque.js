@@ -56,6 +56,7 @@ export default function GerenciamentoDeEstoque({ navigation }) {
         produtos.map((p) => (p.id === produtoEditado.id ? produtoEditado : p))
       );
       Alert.alert("Sucesso", "Produto atualizado com sucesso!");
+      carregarProdutos();
     } catch (error) {
       console.error("Erro ao salvar edição:", error);
     }
