@@ -22,7 +22,7 @@ export class CoreService {
   }
 
    //Função listar Produtos
-   async ListarProdutos(document) {
+   async listarProdutos(document) {
     try {
       const response = await axios.get(`${API_URL}${this.resource}`, document);
       console.log(`${API_URL}${this.resource}`);
@@ -31,5 +31,15 @@ export class CoreService {
       throw error;
     }
   }
- 
+
+  //Função para editar o Produto
+  async editarProduto(id, document) {
+    try {
+      const response = await axios.put(`${API_URL}${this.resource}/${id}`, document); //Pega o dado pelo o ID
+      console.log(`${API_URL}${this.resource}/${id}`);
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  }
 }
