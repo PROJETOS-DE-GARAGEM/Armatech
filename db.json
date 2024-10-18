@@ -13,6 +13,15 @@
       "descricao": "Azul",
       "preco": 20,
       "quantidade": "2"
+    },
+    {
+      "id": "2ec4",
+      "nomeDoProduto": "Pants ",
+      "descricao": "Gfcv",
+      "preco": "20.00",
+      "quantidade": "5",
+      "tamanho": "1",
+      "tipo": "2"
     }
   ],
   "posts": [
@@ -23,6 +32,16 @@
     },
     {
       "id": "1188"
+    }
+  ],
+  "vendas": [
+    {},
+    {
+      "id": "04e6",
+      "produto": "Pants ",
+      "tamanho": "M",
+      "quantidade": "4",
+      "precoTotal": 80
     }
   ]
 }
