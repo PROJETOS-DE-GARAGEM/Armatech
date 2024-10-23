@@ -14,7 +14,7 @@ class UsuarioService {
         email,
         senha,
       });
-      return response.data; //Retorna os dados da resposta da API
+      return response;//Retorna os dados da resposta da API
     } catch(error) {
       //Trata erros a requisiçãofalhe
       console.error("Erro ao registrar um usuário:", error);

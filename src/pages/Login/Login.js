@@ -8,11 +8,12 @@ import {
   KeyboardAvoidingView,
   Platform,
   Alert,
+  ActivityIndicator
 } from "react-native";
 // import { autenticarUsuario } from "../../../service/AutenticarUsuario";
 import styles from "./LoginStyle";
 import * as Animatable from "react-native-animatable";
-import UsuarioService from "../../../service/AutenticarUsuario";
+import UsuarioService from "../../../service/UsuarioService";
 
 const usuarioService = new UsuarioService();
 //Componente recebe a propriedade navigation para utilizar suas funcionalidades
@@ -20,19 +21,23 @@ export default function Login({ navigation }) {
   //Armazena e atualiza o estado dos dados informado pelo usuário
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
-
+  const [loading, setLoading] = useState(false);
 
   const handleLogin = async () => {
     if (!email || !senha) {
       Alert.alert("Erro", "Por favor, preencha todos os campos.");
       return;
     }
+
+    // Ativa o carregamento
+    setLoading(true);
     try {
       const result = await usuarioService.login(email, senha);
 
-      if (result.token) { //Verifica se recebeu o token
+      if (result.token) {
+        //Verifica se recebeu o token
         console.log("Usuário autenticado com sucesso:");
-        navigation.navigate('Home', { screen: 'TelaMenu' });
+        navigation.navigate("Home", { screen: "TelaMenu" });
       } else {
         Alert.alert("Erro", "Falha na autenticação. ");
       }
@@ -40,8 +45,11 @@ export default function Login({ navigation }) {
       console.error("Erro ao tentar fazer login:", error);
       Alert.alert(
         "Erro",
-        "Ocorreu um erro ao tentar fazer login. Tente novamente."
+        "Usuário não encontrado, verifique  as suas crendenciais"
       );
+    } finally {
+      // Finaliza o carregamento
+      setLoading(false);
     }
   };
 
@@ -82,13 +90,14 @@ export default function Login({ navigation }) {
               secureTextEntry={true} //Ocultar a senha digitada pelo usuário
             />
 
-            <TouchableOpacity
-              style={styles.button}
-              // Quando o usuário clicar e passar na autenticação irá para a tela Home que não é uma tela comum, essa tela dará acesso as telas principais do projeto
-              onPress={handleLogin}
-            >
-              <Text style={styles.buttonText}>Acessar</Text>
-            </TouchableOpacity>
+            {/* Exibe o indicador de carregamento enquanto `loading` for verdadeiro */}
+            {loading ? (
+              <ActivityIndicator size="large" color="#007BFF" />
+            ) : (
+              <TouchableOpacity style={styles.button} onPress={handleLogin}>
+                <Text style={styles.buttonText}>Acessar</Text>
+              </TouchableOpacity>
+            )}
             <TouchableOpacity
               onPress={() => navigation.navigate("CadastroConta")}
               style={styles.buttonRegister}
