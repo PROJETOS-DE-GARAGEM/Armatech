@@ -21,6 +21,7 @@ export default function Login({ navigation }) {
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
 
+
   const handleLogin = async () => {
     if (!email || !senha) {
       Alert.alert("Erro", "Por favor, preencha todos os campos.");
@@ -29,12 +30,11 @@ export default function Login({ navigation }) {
     try {
       const result = await usuarioService.login(email, senha);
 
-      if (result.success) {
-        console.log("Usuário autenticado com sucesso:", result.user);
-        navigation.navigate("TelaMenu");
+      if (result.token) { //Verifica se recebeu o token
+        console.log("Usuário autenticado com sucesso:");
+        navigation.navigate('Home', { screen: 'TelaMenu' });
       } else {
-        console.log("Falha na autenticação:", result.message);
-        Alert.alert("Erro", result.message);
+        Alert.alert("Erro", "Falha na autenticação. ");
       }
     } catch (error) {
       console.error("Erro ao tentar fazer login:", error);

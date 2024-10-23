@@ -1,6 +1,8 @@
 import axios from "axios";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const API_URL = "http://192.168.1.8:8080/auth"; //Passar a URL da maquina que estiver usando
+
+const API_URL = "http://192.168.18.14:8080/auth"; //Passar a URL da maquina que estiver usando
 console.log(API_URL);
 
 class UsuarioService {
@@ -20,18 +22,29 @@ class UsuarioService {
     }
   }
 
-  //Função para fazer login do usuário
+  //Função para fazer login do usuário e armazenar o token
   async login(email, senha) {
     try {
       const response = await axios.post(`${API_URL}/login`, {
         email,
         senha,
       });
+
+      const token = response.data.token;
+      if(token){
+        await AsyncStorage.setItem('item', token); // Armazena o token no dispositivo
+      }
       return response.data; //Retorna dos dados (token jwt);
     } catch(error) {
       console.error("Erro ao fazer login:", error);
       throw error;
     }
+  }
+
+  //Função para obter o token armazenado e usuá-lo em futuras requisições
+  async getAuthHeaer(){
+    const token = await AsyncStorage.getItem('token');
+    return token ? {Authorization: `Bearer ${token}`} : {};
   }
 }
 
