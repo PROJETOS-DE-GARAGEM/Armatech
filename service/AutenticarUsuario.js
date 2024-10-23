@@ -1,24 +1,38 @@
-// import axios from "axios";
+import axios from "axios";
 
-// const API_URL = "http://172.20.10.2:3000/users"; //Passar a URL da maquina que estiver usando
-// console.log(API_URL);
+const API_URL = "http://192.168.1.8:8080/auth"; //Passar a URL da maquina que estiver usando
+console.log(API_URL);
 
-// export const autenticarUsuario = async (email, senha) => {
-//   try {
-//     const response = await axios.post(API_URL, email, senha);
+class UsuarioService {
+  //Função para registrar um novo usuário
+  async registrarUsuario(nome, email, senha) {
+    try {
+      const response = await axios.post(`${API_URL}/register`, {
+        nome,
+        email,
+        senha,
+      });
+      return response.data; //Retorna os dados da resposta da API
+    } catch(error) {
+      //Trata erros a requisiçãofalhe
+      console.error("Erro ao registrar um usuário:", error);
+      throw error;
+    }
+  }
 
-//     console.log("Dados retornados pela API:", response.data);
+  //Função para fazer login do usuário
+  async login(email, senha) {
+    try {
+      const response = await axios.post(`${API_URL}/login`, {
+        email,
+        senha,
+      });
+      return response.data; //Retorna dos dados (token jwt);
+    } catch(error) {
+      console.error("Erro ao fazer login:", error);
+      throw error;
+    }
+  }
+}
 
-//     const users = response.data;
-
-
-//     if (user) {
-//       console.log("Usuario autenticado com sucesso", user);
-//       return { success: true, user };
-//     } else {
-//       return { success: false, message: "E-mail ou senha incorretos." };
-//     }
-//   } catch (error) {
-//     return { success: false, message: "Erro ao conectar com o servidor." };
-//   }
-// };
+export default  UsuarioService;

@@ -1,4 +1,4 @@
-// import React, { useState } from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -12,26 +12,38 @@ import {
 // import { autenticarUsuario } from "../../../service/AutenticarUsuario";
 import styles from "./LoginStyle";
 import * as Animatable from "react-native-animatable";
+import UsuarioService from "../../../service/AutenticarUsuario";
 
+const usuarioService = new UsuarioService();
 //Componente recebe a propriedade navigation para utilizar suas funcionalidades
 export default function Login({ navigation }) {
-  // Armazena e atualiza o estado dos dados informado pelo usuário
-  // const [email, setEmail] = useState("");
-  // const [senha, setSenha] = useState("");
+  //Armazena e atualiza o estado dos dados informado pelo usuário
+  const [email, setEmail] = useState("");
+  const [senha, setSenha] = useState("");
 
-  //Função para lidar com os dados informado pelo usuario
-  // const handleLogin = async () => {
-  //   const result = await autenticarUsuario(email, senha);
+  const handleLogin = async () => {
+    if (!email || !senha) {
+      Alert.alert("Erro", "Por favor, preencha todos os campos.");
+      return;
+    }
+    try {
+      const result = await usuarioService.login(email, senha);
 
-  //   //Muda para a tela de login se caso as informações passe na autenticação
-  //   if (result.success) {
-  //     console.log("Usuário autenticado com sucesso:", result.user);
-  //     navigation.navigate('TelaMenu');
-  //   } else {
-  //     console.log("Falha na autenticação:", result.message);
-  //     Alert.alert("Erro", result.message);
-  //   }
-  // };
+      if (result.success) {
+        console.log("Usuário autenticado com sucesso:", result.user);
+        navigation.navigate("TelaMenu");
+      } else {
+        console.log("Falha na autenticação:", result.message);
+        Alert.alert("Erro", result.message);
+      }
+    } catch (error) {
+      console.error("Erro ao tentar fazer login:", error);
+      Alert.alert(
+        "Erro",
+        "Ocorreu um erro ao tentar fazer login. Tente novamente."
+      );
+    }
+  };
 
   return (
     <KeyboardAvoidingView
@@ -56,8 +68,8 @@ export default function Login({ navigation }) {
             <TextInput
               placeholder="Digite seu email..."
               style={styles.input}
-              // value={email} //Define o valor do TextImput com o estado do email
-              // onChangeText={setEmail} //Atualiza o estado de email
+              value={email} //Define o valor do TextImput com o estado do email
+              onChangeText={setEmail} //Atualiza o estado de email
               keyboardType="email-address" //Define o teclado para o email
               autoCapitalize="none" //Evita a capitalização automática no início
             />
@@ -65,15 +77,15 @@ export default function Login({ navigation }) {
             <TextInput
               placeholder="Digite sua senha..."
               style={styles.input}
-              // value={senha} //Define o valor do TextInput com o estado de
-              // onChangeText={setSenha} //Atualiza o estado da senha
+              value={senha} //Define o valor do TextInput com o estado de
+              onChangeText={setSenha} //Atualiza o estado da senha
               secureTextEntry={true} //Ocultar a senha digitada pelo usuário
             />
 
             <TouchableOpacity
               style={styles.button}
               // Quando o usuário clicar e passar na autenticação irá para a tela Home que não é uma tela comum, essa tela dará acesso as telas principais do projeto
-              onPress={() => navigation.navigate("Home")}
+              onPress={handleLogin}
             >
               <Text style={styles.buttonText}>Acessar</Text>
             </TouchableOpacity>
