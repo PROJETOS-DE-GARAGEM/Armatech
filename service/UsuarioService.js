@@ -3,7 +3,7 @@
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const API_URL = "http://192.168.18.14:8080"; // URL base da API
+const API_URL = "http://192.168.1.10:8080"; // URL base da API
 
 class UsuarioService {
   // Função para registrar um novo usuário
@@ -51,8 +51,6 @@ class UsuarioService {
     try {
       const headers = await this.getAuthHeader();
       const response = await axios.get(`${API_URL}/usuario`, { headers });
-      
-      console.log("Dados recebidos do backend:", response.data); // Verifica o conteúdo da resposta
       return response.data; // Retorna apenas os dados do usuário
     } catch (error) {
       console.error(
@@ -62,22 +60,23 @@ class UsuarioService {
       throw error;
     }
   }
+
+  //Função para fazer logout
+  async logout(navigation) {
+    //Limpa o token ou qualquer dado de sessão
+    try {
+      await AsyncStorage.removeItem("token");//limpa o token
+      console.log("Usuário fez logout com sucesso:");
+    //Define a pilha de navegação ou seja o historicode telas visitadas, levando uma nova pilha que contém apenas  uma rota a de login
+      navigation.reset({
+        index: 0,
+        routes: [{ name: "Login" }], //Redireciona para a tela de login
+      });
+    } catch (error) {
+      console.log("Erro ao fazer logout", error);
+      throw error;
+    }
+  }
 }
 
-//   // Função de teste para chamar pegarDadosUsuario diretamente
-//   async testarPegarDadosUsuario() {
-//     try {
-//       const dadosUsuario = await this.pegarDadosUsuario();
-//       console.log("Resultado da função pegarDadosUsuario:", dadosUsuario);
-//     } catch (error) {
-//       console.error("Erro ao testar pegarDadosUsuario:", error);
-//     }
-//   }
-// }
-
-// const usuarioService = new UsuarioService();
 export default UsuarioService;
-
-
-// // Teste a função (remova essa chamada após o teste)
-// usuarioService.testarPegarDadosUsuario();

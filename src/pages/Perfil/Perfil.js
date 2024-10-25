@@ -7,7 +7,7 @@ import UsuarioService from "../../../service/UsuarioService";
 
 export default function Perfil({ navigation }) {
   const [userInfo, setUserInfo] = useState(null); // Inicializa como null
-  const [loading, setLoading] = useState(true);   // Estado de carregamento
+  const [loading, setLoading] = useState(true); // Estado de carregamento
 
   const usuarioService = new UsuarioService();
 
@@ -49,9 +49,14 @@ export default function Perfil({ navigation }) {
         <View style={style.userBox}>
           <FontAwesome name="user-circle-o" size={100} color="#fff" />
           <View>
-            <Text style={style.NameUser}>{userInfo.nome || "Nome indisponível"}</Text>
+            <Text style={style.NameUser}>
+              {userInfo.nome || "Nome indisponível"}
+            </Text>
             {/* Exibe o nome do usuário ou uma mensagem alternativa */}
-            <TouchableOpacity style={style.buttonLogout}>
+            <TouchableOpacity
+              style={style.buttonLogout}
+              onPress={() => usuarioService.logout(navigation)}
+            >
               <Text style={style.buttonText}>Logout</Text>
             </TouchableOpacity>
           </View>
@@ -59,8 +64,12 @@ export default function Perfil({ navigation }) {
 
         <View style={style.containerInformation}>
           <View>
-            <Text style={style.informationTitle}>Nome: {userInfo.nome || "Nome indisponível"}</Text>
-            <Text style={style.informationTitle}>Email: {userInfo.email || "Email indisponível"}</Text>
+            <Text style={style.informationTitle}>
+              Nome: {userInfo.nome || "Nome indisponível"}
+            </Text>
+            <Text style={style.informationTitle}>
+              Email: {userInfo.email || "Email indisponível"}
+            </Text>
           </View>
         </View>
       </View>
