@@ -22,6 +22,7 @@ const style = StyleSheet.create({
         fontStyle: 'italic',
     },
     containerInformation: {
+        height: '10%',
         backgroundColor: '#fff',
         borderRadius: 15,
         marginBottom: 25,
