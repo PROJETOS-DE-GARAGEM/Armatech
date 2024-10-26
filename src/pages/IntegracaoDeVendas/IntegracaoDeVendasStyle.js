@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
     paddingTop: "5%",
     marginLeft: "5%",
     color: "#fff",
-    fontSize: 14,
+    fontSize: 18,
     fontWeight: "bold",
     flexDirection: "row",
   },
@@ -43,11 +43,6 @@ const styles = StyleSheet.create({
   },
   selectedTextStyle: {
     fontSize: 15,
-  },
-  inputSearchStyle: {
-    height: 40,
-    fontSize: 15,
-    borderRadius: 10,
   },
   iconStyle: {
     paddingHorizontal: 6,
@@ -75,7 +70,7 @@ const styles = StyleSheet.create({
   boxSell: {
     backgroundColor: "#fff",
     width: 370,
-    height: 250,
+    height: 335,
     borderRadius: 10,
     padding: "4%",
     gap: 10,
@@ -111,15 +106,16 @@ const styles = StyleSheet.create({
   boxTransaction: {
     backgroundColor: "#fff",
     width: 370,
-    height: 250,
+    height: 225,
     borderRadius: 10,
     padding: "4%",
-    gap: 25,
+    gap: 14,
   },
 
   BoxButton: {
     flexDirection: "row",
     gap: 50,
+    marginBottom: 15,
   },
   saveButton: {
     backgroundColor: "#32bc9b",

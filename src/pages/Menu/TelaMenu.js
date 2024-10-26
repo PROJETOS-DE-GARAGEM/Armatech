@@ -45,7 +45,7 @@ const MenuItens = [
   {
     id: 6,
     icon: <SyncSvg />,
-    label: "Integração de vendas",
+    label: "Lançamentos",
     screen: "IntegracaoDeVendas",
   },
   {

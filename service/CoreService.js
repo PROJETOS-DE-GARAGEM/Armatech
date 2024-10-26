@@ -1,7 +1,7 @@
 import axios from "axios";
 
 //URL principal
-const API_URL = "http://192.168.18.14:3000";
+const API_URL = "http://192.168.100.28:3000";
 
 //Classe para realizar requisições pegando os dados a partir da URL principal
 export class CoreService {
