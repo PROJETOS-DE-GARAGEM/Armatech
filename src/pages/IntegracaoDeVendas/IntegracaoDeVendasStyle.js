@@ -139,8 +139,35 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontWeight: "bold",
     color: '#fff'
-  }
+  },
+  boxAdicionarEstoque: {
+    backgroundColor: '#fff',
 
+  },
+  inputAddProduto: {
+    margin: 10,
+    color: "#000",
+    fontSize: 15,
+    height: 40,
+    borderColor: "#fff",
+    marginStart: "5%",
+    marginEnd: "5%",
+    backgroundColor: "#e5e7eb",
+    borderRadius: 999,
+    paddingHorizontal: 9,
+  },
+  containerTransacionAdd: {
+    justifyContent:'center',
+    alignItems: 'center',
+  },
+  boxTransactionAdd: {
+    backgroundColor: "#fff",
+    width: 370,
+    height: 225,
+    borderRadius: 10,
+    padding: "4%",
+    gap: 12,
+  },
 });
 
 export default styles;

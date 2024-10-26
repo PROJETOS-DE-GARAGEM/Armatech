@@ -23,10 +23,11 @@ export default function IntegracaoDeVendas({ navigation }) {
   const [precoTotal, setPrecoTotal] = useState(0);
   const [produtos, setProdutos] = useState([]);
   const [date, setDate] = useState("");
-  const [tipoLancamento, setTipoLancamento] = useState()
+  const [tipoLancamento, setTipoLancamento] = useState(null)
 
   const [isTipoLancamentoDisabled, setIsTipoLancamentoDisabled] = useState(false);
   const [isSearchEnable, setSearchEnable] = useState(false);
+  const [isLaunchEnable, setLaunchEnable] = useState(false);
 
   const service = new ProdutoService(); // Insancia o serviço para buscar produtos
   //TO DO: REFATORAR A FUNÇÃO PARA SYNC E AWAIT
@@ -134,8 +135,10 @@ export default function IntegracaoDeVendas({ navigation }) {
               value={tipoLancamento} // Valor selecionado
               onChange={(item) => {
                 setTipoLancamento(item.value);
+                console.log("Tipo de Lançamento selecionado:", item.value);
                 setIsTipoLancamentoDisabled(true);
                 setSearchEnable(item.value === 2);
+                setLaunchEnable(item.value === 1);
               }}
               disabled={isTipoLancamentoDisabled} // Desativa o dropdown se uma opção foi selecionada
             />
@@ -166,7 +169,7 @@ export default function IntegracaoDeVendas({ navigation }) {
               />
             </View>
           )}
-          
+
           {tipoLancamento === 2 && produtoSelecionado && (
             <View style={styles.centerContainer}>
               <View style={styles.boxSell}>
@@ -195,10 +198,10 @@ export default function IntegracaoDeVendas({ navigation }) {
                     style={styles.quantidadeInput}
                   />
                   {/* DatePicker */}
-                  <DatePicker 
+                  <DatePicker
                     data={Date}
                     onDateChange={(selectedDate) => setDate(selectedDate)}
-                    />
+                  />
                   {/* Dropdow para selecionar o tamanho */}
                   <Text style={styles.textSell}>Tamanho: </Text>
                   <Dropdown
@@ -257,6 +260,45 @@ export default function IntegracaoDeVendas({ navigation }) {
                 >
                   <Text style={styles.buttonText}>Cancelar</Text>
                 </TouchableOpacity>
+              </View>
+            </View>
+          )}
+          {tipoLancamento === 1 && (
+            <View>
+              <View>
+                <Text style={styles.text}>Selecione o Produto: </Text>
+                <Dropdown
+                  style={styles.dropdown}
+                  placeholderStyle={styles.placeholderStyle}
+                  selectedTextStyle={styles.selectedTextStyle}
+                  inputSearchStyle={styles.inputSearchStyle}
+                  containerStyle={styles.dropDownContainerStyle}
+                  iconStyle={styles.iconStyle}
+                  data={produtos} // Dados carregados dos produtos
+                  search
+                  maxHeight={300}
+                  labelField="nomeDoProduto" //Campo do nome do produto
+                  valueField="id" //Identificador do produto
+                  placeholder="Selecione o Produto..."
+                  searchPlaceholder="Buscar..."
+                  value={produtoSelecionado ? produtoSelecionado.id : null} // Valor selecionado
+                  onChange={(item) => {
+                    setProdutoSelecionado(item); //Atualiza o produto selecionado
+                  }}
+                />
+              </View>
+
+              <View style={styles.containerTransacionAdd}>
+              <View style={styles.boxTransactionAdd}>
+                <Text style={styles.textTrasanction}>Integração de Estoque: </Text>
+                {/* Exibe o resumo dos detalhes da transação */}
+                <Text style={styles.textSell}>
+                  Produto: {}{" "}
+                </Text>
+                <Text style={styles.textSell}>Tamanho: {tamanho} </Text>
+                <Text style={styles.textSell}>Quantidade: {quantidade} </Text>
+                <Text style={styles.textSell}>Data da Entrada: {date} </Text>
+              </View>
               </View>
             </View>
           )}
