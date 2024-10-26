@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, TouchableOpacity, ActivityIndicator } from "react-native";
+import { View, Text, TouchableOpacity, ActivityIndicator, TextInput } from "react-native";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import style from "../Perfil/PerfilStyle";
 import Header from "../../components/Header/Header";
@@ -15,7 +15,14 @@ export default function Perfil({ navigation }) {
   const carregarDadosUsuario = async () => {
     try {
       const dadosUsuario = await usuarioService.pegarDadosUsuario(); // Chama a API
-      setUserInfo(dadosUsuario); // Atualiza o estado com os dados do usuário
+
+      // Extrair o primeiro e o segundo nome para o nickname
+      const nomeCompleto = dadosUsuario.nome || "Nome indisponível";
+      const [primeiroNome, segundoNome] = nomeCompleto.split(" ");
+      const nickname = segundoNome ? `${primeiroNome} ${segundoNome}` : primeiroNome;
+
+      // Atualiza o estado com o nickname e outros dados do usuário
+      setUserInfo({ ...dadosUsuario, nickname });
     } catch (error) {
       console.error("Erro ao carregar os dados do usuário:", error);
     } finally {
@@ -49,10 +56,11 @@ export default function Perfil({ navigation }) {
         <View style={style.userBox}>
           <FontAwesome name="user-circle-o" size={100} color="#fff" />
           <View>
+            {/* Exibe o nickname próximo ao ícone de usuário */}
             <Text style={style.NameUser}>
-              {userInfo.nome || "Nome indisponível"}
+              {userInfo.nickname || "Nome indisponível"}
             </Text>
-            {/* Exibe o nome do usuário ou uma mensagem alternativa */}
+            {/* Botão Logout */}
             <TouchableOpacity
               style={style.buttonLogout}
               onPress={() => usuarioService.logout(navigation)}
@@ -64,12 +72,19 @@ export default function Perfil({ navigation }) {
 
         <View style={style.containerInformation}>
           <View>
-            <Text style={style.informationTitle}>
-              Nome: {userInfo.nome || "Nome indisponível"}
-            </Text>
-            <Text style={style.informationTitle}>
-              Email: {userInfo.email || "Email indisponível"}
-            </Text>
+            <Text style={style.informationTitle}>Nome Completo</Text>
+            <TextInput
+              style={style.Input}
+              value={userInfo.nome || "Nome indisponível"}
+              editable={false} 
+            />
+            
+            <Text style={style.informationTitle}>Email</Text>
+            <TextInput
+              style={style.Input}
+              value={userInfo.email || "Email indisponível"}
+              editable={false} 
+            />
           </View>
         </View>
       </View>
