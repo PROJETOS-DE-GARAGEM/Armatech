@@ -72,7 +72,7 @@ export default function Perfil({ navigation }) {
 
         <View style={style.containerInformation}>
           <View>
-            <Text style={style.informationTitle}>Nome Completo</Text>
+            <Text style={style.informationTitle}>Nome</Text>
             <TextInput
               style={style.Input}
               value={userInfo.nome || "Nome indisponível"}
