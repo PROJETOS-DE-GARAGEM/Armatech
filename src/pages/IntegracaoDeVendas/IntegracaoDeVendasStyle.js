@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
 
   placeholderStyle: {
     fontSize: 15,
-    color: "gray",
+    color: "#ccc",
   },
   selectedTextStyle: {
     fontSize: 15,
@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
   boxSell: {
     backgroundColor: "#fff",
     width: 370,
-    height: 335,
+    height: 310,
     borderRadius: 10,
     padding: "4%",
     gap: 10,
@@ -163,10 +163,32 @@ const styles = StyleSheet.create({
   boxTransactionAdd: {
     backgroundColor: "#fff",
     width: 370,
-    height: 225,
     borderRadius: 10,
     padding: "4%",
-    gap: 12,
+  },
+  boxDescription: {
+    gap: 2,
+  },
+  textAdd: {
+    color: "#000",
+    fontSize: 15,
+  },
+  Input: {
+    margin: 10,
+    color: "#000",
+    fontSize: 15,
+    height: 40,
+    borderColor: "#fff",
+    marginStart: "5%",
+    marginEnd: "5%",
+    backgroundColor: "#e5e7eb",
+    borderRadius: 999,
+    paddingHorizontal: 9,
+  },
+  BoxButtonAdd: {
+    flexDirection: "row",
+    gap: 50,
+    marginTop: 15,
   },
 });
 

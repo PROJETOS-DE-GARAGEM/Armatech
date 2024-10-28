@@ -18,7 +18,9 @@ import DatePicker from "../../components/DateTimePicker";
 
 export default function IntegracaoDeVendas({ navigation }) {
   const [produtoSelecionado, setProdutoSelecionado] = useState(null);
-  const [quantidade, setQuantidade] = useState("");
+  const [quantidade, setQuantidade] = useState(0);
+  const [quantidadeSolicitada, setQuantidadeSolicitada] = useState(0);
+  const [estoqueAtual, setEstoqueAtual] = useState(0);
   const [tamanho, setTamanho] = useState("");
   const [precoTotal, setPrecoTotal] = useState(0);
   const [produtos, setProdutos] = useState([]);
@@ -38,10 +40,12 @@ export default function IntegracaoDeVendas({ navigation }) {
       .then((response) => {
         //Função para busca os produtos no servidor
         setProdutos(response); // Salva os produtos retornados no estado 'produtos
+        setEstoqueAtual(response.quantidade);
       })
       .catch((error) => {
-        Alert.alert("Erro ao carregar os produtos", error.message); //Caso ocorra erro, exibe o alerta
-      });
+        Alert.alert("Erro ao carregar os produtos", error.message);
+      }) //Caso ocorra erro, exibe o alerta
+
   }, []); // Indica que o useEffect será executado apenas uma vez
 
   // 3.Função para calcular o preço total com base na quantidade e no produto selecionado
@@ -89,7 +93,7 @@ export default function IntegracaoDeVendas({ navigation }) {
 
     // Envio da transação para o JSON Server
     axios
-      .post("http://192.168.18.14:3000/vendas", transacao)
+      .post("http://192.168.100.28:3000/vendas", transacao)
       .then((response) => {
         console.log("Transação salva:", response.data);
         Alert.alert("Venda realizada com sucesso!");
@@ -98,9 +102,36 @@ export default function IntegracaoDeVendas({ navigation }) {
         console.error("Erro ao salvar a transação:", error);
       });
 
-
-
     //Limpar os campos após salvar
+    setProdutoSelecionado(null);
+    setTamanho("");
+    setQuantidade("");
+    setDate("");
+    setPrecoTotal(0);
+  }
+
+  //Função que atualiza o estoque do produto no banco de dados.
+  const atualizarEstoque = async () => {
+    //const quantidadeSelecionada = parseInt(quantidade); //Puxa o estoque atual e adiciona o estoque solicitado.
+    // if (isNaN(quantidadeSelecionada) || quantidadeSelecionada <= 0) {
+    //   Alert.alert("A quantidade deve ser um número válido");
+    //   return;
+    // }
+    const quantidadeAdicionada = {
+      ...produtoSelecionado, // Copia todas as propriedades do produto selecionado
+      quantidade: produtoSelecionado.quantidade + quantidadeSolicitada, // Atualiza a quantidade
+    };
+
+
+    try {
+      await axios.put(`http://192.168.100.28:3000/produtos"${produtoSelecionado.id}`, quantidadeAdicionada) //Atualiza o produto com base no seu id.
+        Alert.alert("Estoque atualizado com sucesso!");
+    } catch (error) {
+      console.error("Erro ao adicionar estoque:", error);
+      //console.error("Erro ao adicionar estoque:", error.response ? error.response.data : error.message);
+      Alert.alert("Erro ao atualizar o estoque.");
+    }
+
     setProdutoSelecionado(null);
     setTamanho("");
     setQuantidade("");
@@ -115,7 +146,7 @@ export default function IntegracaoDeVendas({ navigation }) {
         <ScrollView
           showsVerticalScrollIndicator={false}
         >
-          <View>
+          <View style={styles.ViewTipoLancamento}>
             <Text style={styles.text}>Tipo Lançamento: </Text>
             {/* Dropdown */}
             <Dropdown
@@ -140,7 +171,6 @@ export default function IntegracaoDeVendas({ navigation }) {
                 setSearchEnable(item.value === 2);
                 setLaunchEnable(item.value === 1);
               }}
-              disabled={isTipoLancamentoDisabled} // Desativa o dropdown se uma opção foi selecionada
             />
           </View>
           {isSearchEnable && tipoLancamento === 2 && (
@@ -190,6 +220,7 @@ export default function IntegracaoDeVendas({ navigation }) {
                   <TextInput
                     keyboardType="number-pad"
                     placeholder="0"
+                    placeholderTextColor="#ccc"
                     value={quantidade} //Valor da quantidade
                     onChangeText={(value) => {
                       setQuantidade(value); //Atualiza a quantidade no estado
@@ -198,10 +229,13 @@ export default function IntegracaoDeVendas({ navigation }) {
                     style={styles.quantidadeInput}
                   />
                   {/* DatePicker */}
-                  <DatePicker
-                    data={Date}
-                    onDateChange={(selectedDate) => setDate(selectedDate)}
-                  />
+                  <View>
+                    <Text style={styles.textAdd}>Data da Venda:</Text>
+                    <DatePicker
+                      data={Date}
+                      onDateChange={(selectedDate) => setDate(selectedDate)}
+                    />
+                  </View>
                   {/* Dropdow para selecionar o tamanho */}
                   <Text style={styles.textSell}>Tamanho: </Text>
                   <Dropdown
@@ -258,11 +292,12 @@ export default function IntegracaoDeVendas({ navigation }) {
                   }}
                   style={styles.cancelButton}
                 >
-                  <Text style={styles.buttonText}>Cancelar</Text>
+                  <Text style={styles.buttonText}>Limpar</Text>
                 </TouchableOpacity>
               </View>
             </View>
           )}
+
           {tipoLancamento === 1 && (
             <View>
               <View>
@@ -289,16 +324,90 @@ export default function IntegracaoDeVendas({ navigation }) {
               </View>
 
               <View style={styles.containerTransacionAdd}>
-              <View style={styles.boxTransactionAdd}>
-                <Text style={styles.textTrasanction}>Integração de Estoque: </Text>
-                {/* Exibe o resumo dos detalhes da transação */}
-                <Text style={styles.textSell}>
-                  Produto: {}{" "}
-                </Text>
-                <Text style={styles.textSell}>Tamanho: {tamanho} </Text>
-                <Text style={styles.textSell}>Quantidade: {quantidade} </Text>
-                <Text style={styles.textSell}>Data da Entrada: {date} </Text>
-              </View>
+                <View style={styles.boxTransactionAdd}>
+                  <Text style={[styles.textTrasanction, { marginBottom: 30 }]}>Integração de Estoque: </Text>
+                  <View style={styles.boxDescription}>
+                    <Text style={styles.textAdd}>Nome do Produto:</Text>
+                    <TextInput
+                      style={styles.quantidadeInput}
+                      placeholder="Nome do Produto"
+                      //onChangeText={(Input) => changeName(Input)}
+                      value={produtoSelecionado ? produtoSelecionado.nomeDoProduto : "Nenhum produto selecionado"}
+                      editable={false}
+                    />
+                  </View>
+
+                  <View>
+                    <Text style={styles.textAdd}>Tamanho:</Text>
+                    <Dropdown
+                      style={styles.dropdownSize}
+                      placeholderStyle={styles.placeholderStyle}
+                      selectedTextStyle={styles.selectedTextStyle}
+                      inputSearchStyle={styles.inputSearchStyle}
+                      containerStyle={styles.dropDownContainerStyle}
+                      data={[
+                        { label: "PP", value: "PP" },
+                        { label: "P", value: "P" },
+                        { label: "M", value: "M" },
+                        { label: "G", value: "G" },
+                        { label: "GG", value: "GG" },
+                      ]} // Exemplo de tamanho disponíveis
+                      maxHeight={300}
+                      labelField="label"
+                      valueField="value"
+                      placeholder="Selecione o tamanho"
+                      searchPlaceholder="Buscar..."
+                      value={tamanho} // Valor do tamanho selecionado
+                      onChange={(item) => setTamanho(item.value)} // Atualiza o tamanho
+                    />
+                  </View>
+
+                  <View style={[styles.boxDescription, { marginTop: 10 }]}>
+                    <Text style={styles.textAdd}>Quantidade:</Text>
+                    <TextInput
+                      style={styles.quantidadeInput}
+                      keyboardType="number-pad"
+                      placeholder="0"
+                      placeholderTextColor="#ccc"
+                      onChangeText={(value) => setQuantidade(value)}
+                      value={quantidade}
+                    />
+                  </View>
+
+                  {/* <View>
+                    <Text>Data de Entrada:</Text>
+                    <DatePicker
+                      data={Date}
+                      onDateChange={(selectedDate) => setDate(selectedDate)}
+                    />
+                  </View> */}
+                </View>
+
+                <View style={styles.BoxButtonAdd}>
+                  <TouchableOpacity
+                    onPress={atualizarEstoque}
+                    style={styles.saveButton}
+                  >
+                    <Text style={styles.buttonText}>Salvar</Text>
+                  </TouchableOpacity>
+
+                  <TouchableOpacity
+                    onPress={() => {
+                      // Limpa os campos se o usuário clicar em cancelar
+                      setProdutoSelecionado(null);
+                      setQuantidade("");
+                      setTamanho("");
+                      setPrecoTotal(0);
+                      setTipoLancamento("");
+                      setSearchEnable(false);
+                    }}
+                    style={styles.cancelButton}
+                  >
+                    <Text style={styles.buttonText}>Limpar</Text>
+                  </TouchableOpacity>
+                </View>
+
+
               </View>
             </View>
           )}

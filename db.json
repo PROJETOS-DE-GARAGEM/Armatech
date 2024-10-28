@@ -22,6 +22,15 @@
       "quantidade": "5",
       "tamanho": "1",
       "tipo": "2"
+    },
+    {
+      "id": "827b",
+      "nomeDoProduto": "Saia Zara",
+      "descricao": "Crepe Barbie Rosa",
+      "preco": "20.00",
+      "quantidade": "5",
+      "tamanho": "1",
+      "tipo": "1"
     }
   ],
   "posts": [
@@ -35,7 +44,9 @@
     }
   ],
   "vendas": [
-    {},
+    {
+      "id": "b8c1"
+    },
     {
       "id": "04e6",
       "produto": "Pants ",

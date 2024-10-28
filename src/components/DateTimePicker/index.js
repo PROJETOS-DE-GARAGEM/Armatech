@@ -25,12 +25,11 @@ const DatePicker = ({onDateChange}) => {
 
   return (
     <View>
-      <Text style={style.TextTittle}>Data da Venda:</Text>
       <View style={style.containerInput}>
         <TextInput
           style={style.InputText}
           placeholder="DD/MM/AA"
-          placeholderTextColor={'#gray'}
+          placeholderTextColor={'#ccc'}
           value={selectedDate || ""}
           editable={false}
         />

@@ -46,8 +46,19 @@ export class CoreService {
    //Função para deletar o Produto
    async deletarProduto(id) {
     try {
-      const response = await axios.delete(`${API_URL}${this.resource}/${id}`); //Pega o dado pelo o ID
+      const response = await axios.delete(`${API_URL}${this.resource}/${id}`,); //Pega o dado pelo o ID
       console.log(`Produto deletado ${API_URL}${this.resource}/${id}`);
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  //Função para adicionar estoque
+  async adicionarEstoque(id) {
+    try {
+      const response = await axios.put(`${API_URL}${this.resource}/${id}`); //Pega o dado pelo o ID
+      console.log(`Estoque do produto atualizado ${API_URL}${this.resource}/${id}`, document);
       return response.data;
     } catch (error) {
       throw error;
