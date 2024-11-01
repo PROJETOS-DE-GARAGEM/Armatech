@@ -110,73 +110,171 @@ export default function IntegracaoDeVendas({ navigation }) {
     setPrecoTotal(0);
   }
 
-  //Função que atualiza o estoque do produto no banco de dados.
-  const atualizarEstoque = async () => {
-    //const quantidadeSelecionada = parseInt(quantidade); //Puxa o estoque atual e adiciona o estoque solicitado.
-    // if (isNaN(quantidadeSelecionada) || quantidadeSelecionada <= 0) {
-    //   Alert.alert("A quantidade deve ser um número válido");
-    //   return;
-    // }
-    const quantidadeAdicionada = {
-      ...produtoSelecionado, // Copia todas as propriedades do produto selecionado
-      quantidade: produtoSelecionado.quantidade + quantidadeSolicitada, // Atualiza a quantidade
-    };
+  
 
-
-    try {
-      await axios.put(`http://192.168.100.28:3000/produtos"${produtoSelecionado.id}`, quantidadeAdicionada) //Atualiza o produto com base no seu id.
-        Alert.alert("Estoque atualizado com sucesso!");
-    } catch (error) {
-      console.error("Erro ao adicionar estoque:", error);
-      //console.error("Erro ao adicionar estoque:", error.response ? error.response.data : error.message);
-      Alert.alert("Erro ao atualizar o estoque.");
-    }
-
-    setProdutoSelecionado(null);
-    setTamanho("");
-    setQuantidade("");
-    setDate("");
-    setPrecoTotal(0);
-  }
-
-  return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <View style={styles.container}>
-        <Header titulo="Lançamentos" navigation={navigation} />
-        <ScrollView
-          showsVerticalScrollIndicator={false}
-        >
-          <View style={styles.ViewTipoLancamento}>
-            <Text style={styles.text}>Tipo Lançamento: </Text>
+return (
+  <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+    <View style={styles.container}>
+      <Header titulo="Lançamentos" navigation={navigation} />
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+      >
+        <View style={styles.ViewTipoLancamento}>
+          <Text style={styles.text}>Tipo Lançamento: </Text>
+          {/* Dropdown */}
+          <Dropdown
+            style={styles.dropdown}
+            placeholderStyle={styles.placeholderStyle}
+            selectedTextStyle={styles.selectedTextStyle}
+            iconStyle={styles.iconStyle}
+            containerStyle={styles.dropDownContainerStyle}
+            data={[
+              { label: "Adicionar Estoque", value: 1 },
+              { label: "Lançamento de Venda", value: 2 },
+            ]}
+            maxHeight={300}
+            labelField="label" //Campo do nome do produto
+            valueField="value" //Identificador do produto
+            placeholder="Lançamento..."
+            value={tipoLancamento} // Valor selecionado
+            onChange={(item) => {
+              setTipoLancamento(item.value);
+              console.log("Tipo de Lançamento selecionado:", item.value);
+              setIsTipoLancamentoDisabled(true);
+              setSearchEnable(item.value === 2);
+              setLaunchEnable(item.value === 1);
+            }}
+          />
+        </View>
+        {isSearchEnable && tipoLancamento === 2 && (
+          <View>
+            <Text style={styles.text}>Pesquisar Produto: </Text>
             {/* Dropdown */}
             <Dropdown
               style={styles.dropdown}
               placeholderStyle={styles.placeholderStyle}
               selectedTextStyle={styles.selectedTextStyle}
-              iconStyle={styles.iconStyle}
+              inputSearchStyle={styles.inputSearchStyle}
               containerStyle={styles.dropDownContainerStyle}
-              data={[
-                { label: "Adicionar Estoque", value: 1 },
-                { label: "Lançamento de Venda", value: 2 },
-              ]}
+              iconStyle={styles.iconStyle}
+              data={produtos} // Dados carregados dos produtos
+              search
               maxHeight={300}
-              labelField="label" //Campo do nome do produto
-              valueField="value" //Identificador do produto
-              placeholder="Lançamento..."
-              value={tipoLancamento} // Valor selecionado
+              labelField="nomeDoProduto" //Campo do nome do produto
+              valueField="id" //Identificador do produto
+              placeholder="Selecione o Produto..."
+              searchPlaceholder="Buscar..."
+              value={produtoSelecionado ? produtoSelecionado.id : null} // Valor selecionado
               onChange={(item) => {
-                setTipoLancamento(item.value);
-                console.log("Tipo de Lançamento selecionado:", item.value);
-                setIsTipoLancamentoDisabled(true);
-                setSearchEnable(item.value === 2);
-                setLaunchEnable(item.value === 1);
+                setProdutoSelecionado(item); //Atualiza o produto selecionado
+                calcularPrecoTotal(quantidade); // Recalcula o preço total se a quantidade já foi informada
               }}
             />
           </View>
-          {isSearchEnable && tipoLancamento === 2 && (
+        )}
+
+        {tipoLancamento === 2 && produtoSelecionado && (
+          <View style={styles.centerContainer}>
+            <View style={styles.boxSell}>
+              {/* Exibe o nome do produto, preço e estoque disponível */}
+              <Text style={styles.textSell}>
+                Nome do Produto: {produtoSelecionado.nomeDoProduto}{" "}
+              </Text>
+              <Text style={styles.textSell}>
+                Preço: R$ {produtoSelecionado.preco}{" "}
+              </Text>
+              <Text style={styles.textSell}>
+                Estoque disponivel: {produtoSelecionado.quantidade}
+              </Text>
+
+              {/*Campo para inserir a quantidade  */}
+              <View>
+                <Text style={styles.textSell}>Quantidade: </Text>
+                <TextInput
+                  keyboardType="number-pad"
+                  placeholder="0"
+                  placeholderTextColor="#ccc"
+                  value={quantidade} //Valor da quantidade
+                  onChangeText={(value) => {
+                    setQuantidade(value); //Atualiza a quantidade no estado
+                    calcularPrecoTotal(value); //Recalcula preço total e altera a quantidade
+                  }}
+                  style={styles.quantidadeInput}
+                />
+                {/* DatePicker */}
+                <View>
+                  <Text style={styles.textAdd}>Data da Venda:</Text>
+                  <DatePicker
+                    data={Date}
+                    onDateChange={(selectedDate) => setDate(selectedDate)}
+                  />
+                </View>
+                {/* Dropdow para selecionar o tamanho */}
+                <Text style={styles.textSell}>Tamanho: </Text>
+                <Dropdown
+                  style={styles.dropdownSize}
+                  placeholderStyle={styles.placeholderStyle}
+                  selectedTextStyle={styles.selectedTextStyle}
+                  inputSearchStyle={styles.inputSearchStyle}
+                  data={[
+                    { label: "PP", value: "PP" },
+                    { label: "P", value: "P" },
+                    { label: "M", value: "M" },
+                    { label: "G", value: "G" },
+                    { label: "GG", value: "GG" },
+                  ]} // Exemplo de tamanho disponíveis
+                  maxHeight={300}
+                  labelField="label"
+                  valueField="value"
+                  placeholder="Selecione o tamanho"
+                  searchPlaceholder="Buscar..."
+                  value={tamanho} // Valor do tamanho selecionado
+                  onChange={(item) => setTamanho(item.value)} // Atualiza o tamanho
+                  containerStyle={styles.dropDownContainerStyle}
+                />
+              </View>
+            </View>
+            <View style={styles.boxTransaction}>
+              <Text style={styles.textTrasanction}>Resumo da transação: </Text>
+              {/* Exibe o resumo dos detalhes da transação */}
+              <Text style={styles.textSell}>
+                Produto: {produtoSelecionado.nomeDoProduto}{" "}
+              </Text>
+              <Text style={styles.textSell}>Tamanho: {tamanho} </Text>
+              <Text style={styles.textSell}>Quantidade: {quantidade} </Text>
+              <Text style={styles.textSell}>Data da Venda: {date} </Text>
+              <Text style={styles.textSell}>Preço Total: R$ {precoTotal} </Text>
+            </View>
+            <View style={styles.BoxButton}>
+              <TouchableOpacity
+                onPress={salvarTransacao}
+                style={styles.saveButton}
+              >
+                <Text style={styles.buttonText}>Salvar</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                onPress={() => {
+                  // Limpa os campos se o usuário clicar em cancelar
+                  setProdutoSelecionado(null);
+                  setQuantidade("");
+                  setTamanho("");
+                  setPrecoTotal(0);
+                  setTipoLancamento("");
+                  setSearchEnable(false);
+                }}
+                style={styles.cancelButton}
+              >
+                <Text style={styles.buttonText}>Limpar</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        )}
+
+        {tipoLancamento === 1 && (
+          <View>
             <View>
-              <Text style={styles.text}>Pesquisar Produto: </Text>
-              {/* Dropdown */}
+              <Text style={styles.text}>Selecione o Produto: </Text>
               <Dropdown
                 style={styles.dropdown}
                 placeholderStyle={styles.placeholderStyle}
@@ -194,55 +292,32 @@ export default function IntegracaoDeVendas({ navigation }) {
                 value={produtoSelecionado ? produtoSelecionado.id : null} // Valor selecionado
                 onChange={(item) => {
                   setProdutoSelecionado(item); //Atualiza o produto selecionado
-                  calcularPrecoTotal(quantidade); // Recalcula o preço total se a quantidade já foi informada
                 }}
               />
             </View>
-          )}
 
-          {tipoLancamento === 2 && produtoSelecionado && (
-            <View style={styles.centerContainer}>
-              <View style={styles.boxSell}>
-                {/* Exibe o nome do produto, preço e estoque disponível */}
-                <Text style={styles.textSell}>
-                  Nome do Produto: {produtoSelecionado.nomeDoProduto}{" "}
-                </Text>
-                <Text style={styles.textSell}>
-                  Preço: R$ {produtoSelecionado.preco}{" "}
-                </Text>
-                <Text style={styles.textSell}>
-                  Estoque disponivel: {produtoSelecionado.quantidade}
-                </Text>
-
-                {/*Campo para inserir a quantidade  */}
-                <View>
-                  <Text style={styles.textSell}>Quantidade: </Text>
+            <View style={styles.containerTransacionAdd}>
+              <View style={styles.boxTransactionAdd}>
+                <Text style={[styles.textTrasanction, { marginBottom: 30 }]}>Integração de Estoque: </Text>
+                <View style={styles.boxDescription}>
+                  <Text style={styles.textAdd}>Nome do Produto:</Text>
                   <TextInput
-                    keyboardType="number-pad"
-                    placeholder="0"
-                    placeholderTextColor="#ccc"
-                    value={quantidade} //Valor da quantidade
-                    onChangeText={(value) => {
-                      setQuantidade(value); //Atualiza a quantidade no estado
-                      calcularPrecoTotal(value); //Recalcula preço total e altera a quantidade
-                    }}
                     style={styles.quantidadeInput}
+                    placeholder="Nome do Produto"
+                    //onChangeText={(Input) => changeName(Input)}
+                    value={produtoSelecionado ? produtoSelecionado.nomeDoProduto : "Nenhum produto selecionado"}
+                    editable={false}
                   />
-                  {/* DatePicker */}
-                  <View>
-                    <Text style={styles.textAdd}>Data da Venda:</Text>
-                    <DatePicker
-                      data={Date}
-                      onDateChange={(selectedDate) => setDate(selectedDate)}
-                    />
-                  </View>
-                  {/* Dropdow para selecionar o tamanho */}
-                  <Text style={styles.textSell}>Tamanho: </Text>
+                </View>
+
+                <View>
+                  <Text style={styles.textAdd}>Tamanho:</Text>
                   <Dropdown
                     style={styles.dropdownSize}
                     placeholderStyle={styles.placeholderStyle}
                     selectedTextStyle={styles.selectedTextStyle}
                     inputSearchStyle={styles.inputSearchStyle}
+                    containerStyle={styles.dropDownContainerStyle}
                     data={[
                       { label: "PP", value: "PP" },
                       { label: "P", value: "P" },
@@ -257,24 +332,33 @@ export default function IntegracaoDeVendas({ navigation }) {
                     searchPlaceholder="Buscar..."
                     value={tamanho} // Valor do tamanho selecionado
                     onChange={(item) => setTamanho(item.value)} // Atualiza o tamanho
-                    containerStyle={styles.dropDownContainerStyle}
                   />
                 </View>
+
+                <View style={[styles.boxDescription, { marginTop: 10 }]}>
+                  <Text style={styles.textAdd}>Quantidade:</Text>
+                  <TextInput
+                    style={styles.quantidadeInput}
+                    keyboardType="number-pad"
+                    placeholder="0"
+                    placeholderTextColor="#ccc"
+                    onChangeText={(value) => setQuantidadeSolicitada(value)}
+                    value={quantidadeSolicitada}
+                  />
+                </View>
+
+                {/* <View>
+                    <Text>Data de Entrada:</Text>
+                    <DatePicker
+                      data={Date}
+                      onDateChange={(selectedDate) => setDate(selectedDate)}
+                    />
+                  </View> */}
               </View>
-              <View style={styles.boxTransaction}>
-                <Text style={styles.textTrasanction}>Resumo da transação: </Text>
-                {/* Exibe o resumo dos detalhes da transação */}
-                <Text style={styles.textSell}>
-                  Produto: {produtoSelecionado.nomeDoProduto}{" "}
-                </Text>
-                <Text style={styles.textSell}>Tamanho: {tamanho} </Text>
-                <Text style={styles.textSell}>Quantidade: {quantidade} </Text>
-                <Text style={styles.textSell}>Data da Venda: {date} </Text>
-                <Text style={styles.textSell}>Preço Total: R$ {precoTotal} </Text>
-              </View>
-              <View style={styles.BoxButton}>
+
+              <View style={styles.BoxButtonAdd}>
                 <TouchableOpacity
-                  onPress={salvarTransacao}
+                  //onPress={adicionarEstoqueProduto}
                   style={styles.saveButton}
                 >
                   <Text style={styles.buttonText}>Salvar</Text>
@@ -295,124 +379,13 @@ export default function IntegracaoDeVendas({ navigation }) {
                   <Text style={styles.buttonText}>Limpar</Text>
                 </TouchableOpacity>
               </View>
+
+
             </View>
-          )}
-
-          {tipoLancamento === 1 && (
-            <View>
-              <View>
-                <Text style={styles.text}>Selecione o Produto: </Text>
-                <Dropdown
-                  style={styles.dropdown}
-                  placeholderStyle={styles.placeholderStyle}
-                  selectedTextStyle={styles.selectedTextStyle}
-                  inputSearchStyle={styles.inputSearchStyle}
-                  containerStyle={styles.dropDownContainerStyle}
-                  iconStyle={styles.iconStyle}
-                  data={produtos} // Dados carregados dos produtos
-                  search
-                  maxHeight={300}
-                  labelField="nomeDoProduto" //Campo do nome do produto
-                  valueField="id" //Identificador do produto
-                  placeholder="Selecione o Produto..."
-                  searchPlaceholder="Buscar..."
-                  value={produtoSelecionado ? produtoSelecionado.id : null} // Valor selecionado
-                  onChange={(item) => {
-                    setProdutoSelecionado(item); //Atualiza o produto selecionado
-                  }}
-                />
-              </View>
-
-              <View style={styles.containerTransacionAdd}>
-                <View style={styles.boxTransactionAdd}>
-                  <Text style={[styles.textTrasanction, { marginBottom: 30 }]}>Integração de Estoque: </Text>
-                  <View style={styles.boxDescription}>
-                    <Text style={styles.textAdd}>Nome do Produto:</Text>
-                    <TextInput
-                      style={styles.quantidadeInput}
-                      placeholder="Nome do Produto"
-                      //onChangeText={(Input) => changeName(Input)}
-                      value={produtoSelecionado ? produtoSelecionado.nomeDoProduto : "Nenhum produto selecionado"}
-                      editable={false}
-                    />
-                  </View>
-
-                  <View>
-                    <Text style={styles.textAdd}>Tamanho:</Text>
-                    <Dropdown
-                      style={styles.dropdownSize}
-                      placeholderStyle={styles.placeholderStyle}
-                      selectedTextStyle={styles.selectedTextStyle}
-                      inputSearchStyle={styles.inputSearchStyle}
-                      containerStyle={styles.dropDownContainerStyle}
-                      data={[
-                        { label: "PP", value: "PP" },
-                        { label: "P", value: "P" },
-                        { label: "M", value: "M" },
-                        { label: "G", value: "G" },
-                        { label: "GG", value: "GG" },
-                      ]} // Exemplo de tamanho disponíveis
-                      maxHeight={300}
-                      labelField="label"
-                      valueField="value"
-                      placeholder="Selecione o tamanho"
-                      searchPlaceholder="Buscar..."
-                      value={tamanho} // Valor do tamanho selecionado
-                      onChange={(item) => setTamanho(item.value)} // Atualiza o tamanho
-                    />
-                  </View>
-
-                  <View style={[styles.boxDescription, { marginTop: 10 }]}>
-                    <Text style={styles.textAdd}>Quantidade:</Text>
-                    <TextInput
-                      style={styles.quantidadeInput}
-                      keyboardType="number-pad"
-                      placeholder="0"
-                      placeholderTextColor="#ccc"
-                      onChangeText={(value) => setQuantidade(value)}
-                      value={quantidade}
-                    />
-                  </View>
-
-                  {/* <View>
-                    <Text>Data de Entrada:</Text>
-                    <DatePicker
-                      data={Date}
-                      onDateChange={(selectedDate) => setDate(selectedDate)}
-                    />
-                  </View> */}
-                </View>
-
-                <View style={styles.BoxButtonAdd}>
-                  <TouchableOpacity
-                    onPress={atualizarEstoque}
-                    style={styles.saveButton}
-                  >
-                    <Text style={styles.buttonText}>Salvar</Text>
-                  </TouchableOpacity>
-
-                  <TouchableOpacity
-                    onPress={() => {
-                      // Limpa os campos se o usuário clicar em cancelar
-                      setProdutoSelecionado(null);
-                      setQuantidade("");
-                      setTamanho("");
-                      setPrecoTotal(0);
-                      setTipoLancamento("");
-                      setSearchEnable(false);
-                    }}
-                    style={styles.cancelButton}
-                  >
-                    <Text style={styles.buttonText}>Limpar</Text>
-                  </TouchableOpacity>
-                </View>
-
-
-              </View>
-            </View>
-          )}
-        </ScrollView>
-      </View>
-    </TouchableWithoutFeedback>
-  );
+          </View>
+        )}
+      </ScrollView>
+    </View>
+  </TouchableWithoutFeedback>
+);
 }
