@@ -1,7 +1,9 @@
 import axios from "axios";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 //URL principal
-const API_URL = "http://192.168.18.14:3000";
+const API_URL = "http://:8080"; // URL base da API
+
 
 //Classe para realizar requisições pegando os dados a partir da URL principal
 export class CoreService {
@@ -13,13 +15,20 @@ export class CoreService {
   //Função de cadastro de Produtos
   async cadastrar(document) {
     try {
-      const response = await axios.post(`${API_URL}${this.resource}`, document);
-      console.log(`${API_URL}${this.resource}`);
-      return response.data; //Retorna os dados do produto cadastrado
+      const token = await AsyncStorage.getItem("token"); // Recupera o token do armazenamento
+      const response = await axios.post(`${API_URL}${this.resource}`, document, { //Realiza o cadastro do produto
+        headers: {
+          Authorization: `Bearer ${token}`, // Adiciona o token obtido pelo login para autorizar o metodo post no backend
+          'Content-Type': 'application/json',
+        },
+      });
+      return response.data; // Retorna os dados do produto cadastrado
     } catch (error) {
-      throw error; //Lança o erro para ser tratado na camada que chamou
+      console.error("Erro ao cadastrar o produto:", error);
+      throw error; // Lança o erro para ser tratado na camada que chamou
     }
   }
+  
 
    //Função listar Produtos
    async listarProdutos(document) {
