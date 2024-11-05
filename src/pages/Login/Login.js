@@ -19,8 +19,8 @@ const usuarioService = new UsuarioService();
 //Componente recebe a propriedade navigation para utilizar suas funcionalidades
 export default function Login({ navigation }) {
   //Armazena e atualiza o estado dos dados informado pelo usuário
-  const [email, setEmail] = useState("test3@gmail.com");
-  const [senha, setSenha] = useState("1234");
+  const [email, setEmail] = useState("");
+  const [senha, setSenha] = useState("");
   const [loading, setLoading] = useState(false);
 
   const handleLogin = async () => {
