@@ -52,26 +52,22 @@ const ModalEditarProduto = ({
             <View style={styles.boxDescription}>
               <Text style={styles.text}>Preço</Text>
               <TextInput
-                value={produtoEditado?.preco || ""}
-                onChangeText={(valor) =>
-                  atualizarProduto("preco", parseFloat(valor))
-                }
+                value={produtoEditado?.preco?.toFixed(2) || ""}
                 placeholder="Preco"
                 keyboardType="numeric"
                 style={styles.TextInput}
+                editable={false}
               />
             </View>
 
             <View style={styles.boxDescription}>
               <Text style={styles.text}>Quantidade</Text>
               <TextInput
-                value={produtoEditado?.quantidade || ""}
-                onChangeText={(valor) =>
-                  atualizarProduto("quantidade", valor, parseInt(valor))
-                }
+                value={produtoEditado?.quantidade?.toString() || ""}
                 placeholder="Quantidade"
                 keyboardType="numeric"
                 style={styles.TextInput}
+                editable={false}
               />
             </View>
 

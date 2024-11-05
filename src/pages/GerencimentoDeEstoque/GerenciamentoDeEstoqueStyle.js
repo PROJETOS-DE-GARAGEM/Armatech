@@ -87,7 +87,7 @@ const style = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        height: 150,
+        height: 175,
     },
     boxListEstoque: {
         padding: 15,

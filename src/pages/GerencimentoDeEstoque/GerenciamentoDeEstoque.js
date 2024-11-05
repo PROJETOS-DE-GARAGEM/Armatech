@@ -50,9 +50,8 @@ export default function GerenciamentoDeEstoque({ navigation }) {
   const salvarEdicao = async () => {
     try {
       await produtoService.editarProduto(produtoEditado.id, produtoEditado); // Chama o serviço para editar o produto
-      setModalVisible(false); // Fecha o modal após salvar
-      // Atualiza a lista de produtos após a edição
-      setProdutos((produtos) =>
+      setModalVisible(false); // Fecha o modal após salvar // Atualiza a lista de produtos após a edição
+      setProdutos((produtos) => // Atualiza a lista de produtos após a edição
         produtos.map((p) => (p.id === produtoEditado.id ? produtoEditado : p))
       );
       Alert.alert("Sucesso", "Produto atualizado com sucesso!");
@@ -104,11 +103,12 @@ export default function GerenciamentoDeEstoque({ navigation }) {
     return (
       <View style={style.boxListContainer}>
         <View style={style.boxListEstoque}>
-          <Text style={style.nameList}>{item.nomeDoProduto}</Text>
+          <Text style={style.nameList}>{item.nome}</Text>
           <Text style={style.detailsList}>Descrição: {item.descricao}</Text>
-          <Text style={style.detailsList}>Preço: {item.preco}</Text>
+          <Text style={style.detailsList}>Tamanho: {item.tamanho}</Text>
+          <Text style={style.detailsList}>Preço: {item.preco.toFixed(2)}R$</Text>
           <Text style={style.detailsList}>
-            Disponível: {item.quantidade} Unidades
+            Estoque Disponível: {item.quantidade} Unidades
           </Text>
         </View>
 
@@ -147,9 +147,9 @@ export default function GerenciamentoDeEstoque({ navigation }) {
 
       <View style={style.ViewTitle}>
         <Text style={style.textTitle}>Lista de Produtos</Text>
-        <TouchableOpacity style={style.buttonAddProduct}>
+        {/* <TouchableOpacity style={style.buttonAddProduct}>
           <Text style={style.textButton}>Adicionar</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
       <View style={style.containerDropdown}>
         <Text style={style.text}>Pesquisar Produto: </Text>
