@@ -64,7 +64,6 @@ export class CoreService {
       throw error;
     }
   }
-  
 
   //Função para deletar o Produto
   async deletarProduto(id) {
