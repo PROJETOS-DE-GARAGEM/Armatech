@@ -72,7 +72,7 @@ export default function RegistroDeProdutos({ navigation }) {
 
     //Cria o objeto produtos com os dados do usuário.
     const novoProduto = {
-      nomeDoProduto: name,
+      nome: name,
       descricao: description,
       preco: price,
       quantidade: amount,
