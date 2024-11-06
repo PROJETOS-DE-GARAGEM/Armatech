@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
   boxSell: {
     backgroundColor: "#fff",
     width: 370,
-    height: 310,
+    height: 240,
     borderRadius: 10,
     padding: "4%",
     gap: 10,
@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
     height: 225,
     borderRadius: 10,
     padding: "4%",
-    gap: 14,
+    gap: 18,
   },
 
   BoxButton: {
