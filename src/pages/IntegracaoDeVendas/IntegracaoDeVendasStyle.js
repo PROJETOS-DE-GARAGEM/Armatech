@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
     paddingTop: "5%",
     marginLeft: "5%",
     color: "#fff",
-    fontSize: 14,
+    fontSize: 18,
     fontWeight: "bold",
     flexDirection: "row",
   },
@@ -39,15 +39,10 @@ const styles = StyleSheet.create({
 
   placeholderStyle: {
     fontSize: 15,
-    color: "gray",
+    color: "#ccc",
   },
   selectedTextStyle: {
     fontSize: 15,
-  },
-  inputSearchStyle: {
-    height: 40,
-    fontSize: 15,
-    borderRadius: 10,
   },
   iconStyle: {
     paddingHorizontal: 6,
@@ -75,7 +70,7 @@ const styles = StyleSheet.create({
   boxSell: {
     backgroundColor: "#fff",
     width: 370,
-    height: 250,
+    height: 240,
     borderRadius: 10,
     padding: "4%",
     gap: 10,
@@ -111,15 +106,16 @@ const styles = StyleSheet.create({
   boxTransaction: {
     backgroundColor: "#fff",
     width: 370,
-    height: 250,
+    height: 225,
     borderRadius: 10,
     padding: "4%",
-    gap: 25,
+    gap: 18,
   },
 
   BoxButton: {
     flexDirection: "row",
     gap: 50,
+    marginBottom: 15,
   },
   saveButton: {
     backgroundColor: "#32bc9b",
@@ -143,8 +139,57 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontWeight: "bold",
     color: '#fff'
-  }
+  },
+  boxAdicionarEstoque: {
+    backgroundColor: '#fff',
 
+  },
+  inputAddProduto: {
+    margin: 10,
+    color: "#000",
+    fontSize: 15,
+    height: 40,
+    borderColor: "#fff",
+    marginStart: "5%",
+    marginEnd: "5%",
+    backgroundColor: "#e5e7eb",
+    borderRadius: 999,
+    paddingHorizontal: 9,
+  },
+  containerTransacionAdd: {
+    justifyContent:'center',
+    alignItems: 'center',
+  },
+  boxTransactionAdd: {
+    backgroundColor: "#fff",
+    width: 370,
+    borderRadius: 10,
+    padding: "4%",
+  },
+  boxDescription: {
+    gap: 2,
+  },
+  textAdd: {
+    color: "#000",
+    fontSize: 15,
+  },
+  Input: {
+    margin: 10,
+    color: "#000",
+    fontSize: 15,
+    height: 40,
+    borderColor: "#fff",
+    marginStart: "5%",
+    marginEnd: "5%",
+    backgroundColor: "#e5e7eb",
+    borderRadius: 999,
+    paddingHorizontal: 9,
+  },
+  BoxButtonAdd: {
+    flexDirection: "row",
+    gap: 50,
+    marginTop: 15,
+  },
 });
 
 export default styles;
