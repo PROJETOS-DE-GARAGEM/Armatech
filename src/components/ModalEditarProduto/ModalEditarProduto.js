@@ -28,9 +28,9 @@ const ModalEditarProduto = ({
             <View style={styles.boxDescription}>
               <Text style={styles.text}>Nome do produto</Text>
               <TextInput
-                value={produtoEditado?.nomeDoProduto || ""}
+                value={produtoEditado?.nome || ""}
                 onChangeText={(valor) =>
-                  atualizarProduto("nomeDoProduto", valor)
+                  atualizarProduto("nome", valor)
                 }
                 placeholder="Nome do Produto"
                 style={styles.TextInput}

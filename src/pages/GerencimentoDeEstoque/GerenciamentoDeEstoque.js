@@ -25,7 +25,7 @@ export default function GerenciamentoDeEstoque({ navigation }) {
       //const produtoService = new ProdutoService();
       const produtoListados = await produtoService.listarProdutos(); //Buscar os produtos da API
       setProdutos([
-        { id: 0, nomeDoProduto: "Todos os Produtos" },
+        { id: 0, nome: "Todos os Produtos" },
         ...produtoListados,
       ]); // Adiciona a opção "Todos os Produtos"
       setProdutosFiltrados(produtoListados); //Inicia exibindo todos os produtos mas poderá ao pesquisar um produto especifico
@@ -131,8 +131,8 @@ export default function GerenciamentoDeEstoque({ navigation }) {
       setProdutosFiltrados(produtos.filter((produto) => produto.id !== 0)); // Mostra todos os produtos, exceto a opção "Todos os Produtos"
     } else {
       const produtosFiltrados = produtos.filter((produto) => {
-        return produto.nomeDoProduto
-          ? produto.nomeDoProduto
+        return produto.nome
+          ? produto.nome
               .toLowerCase()
               .includes(produtoSelecionado.toLowerCase())
           : false;
@@ -163,14 +163,14 @@ export default function GerenciamentoDeEstoque({ navigation }) {
           data={produtos}
           search
           maxHeight={300}
-          labelField="nomeDoProduto"
-          valueField="nomeDoProduto"
+          labelField="nome"
+          valueField="nome"
           placeholder="Selecione o Produto..."
           searchPlaceholder="Buscar..."
           value={produtoSelecionado}
           onChange={(item) => {
-            setProdutoSelecionado(item.nomeDoProduto); // Atualiza o estado com o produto selecionado
-            filtrarProdutos(item.nomeDoProduto); // Filtra a lista de produtos com base na seleção
+            setProdutoSelecionado(item.nome); // Atualiza o estado com o produto selecionado
+            filtrarProdutos(item.nome); // Filtra a lista de produtos com base na seleção
           }}
           containerStyle={style.dropDownContainerStyle}
         />
