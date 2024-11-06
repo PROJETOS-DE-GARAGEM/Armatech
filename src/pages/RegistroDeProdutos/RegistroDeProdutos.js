@@ -22,34 +22,30 @@ export default function RegistroDeProdutos({ navigation }) {
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
   const [amount, setAmount] = useState("");
-  const [size, setSize] = useState("");
-  const [sizeNumber, setSizeNumber] = useState("");
-  const [type, setType] = useState("");
+  const [tamanho, setTamanho] = useState("");
+  const [tipo, setTipo] = useState(null);
 
   //Estados para o controle de habilitação e desabilitação dos seletores
   const [isSizeDisable, setSizeDisable] = useState(false);
   const [isSizeNumberEnable, setSizeNumberEnable] = useState(false);
 
   //Listas de objetos para colocar nas opções dos seletores
-  const tipo = [
-    { label: "Short/Saia", value: "1" },
-    { label: "Calça", value: "2" },
-  ];
-
   const data = [
-    { label: "PP", value: "1" },
-    { label: "P", value: "2" },
-    { label: "M", value: "3" },
-    { label: "G", value: "4" },
-    { label: "GG", value: "5" },
+    { label: "LETRA", value: 0 },
+    { label: "NUMERICO", value: 1 },
   ];
 
-  const numeracao = [
-    { label: "36/38", value: "1" },
-    { label: "38/40", value: "2" },
-    { label: "40/42", value: "3" },
-    { label: "42/44", value: "4" },
-    { label: "44/46", value: "5" },
+  const tamanhos = [
+    { label: "PP", value: "PP" },
+    { label: "P", value: "P" },
+    { label: "M", value: "M" },
+    { label: "G", value: "G" },
+    { label: "GG", value: "GG" },
+    { label: "36/38", value: "36/38"},
+    { label: "38/40", value: "38/40"},
+    { label: "40/42", value: "40/42"},
+    { label: "42/44", value: "42/44"},
+    { label: "44/46", value: "44/46"},
   ];
 
   //Funções para setar o valor digitado dentro do estado "set"
@@ -69,7 +65,7 @@ export default function RegistroDeProdutos({ navigation }) {
   service = new ProdutoService()
   //Se os campos não forem preenchidos, informar ao usuário.
   function register() {
-    if (!name || !description || !price || !amount || !(size || sizeNumber) || !type) {
+    if (!name || !description || !price || !amount || !tamanho || tipo === null) {
       Alert.alert("Preencha todos os campos!");
       return;
     }
@@ -80,8 +76,8 @@ export default function RegistroDeProdutos({ navigation }) {
       descricao: description,
       preco: price,
       quantidade: amount,
-      tamanho: size || sizeNumber,
-      tipo: type,
+      tamanho: tamanho,
+      tipo: tipo,
     };
 
 
@@ -97,9 +93,8 @@ export default function RegistroDeProdutos({ navigation }) {
         setDescription("");
         setPrice("");
         setAmount("");
-        setSize("");
-        setType("");
-        setSizeNumber("");
+        setTamanho("");
+        setTipo("");
       })
       .catch((error) => {
         Alert.alert("Erro ao cadastrar o produto:", error.message); // Mostra um alerta em caso de erro
@@ -112,9 +107,8 @@ export default function RegistroDeProdutos({ navigation }) {
     setDescription("");
     setPrice("");
     setAmount("");
-    setSize("");
-    setType("");
-    setSizeNumber("");
+    setTamanho("");
+    setTipo("");
   }
 
   return (
@@ -141,17 +135,17 @@ export default function RegistroDeProdutos({ navigation }) {
                 selectedTextStyle={style.selectedTextStyle}
                 inputSearchStyle={style.inputSearchStyle}
                 iconStyle={style.iconStyle}
-                data={tipo} // Definindo a variável de dados
+                data={data} // Definindo a variável de dados
                 maxHeight={300}
                 labelField="label"
                 valueField="value"
                 placeholder="Tipo de Produto..."
-                value={type}
+                value={tipo}
                 onChange={(item) => {
-                  setType(item.value);
+                  setTipo(item.value);
                   // Se o item 2 "Calça" for selecionado, ele passa para a varável de estado, disponibiliza o input "selecione o número".
-                  setSizeNumberEnable(item.value === "2");
-                  setSizeDisable(item.value === "2");
+                  setSizeNumberEnable(item.value === 1);
+                  setSizeDisable(item.value === 1);
                 }}
                 containerStyle={style.dropDownContainerStyle}
               />
@@ -189,14 +183,14 @@ export default function RegistroDeProdutos({ navigation }) {
                   selectedTextStyle={style.selectedTextStyle}
                   inputSearchStyle={style.inputSearchStyle}
                   iconStyle={style.iconStyle}
-                  data={data} // Definindo a variável de dados
+                  data={tamanhos} // Definindo a variável de dados
                   maxHeight={300}
                   labelField="label"
                   valueField="value"
                   placeholder="Selecione o Tamanho..."
-                  value={size}
+                  value={tamanho}
                   onChange={(item) => {
-                    setSize(item.value);
+                    setTamanho(item.value);
                   }}
                   disable={isSizeDisable} //Desabilitando a funcionalidade caso SizeDisable seja true.
                   containerStyle={style.dropDownContainerStyle}
@@ -213,14 +207,14 @@ export default function RegistroDeProdutos({ navigation }) {
                   selectedTextStyle={style.selectedTextStyle}
                   inputSearchStyle={style.inputSearchStyle}
                   iconStyle={style.iconStyle}
-                  data={numeracao} // Definindo a variável de dados
+                  data={tamanhos} // Definindo a variável de dados
                   maxHeight={300}
                   labelField="label"
                   valueField="value"
                   placeholder="Selecione o Número..."
-                  value={sizeNumber}
+                  value={tamanho}
                   onChange={(item) => {
-                    setSizeNumber(item.value);
+                    setTamanho(item.value);
                   }}
                   containerStyle={style.dropDownContainerStyle}
                 />
