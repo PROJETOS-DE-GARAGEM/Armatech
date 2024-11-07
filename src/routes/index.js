@@ -41,36 +41,36 @@ const drawerScreens = [
     label: "Estoque",
     icon: "cube",
   },
-  {
-    name: "ProcessamentoDeCompras",
-    component: ProcessamentoDeCompras,
-    label: "Compras",
-    icon: "cart",
-  },
+  // {
+  //   name: "ProcessamentoDeCompras",
+  //   component: ProcessamentoDeCompras,
+  //   label: "Compras",
+  //   icon: "cart",
+  // },
   {
     name: "RelatoriosEAnalises",
     component: RelatoriosEAnalises,
     label: "Relatórios",
     icon: "stats-chart",
   },
-  {
-    name: "ControleDeFornecedores",
-    component: ControleDeFornecedores,
-    label: "Fornecedores",
-    icon: "people",
-  },
+  // {
+  //   name: "ControleDeFornecedores",
+  //   component: ControleDeFornecedores,
+  //   label: "Fornecedores",
+  //   icon: "people",
+  // },
   {
     name: "IntegracaoDeVendas",
     component: IntegracaoDeVendas,
     label: "Vendas",
     icon: "cash",
   },
-  {
-    name: "UsuariosEPermissoes",
-    component: UsuariosEPermissoes,
-    label: "Usuários",
-    icon: "person",
-  },
+  // {
+  //   name: "UsuariosEPermissoes",
+  //   component: UsuariosEPermissoes,
+  //   label: "Usuários",
+  //   icon: "person",
+  // },
 ];
 
 function DrawerNavigation() {

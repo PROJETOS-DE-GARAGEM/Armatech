@@ -5,11 +5,11 @@ import Header from "../../components/Header/Header";
 import styles from "./TelaMenuStyle";
 import BoxSvg from "../../../assets/svg/BoxSvg";
 import WarehousSvg from "../../../assets/svg/WarehoseSvg";
-import ShoppingCartSvg from "../../../assets/svg/ShoppingCartSvg";
+// import ShoppingCartSvg from "../../../assets/svg/ShoppingCartSvg";
 import ChartBarSvg from "../../../assets/svg/ChartBarSvg";
-import TruckSvg from "../../../assets/svg/TruckSvg";
+// import TruckSvg from "../../../assets/svg/TruckSvg";
 import SyncSvg from "../../../assets/svg/SyncSvg";
-import UsersSvg from "../../../assets/svg/UsersSvg";
+// import UsersSvg from "../../../assets/svg/UsersSvg";
 
 const MenuItens = [
   {
@@ -24,36 +24,36 @@ const MenuItens = [
     label: "Gerenciamento de Estoque",
     screen: "GerenciamentoDeEstoque",
   },
+  // {
+  //   id: 3,
+  //   icon: <ShoppingCartSvg />,
+  //   label: "Processamento de Compras",
+  //   screen: "ProcessamentoDeCompras",
+  // },
   {
     id: 3,
-    icon: <ShoppingCartSvg />,
-    label: "Processamento de Compras",
-    screen: "ProcessamentoDeCompras",
-  },
-  {
-    id: 4,
     icon: <ChartBarSvg />,
     label: "Relatórios e Analises",
     screen: "RelatoriosEAnalises",
   },
+  // {
+  //   id: 5,
+  //   icon: <TruckSvg />,
+  //   label: "Controle de Fornecedores",
+  //   screen: "ControleDeFornecedores",
+  // },
   {
-    id: 5,
-    icon: <TruckSvg />,
-    label: "Controle de Fornecedores",
-    screen: "ControleDeFornecedores",
-  },
-  {
-    id: 6,
+    id: 4,
     icon: <SyncSvg />,
     label: "Integração de vendas",
     screen: "IntegracaoDeVendas",
   },
-  {
-    id: 7,
-    icon: <UsersSvg />,
-    label: "Usuários e Permissões",
-    screen: "UsuariosEPermissoes",
-  },
+  // {
+  //   id: 7,
+  //   icon: <UsersSvg />,
+  //   label: "Usuários e Permissões",
+  //   screen: "UsuariosEPermissoes",
+  // },
 ];
 
 export default function TelaMenu({ navigation }) {
