@@ -27,8 +27,7 @@ export default function IntegracaoDeVendas({ navigation }) {
   const [date, setDate] = useState("");
   const [tipoLancamento, setTipoLancamento] = useState(null);
 
-  const [isTipoLancamentoDisabled, setIsTipoLancamentoDisabled] =
-    useState(false);
+  const [isTipoLancamentoDisabled, setIsTipoLancamentoDisabled] = useState(false);
   const [isSearchEnable, setSearchEnable] = useState(false);
   const [isLaunchEnable, setLaunchEnable] = useState(false);
 
@@ -72,7 +71,7 @@ export default function IntegracaoDeVendas({ navigation }) {
 
   // Função para salvar a transação e limpar os campos após o salvamento
   function salvarTransacao() {
-    if (!produtoSelecionado || !quantidade || !tamanho) {
+    if (!produtoSelecionado || !quantidade) {
       Alert.alert("Por favor, preencha todos os campos"); //Valida se todos os campos estão preenchidos
       return;
     }
@@ -84,16 +83,20 @@ export default function IntegracaoDeVendas({ navigation }) {
 
     // Objeto que representa a transação realizada
     const transacao = {
-      produto: produtoSelecionado.nomeDoProduto,
-      tamanho: tamanho,
-      quantidade: quantidade,
-      data: date,
-      precoTotal: precoTotal,
+      tipoLancamento: 1,
+      produto: {
+        nome: produtoSelecionado.nome,
+        id: produtoSelecionado.id
+      },
+      quantidade: parseFloat(quantidade),
+      ...(date && { dataSaida: date }),
     };
+
+    console.log("Objeto transacao enviado:", transacao);
 
     // Envio da transação para o JSON Server
     axios
-      .post("http://192.168.100.28:3000/vendas", transacao)
+      .put("http://192.168.100.26:8081/lancamento", transacao)
       .then((response) => {
         console.log("Transação salva:", response.data);
         Alert.alert("Venda realizada com sucesso!");
@@ -125,8 +128,8 @@ export default function IntegracaoDeVendas({ navigation }) {
               iconStyle={styles.iconStyle}
               containerStyle={styles.dropDownContainerStyle}
               data={[
-                { label: "Adicionar Estoque", value: 1 },
-                { label: "Lançamento de Venda", value: 2 },
+                { label: "Adicionar Estoque", value: 0 },
+                { label: "Lançamento de Venda", value: 1 },
               ]}
               maxHeight={300}
               labelField="label" //Campo do nome do produto
@@ -137,12 +140,12 @@ export default function IntegracaoDeVendas({ navigation }) {
                 setTipoLancamento(item.value);
                 console.log("Tipo de Lançamento selecionado:", item.value);
                 setIsTipoLancamentoDisabled(true);
-                setSearchEnable(item.value === 2);
-                setLaunchEnable(item.value === 1);
+                setSearchEnable(item.value === 1);
+                setLaunchEnable(item.value === 0);
               }}
             />
           </View>
-          {isSearchEnable && tipoLancamento === 2 && (
+          {isSearchEnable && tipoLancamento === 1 && (
             <View>
               <Text style={styles.text}>Pesquisar Produto: </Text>
               {/* Dropdown */}
@@ -156,7 +159,7 @@ export default function IntegracaoDeVendas({ navigation }) {
                 data={produtos} // Dados carregados dos produtos
                 search
                 maxHeight={300}
-                labelField="nomeDoProduto" //Campo do nome do produto
+                labelField="nome" //Campo do nome do produto
                 valueField="id" //Identificador do produto
                 placeholder="Selecione o Produto..."
                 searchPlaceholder="Buscar..."
@@ -169,18 +172,18 @@ export default function IntegracaoDeVendas({ navigation }) {
             </View>
           )}
 
-          {tipoLancamento === 2 && produtoSelecionado && (
+          {tipoLancamento === 1 && produtoSelecionado && (
             <View style={styles.centerContainer}>
               <View style={styles.boxSell}>
                 {/* Exibe o nome do produto, preço e estoque disponível */}
                 <Text style={styles.textSell}>
-                  Nome do Produto: {produtoSelecionado.nomeDoProduto}{" "}
+                  Nome do Produto: {produtoSelecionado.nome}{" "}
                 </Text>
                 <Text style={styles.textSell}>
-                  Preço: R${produtoSelecionado.preco}{" "}
+                  Preço: R$ {produtoSelecionado.preco?.toFixed(2)}{" "}
                 </Text>
                 <Text style={styles.textSell}>
-                  Estoque disponivel: {produtoSelecionado.quantidade}
+                  Estoque disponivel: {produtoSelecionado.quantidade} Unidades
                 </Text>
 
                 {/*Campo para inserir a quantidade  */}
@@ -213,13 +216,13 @@ export default function IntegracaoDeVendas({ navigation }) {
                 </Text>
                 {/* Exibe o resumo dos detalhes da transação */}
                 <Text style={styles.textSell}>
-                  Produto: {produtoSelecionado.nomeDoProduto}{" "}
+                  Produto: {produtoSelecionado.nome}{" "}
                 </Text>
-                <Text style={styles.textSell}>Tamanho: {tamanho} </Text>
-                <Text style={styles.textSell}>Quantidade: {quantidade} </Text>
+                <Text style={styles.textSell}>Tamanho: {produtoSelecionado.tamanho} </Text>
+                <Text style={styles.textSell}>Vendido: {quantidade} Unidades </Text>
                 <Text style={styles.textSell}>Data da Venda: {date} </Text>
                 <Text style={styles.textSell}>
-                  Preço Total: R$ {precoTotal}{" "}
+                  Preço Total: R$ {precoTotal?.toFixed(2)}{" "}
                 </Text>
               </View>
               <View style={styles.BoxButton}>
@@ -248,7 +251,7 @@ export default function IntegracaoDeVendas({ navigation }) {
             </View>
           )}
 
-          {tipoLancamento === 1 && (
+          {tipoLancamento === 0 && (
             <View>
               <View>
                 <Text style={styles.text}>Selecione o Produto: </Text>
