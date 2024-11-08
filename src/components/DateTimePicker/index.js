@@ -17,9 +17,9 @@ const DatePicker = ({onDateChange}) => {
   };
 
   const handleConfirm = (date) => {
-    const formattedDate = date.toLocaleDateString("pt-BR"); // Formata a data para "DD/MM/AAAA"
-    setSelectedDate(formattedDate);
-    onDateChange(formattedDate); // Passa a data formatada para o componente pai
+     const formattedDate = date.toLocaleDateString("pt-BR"); // Formata a data para "DD/MM/AAAA"
+     setSelectedDate(formattedDate);
+     onDateChange(formattedDate); // Passa a data formatada para o componente pai
     hideDatePicker();
   };
 

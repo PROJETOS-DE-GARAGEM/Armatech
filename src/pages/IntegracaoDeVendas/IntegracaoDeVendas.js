@@ -8,13 +8,16 @@ import {
   Keyboard,
   Alert,
   ScrollView,
+  KeyboardAvoidingView,
+  Platform,
 } from "react-native";
-import axios from "axios";
 import styles from "./IntegracaoDeVendasStyle";
 import Header from "../../components/Header/Header";
 import { Dropdown } from "react-native-element-dropdown";
 import { ProdutoService } from "../../../service/CasdastrarProdutos";
 import DatePicker from "../../components/DateTimePicker";
+import { LancamentoService } from "../../../service/LancamentoService";
+import moment from "moment";
 
 export default function IntegracaoDeVendas({ navigation }) {
   const [produtoSelecionado, setProdutoSelecionado] = useState(null);
@@ -27,19 +30,27 @@ export default function IntegracaoDeVendas({ navigation }) {
   const [date, setDate] = useState("");
   const [tipoLancamento, setTipoLancamento] = useState(null);
 
-  const [isTipoLancamentoDisabled, setIsTipoLancamentoDisabled] = useState(false);
+  // Estados para o controle dos seletores
+  const [isTipoLancamentoDisabled, setIsTipoLancamentoDisabled] =
+    useState(false);
   const [isSearchEnable, setSearchEnable] = useState(false);
   const [isLaunchEnable, setLaunchEnable] = useState(false);
 
   const service = new ProdutoService(); // Insancia o serviço para buscar produtos
-  //TO DO: REFATORAR A FUNÇÃO PARA SYNC E AWAIT
+  const lancamentoService = new LancamentoService(); // Insancia o serviço realizar os lançamentos
+
   // useEffect para carregar os produtos assim que os produtos é motado
   useEffect(() => {
     service
-      .listarProdutos()
+      .listarProdutos() //Função para busca os produtos no servidor
       .then((response) => {
-        //Função para busca os produtos no servidor
-        setProdutos(response); // Salva os produtos retornados no estado 'produtos
+        if (response) {
+          response = response.map((produto) => {
+            produto.nomeTamanho = `${produto.nome} (${produto.tamanho}) (${produto.descricao})`;
+            return produto;
+          });
+        }
+        setProdutos(response); // Salva os produtos retornados no estado produtos
         setEstoqueAtual(response.quantidade);
       })
       .catch((error) => {
@@ -63,7 +74,7 @@ export default function IntegracaoDeVendas({ navigation }) {
   function validarQuantidadeEstoque() {
     const quantidadeSelecionada = parseFloat(quantidade);
     if (quantidadeSelecionada > produtoSelecionado.quantidade) {
-      Alert.alert(`Erro,Estoque diposnivel: ${quantidade} `);
+      Alert.alert(`Erro, Estoque diposnivel: ${produtoSelecionado.quantidade} unidades.`);
       return false; //Retorna falso se a quantidade for maior que o estoque
     }
     return true; //Caso contrário, a quantidade é válida
@@ -71,51 +82,83 @@ export default function IntegracaoDeVendas({ navigation }) {
 
   // Função para salvar a transação e limpar os campos após o salvamento
   function salvarTransacao() {
-    if (!produtoSelecionado || !quantidade) {
-      Alert.alert("Por favor, preencha todos os campos"); //Valida se todos os campos estão preenchidos
+    // Verificação se todos os campos estão preenchidos corretamente de acordo com o tipo de lançamento
+    if (!produtoSelecionado) {
+      Alert.alert("Por favor, selecione um produto.");
+      return;
+    }
+    if (tipoLancamento === 1 && !quantidade) {
+      Alert.alert("Por favor, informe a quantidade vendida.");
+      return;
+    }
+    if (tipoLancamento === 0 && !quantidadeSolicitada) {
+      Alert.alert("Por favor, informe a quantidade que deseja adicionar.");
+      return;
+    }
+    if (tipoLancamento === 0 && !date || tipoLancamento === 1 && !date) {
+      Alert.alert("Por favor, selecione uma data.");
+      return;
+    }
+    // Verifica se a quantidade é maior que o estoque disponível somente para lançamentos de venda
+    if (tipoLancamento === 1 && !validarQuantidadeEstoque(quantidade)) {
       return;
     }
 
-    // Verifica se a quantidade é maior que o estoque disponível
-    if (!validarQuantidadeEstoque(quantidade)) {
-      return;
-    }
+    // Conversão do dado de moment para timestamp
+    let partes = date.split("/"); //DD MM YYYY  [DD, MM , YYYY]
+    let dataTimeStamp = new Date(`${partes[2]}-${partes[1]}-${partes[0]}`);
+    dataTimeStamp = moment(dataTimeStamp);
 
-    // Objeto que representa a transação realizada
-    const transacao = {
-      tipoLancamento: 1,
+    // Objeto que representa a transação de venda
+    let lancamento = {
+      tipo: tipoLancamento,
       produto: {
         nome: produtoSelecionado.nome,
-        id: produtoSelecionado.id
+        id: produtoSelecionado.id,
       },
       quantidade: parseFloat(quantidade),
-      ...(date && { dataSaida: date }),
+      dataSaida: null, // Recebe o valor de date se o tipo for "1" saída
+      dataEntrada: null, // Recebe o valor de date se o tipo for "0" entrada
     };
 
-    console.log("Objeto transacao enviado:", transacao);
+    // Condicional para idenficar qual o tipo da transação ao salvar os dados nas variáveis(entrada ou saída)
+    if (tipoLancamento === 1) {
+      lancamento.dataSaida = dataTimeStamp.format("YYYY-MM-DD");
+    } else if (tipoLancamento === 0) {
+      lancamento.dataEntrada = dataTimeStamp.format("YYYY-MM-DD");
+      lancamento.quantidade = quantidadeSolicitada;
+    }
 
     // Envio da transação para o JSON Server
-    axios
-      .put("http://192.168.100.26:8081/lancamento", transacao)
-      .then((response) => {
-        console.log("Transação salva:", response.data);
-        Alert.alert("Venda realizada com sucesso!");
+    lancamentoService
+      .cadastrar(lancamento)
+      .then(() => {
+        //Mostra um alerta de sucesso
+        Alert.alert("Lançamento registrado com sucesso!");
+
+        //Limpar os campos após salvar   map , filter , find  , reduce
+        setProdutoSelecionado(null);
+        setTamanho("");
+        setQuantidade("");
+        setDate("");
+        setPrecoTotal(0);
+        setTipoLancamento(null);
       })
       .catch((error) => {
-        console.error("Erro ao salvar a transação:", error);
+        Alert.alert(
+          "Erro ao registrar a venda:",
+          error.response ? error.response.data : error.message
+        ); // Mostra um alerta em caso de erro
       });
-
-    //Limpar os campos após salvar
-    setProdutoSelecionado(null);
-    setTamanho("");
-    setQuantidade("");
-    setDate("");
-    setPrecoTotal(0);
   }
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <View style={styles.container}>
+      <KeyboardAvoidingView 
+        style={styles.container}
+        behavior={Platform.OS === "ios" ? "padding" : "heigth"} //Ajuste para o teclado não ficar sobre os formulários
+        keyboardVerticalOffset={75}
+        >
         <Header titulo="Lançamentos" navigation={navigation} />
         <ScrollView showsVerticalScrollIndicator={false}>
           <View style={styles.ViewTipoLancamento}>
@@ -159,7 +202,7 @@ export default function IntegracaoDeVendas({ navigation }) {
                 data={produtos} // Dados carregados dos produtos
                 search
                 maxHeight={300}
-                labelField="nome" //Campo do nome do produto
+                labelField="nomeTamanho" //Campo do nome do produto
                 valueField="id" //Identificador do produto
                 placeholder="Selecione o Produto..."
                 searchPlaceholder="Buscar..."
@@ -178,6 +221,9 @@ export default function IntegracaoDeVendas({ navigation }) {
                 {/* Exibe o nome do produto, preço e estoque disponível */}
                 <Text style={styles.textSell}>
                   Nome do Produto: {produtoSelecionado.nome}{" "}
+                </Text>
+                <Text style={styles.textSell}>
+                  Descrição: {produtoSelecionado.descricao}{" "}
                 </Text>
                 <Text style={styles.textSell}>
                   Preço: R$ {produtoSelecionado.preco?.toFixed(2)}{" "}
@@ -218,8 +264,15 @@ export default function IntegracaoDeVendas({ navigation }) {
                 <Text style={styles.textSell}>
                   Produto: {produtoSelecionado.nome}{" "}
                 </Text>
-                <Text style={styles.textSell}>Tamanho: {produtoSelecionado.tamanho} </Text>
-                <Text style={styles.textSell}>Vendido: {quantidade} Unidades </Text>
+                <Text style={styles.textSell}>
+                  Descrição: {produtoSelecionado.descricao}{" "}
+                </Text>
+                <Text style={styles.textSell}>
+                  Tamanho: {produtoSelecionado.tamanho}{" "}
+                </Text>
+                <Text style={styles.textSell}>
+                  Vendido: {quantidade} Unidades{" "}
+                </Text>
                 <Text style={styles.textSell}>Data da Venda: {date} </Text>
                 <Text style={styles.textSell}>
                   Preço Total: R$ {precoTotal?.toFixed(2)}{" "}
@@ -265,7 +318,7 @@ export default function IntegracaoDeVendas({ navigation }) {
                   data={produtos} // Dados carregados dos produtos
                   search
                   maxHeight={300}
-                  labelField="nomeDoProduto" //Campo do nome do produto
+                  labelField="nomeTamanho" //Campo do nome do produto
                   valueField="id" //Identificador do produto
                   placeholder="Selecione o Produto..."
                   searchPlaceholder="Buscar..."
@@ -286,11 +339,21 @@ export default function IntegracaoDeVendas({ navigation }) {
                     <TextInput
                       style={styles.quantidadeInput}
                       placeholder="Nome do Produto"
-                      //onChangeText={(Input) => changeName(Input)}
                       value={
                         produtoSelecionado
-                          ? produtoSelecionado.nomeDoProduto
+                          ? produtoSelecionado.nome
                           : "Nenhum produto selecionado"
+                      }
+                      editable={false}
+                    />
+                  </View>
+
+                  <View>
+                    <Text style={styles.textAdd}>Descrição:</Text>
+                    <TextInput
+                      style={styles.quantidadeInput}
+                      value={
+                        produtoSelecionado ? produtoSelecionado.descricao : "Nenhum tamanho selecionado"
                       }
                       editable={false}
                     />
@@ -301,9 +364,19 @@ export default function IntegracaoDeVendas({ navigation }) {
                     <TextInput
                       style={styles.quantidadeInput}
                       value={
-                        tamanho ? tamanho.tamanho : "Nenhum tamanho selecionado"
+                        produtoSelecionado
+                          ? produtoSelecionado.tamanho
+                          : "Nenhum tamanho selecionado"
                       }
                       editable={false}
+                    />
+                  </View>
+
+                  <View>
+                    <Text style={styles.textAdd}>Data da Entrada:</Text>
+                    <DatePicker
+                      data={Date}
+                      onDateChange={(selectedDate) => setDate(selectedDate)}
                     />
                   </View>
 
@@ -322,7 +395,7 @@ export default function IntegracaoDeVendas({ navigation }) {
 
                 <View style={styles.BoxButtonAdd}>
                   <TouchableOpacity
-                    //onPress={adicionarEstoqueProduto}
+                    onPress={salvarTransacao}
                     style={styles.saveButton}
                   >
                     <Text style={styles.buttonText}>Salvar</Text>
@@ -347,7 +420,7 @@ export default function IntegracaoDeVendas({ navigation }) {
             </View>
           )}
         </ScrollView>
-      </View>
+      </KeyboardAvoidingView>
     </TouchableWithoutFeedback>
   );
 }

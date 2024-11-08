@@ -2,7 +2,7 @@ import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 //URL principal
-const API_URL = "http://192.168.100.26:8080"; // URL base da API
+const API_URL = "http://192.168.100.28:8080"; // URL base da API
 
 //Classe para realizar requisições pegando os dados a partir da URL principal
 export class CoreService {
