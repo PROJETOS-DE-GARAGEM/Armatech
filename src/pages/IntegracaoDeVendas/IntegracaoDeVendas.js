@@ -29,6 +29,7 @@ export default function IntegracaoDeVendas({ navigation }) {
   const [produtos, setProdutos] = useState([]);
   const [date, setDate] = useState("");
   const [tipoLancamento, setTipoLancamento] = useState(null);
+  const [reload, setReload] = useState(false);
 
   // Estados para o controle dos seletores
   const [isTipoLancamentoDisabled, setIsTipoLancamentoDisabled] =
@@ -56,7 +57,7 @@ export default function IntegracaoDeVendas({ navigation }) {
       .catch((error) => {
         Alert.alert("Erro ao carregar os produtos", error.message);
       }); //Caso ocorra erro, exibe o alerta
-  }, []); // Indica que o useEffect será executado apenas uma vez
+  }, [reload]); // Indica que o useEffect será executado apenas uma vez
 
   // 3.Função para calcular o preço total com base na quantidade e no produto selecionado
   function calcularPrecoTotal(quantidade) {
@@ -143,6 +144,8 @@ export default function IntegracaoDeVendas({ navigation }) {
         setDate("");
         setPrecoTotal(0);
         setTipoLancamento(null);
+        // Atualizar o estado 'reload' para recarregar os dados
+        setReload((prev) => !prev); // Alterna entre true e false
       })
       .catch((error) => {
         Alert.alert(
