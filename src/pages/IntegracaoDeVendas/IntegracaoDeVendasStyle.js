@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, Platform } from "react-native";
 
 const styles = StyleSheet.create({
   container: {
@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
   },
 
   text: {
-    paddingTop: "5%",
+    paddingTop: 15,
     marginLeft: "5%",
     color: "#fff",
     fontSize: 18,
@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
   boxSell: {
     backgroundColor: "#fff",
     width: 370,
-    height: 240,
+    height: Platform.OS === 'ios' ? 250 : 295,
     borderRadius: 10,
     padding: "4%",
     gap: 10,
@@ -106,10 +106,10 @@ const styles = StyleSheet.create({
   boxTransaction: {
     backgroundColor: "#fff",
     width: 370,
-    height: 225,
+    height: Platform.OS === 'ios' ? 200 : 230,
     borderRadius: 10,
     padding: "4%",
-    gap: 18,
+    gap: 10,
   },
 
   BoxButton: {
