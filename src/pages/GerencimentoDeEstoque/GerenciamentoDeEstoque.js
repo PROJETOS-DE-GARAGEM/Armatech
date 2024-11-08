@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useFocusEffect } from '@react-navigation/native'; // Importando useFocusEffect
 import { View, Text, TouchableOpacity, FlatList, Alert } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
@@ -34,6 +35,13 @@ export default function GerenciamentoDeEstoque({ navigation }) {
       console.error("Erro ao carregar produtos: ", error);
     }
   }
+
+  // Usando useFocusEffect para recarregar os dados sempre que a tela for aberta
+  useFocusEffect(
+    React.useCallback(() => {
+      carregarProdutos(); // Recarrega os produtos sempre que a tela for exibida
+    }, []) // O array vazio garante que a função seja chamada apenas quando a tela ganhar o foco
+  );
 
   useEffect(() => {
     carregarProdutos();
