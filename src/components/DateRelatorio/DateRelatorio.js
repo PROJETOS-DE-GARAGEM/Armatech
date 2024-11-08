@@ -5,7 +5,8 @@ import FontAwesome from "@expo/vector-icons/FontAwesome";
 import style from "./DateRelatorioStyle";
 
 const DateRelatorio = ({ onStartDateChange, onEndDateChange, onConfirm }) => {
-  const [isStartDatePickerVisible, setStartDatePickerVisibility] = useState(false);
+  const [isStartDatePickerVisible, setStartDatePickerVisibility] =
+    useState(false);
   const [isEndDatePickerVisible, setEndDatePickerVisibility] = useState(false);
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
@@ -34,6 +35,10 @@ const DateRelatorio = ({ onStartDateChange, onEndDateChange, onConfirm }) => {
 
   // Função para confirmar o intervalo de datas
   const handleConfirmDates = () => {
+    if (!startDate || !endDate) {
+      alert("Por favor, selecione tanto a data inicial quanto a data final."); // Exibe um alerta amigável
+      return;
+    }
     onConfirm(startDate, endDate);
   };
 
@@ -48,8 +53,16 @@ const DateRelatorio = ({ onStartDateChange, onEndDateChange, onConfirm }) => {
           value={startDate || ""}
           editable={false}
         />
-        <TouchableOpacity onPress={showStartDatePicker} style={style.ButtonIconPicker}>
-          <FontAwesome name="calendar" size={20} color="gray" style={style.iconCalendario} />
+        <TouchableOpacity
+          onPress={showStartDatePicker}
+          style={style.ButtonIconPicker}
+        >
+          <FontAwesome
+            name="calendar"
+            size={20}
+            color="gray"
+            style={style.iconCalendario}
+          />
         </TouchableOpacity>
       </View>
 
@@ -62,13 +75,24 @@ const DateRelatorio = ({ onStartDateChange, onEndDateChange, onConfirm }) => {
           value={endDate || ""}
           editable={false}
         />
-        <TouchableOpacity onPress={showEndDatePicker} style={style.ButtonIconPicker}>
-          <FontAwesome name="calendar" size={20} color="gray" style={style.iconCalendario} />
+        <TouchableOpacity
+          onPress={showEndDatePicker}
+          style={style.ButtonIconPicker}
+        >
+          <FontAwesome
+            name="calendar"
+            size={20}
+            color="gray"
+            style={style.iconCalendario}
+          />
         </TouchableOpacity>
       </View>
 
       {/* Botão Confirmar Sempre Visível */}
-      <TouchableOpacity onPress={handleConfirmDates} style={style.ButtonIconConfirm}>
+      <TouchableOpacity
+        onPress={handleConfirmDates}
+        style={style.ButtonIconConfirm}
+      >
         <FontAwesome name="check-circle" size={30} color="green" />
       </TouchableOpacity>
 
@@ -84,7 +108,11 @@ const DateRelatorio = ({ onStartDateChange, onEndDateChange, onConfirm }) => {
         mode="date"
         onConfirm={handleConfirmEndDate}
         onCancel={hideEndDatePicker}
-        minimumDate={startDate ? new Date(startDate.split("/").reverse().join("-")) : new Date()}
+        minimumDate={
+          startDate
+            ? new Date(startDate.split("/").reverse().join("-"))
+            : new Date()
+        }
       />
     </View>
   );

@@ -3,7 +3,7 @@
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const API_URL = "http://192.168.1.10:8080"; // URL base da API
+const API_URL = "http://192.168.18.14:8080"; // URL base da API
 
 class UsuarioService {
   // Função para registrar um novo usuário

@@ -38,10 +38,10 @@ const style = StyleSheet.create({
         borderRadius: 5,
         padding: 15,
     },
-    viewTittleResultMensal: {
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
+    // viewTittleResultMensal: {
+    //     justifyContent: 'center',
+    //     alignItems: 'center',
+    // },
     ViewDetailsResultSize: {
 
     },
