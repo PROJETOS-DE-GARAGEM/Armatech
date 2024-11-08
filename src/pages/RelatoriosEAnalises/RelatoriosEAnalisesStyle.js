@@ -52,6 +52,13 @@ const style = StyleSheet.create({
         fontWeight: "bold",
         paddingTop: 20,
         marginStart: '5%',
+    },
+
+    itemContainer: {
+        marginBottom: 10,
+    }, textContainer: {
+        fontSize: 15,
+        
     }
 })
 

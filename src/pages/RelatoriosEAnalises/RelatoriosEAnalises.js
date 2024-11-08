@@ -90,18 +90,18 @@ export default function RelatoriosEAnalises({ navigation }) {
           {/* Resumo de Movimentações */}
           <View style={style.ViewResultsBox}>
             <Text style={style.tittleResultMensal}>Resumo de Movimentações</Text>
-            <Text>Lançamento de Entrada: {totalEntradas} peças</Text>
-            <Text>Lançamento de Saída: {totalSaidas} peças</Text>
+            <Text style={style.textContainer}>Lançamento de Entrada: {totalEntradas} peças</Text>
+            <Text style={style.textContainer}>Lançamento de Saída: {totalSaidas} peças</Text>
           </View>
 
           {/* Resumo de Entradas */}
           <View style={style.ViewResultsBox}>
             <Text style={style.tittleResultMensal}>Resumo de Entradas</Text>
             {entradas.map((item, index) => (
-              <View key={index}>
-                <Text>Produto: {item.produto?.nome || "Desconhecido"}</Text>
-                <Text>Quantidade: {item.quantidade}</Text>
-                <Text>Data de Entrada: {formatDate(item.dataEntrada)}</Text>
+              <View key={index} style={style.itemContainer}>
+                <Text style={style.textContainer}>Produto: {item.produto?.nome || "Desconhecido"}</Text>
+                <Text style={style.textContainer}>Quantidade: {item.quantidade}</Text>
+                <Text style={style.textContainer}>Data de Entrada: {formatDate(item.dataEntrada)}</Text>
               </View>
             ))}
           </View>
@@ -110,11 +110,11 @@ export default function RelatoriosEAnalises({ navigation }) {
           <View style={style.ViewResultsBox}>
             <Text style={style.tittleResultMensal}>Resumo de Saídas</Text>
             {saidas.map((item, index) => (
-              <View key={index}>
-                <Text>Produto: {item.produto?.nome || "Desconhecido"}</Text>
-                <Text>Quantidade: {item.quantidade}</Text>
-                <Text>Valor Total: R$ {(item.quantidade * (item.produto?.preco || 0)).toFixed(2)}</Text>
-                <Text>Data de Saída: {formatDate(item.dataSaida)}</Text>
+              <View key={index} style={style.itemContainer}>
+                <Text style={style.textContainer}>Produto: {item.produto?.nome || "Desconhecido"}</Text>
+                <Text style={style.textContainer}>Quantidade: {item.quantidade}</Text>
+                <Text style={style.textContainer}>Valor Total: R$ {(item.quantidade * (item.produto?.preco || 0)).toFixed(2)}</Text>
+                <Text style={style.textContainer}>Data de Saída: {formatDate(item.dataSaida)}</Text>
               </View>
             ))}
           </View>
@@ -122,7 +122,7 @@ export default function RelatoriosEAnalises({ navigation }) {
           {/* Faturamento */}
           <View style={style.ViewResultsBox}>
             <Text style={style.tittleResultMensal}>Faturamento</Text>
-            <Text>Total Vendido (R$): R$ {totalFaturamento}</Text>
+            <Text style={style.textContainer}>Total Vendido (R$): R$ {totalFaturamento}</Text>
           </View>
         </View>
       </ScrollView>
