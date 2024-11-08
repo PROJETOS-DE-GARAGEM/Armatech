@@ -45,6 +45,14 @@ const style = StyleSheet.create({
     ViewDetailsResultSize: {
 
     },
+
+    dateText: {
+        color: "#fff",
+        fontSize: 20,
+        fontWeight: "bold",
+        paddingTop: 20,
+        marginStart: '5%',
+    }
 })
 
 export default style;

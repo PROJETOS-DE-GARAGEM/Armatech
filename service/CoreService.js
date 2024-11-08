@@ -2,7 +2,7 @@ import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 //URL principal
-const API_URL = "http:8080"; // URL base da API
+const API_URL = "http:192.168.1.10:8080"; // URL base da API
 
 //Classe para realizar requisições pegando os dados a partir da URL principal
 export class CoreService {
@@ -81,3 +81,20 @@ export class CoreService {
       throw error;
     }
   }
+
+  async listarLancamento() {
+    try {
+      const token = await AsyncStorage.getItem("token");
+      const response = await axios.get(`${API_URL}${this.resource}`, {
+         headers: {
+           Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+      },
+    });
+      return response.data;
+    } catch (error) {
+      console.error("Erro ao listar os lançamento:", error);
+      throw error;
+    }
+  }
+}
