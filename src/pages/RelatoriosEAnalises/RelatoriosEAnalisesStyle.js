@@ -38,13 +38,28 @@ const style = StyleSheet.create({
         borderRadius: 5,
         padding: 15,
     },
-    viewTittleResultMensal: {
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
+    // viewTittleResultMensal: {
+    //     justifyContent: 'center',
+    //     alignItems: 'center',
+    // },
     ViewDetailsResultSize: {
 
     },
+
+    dateText: {
+        color: "#fff",
+        fontSize: 20,
+        fontWeight: "bold",
+        paddingTop: 20,
+        marginStart: '5%',
+    },
+
+    itemContainer: {
+        marginBottom: 10,
+    }, textContainer: {
+        fontSize: 15,
+        
+    }
 })
 
 export default style;
