@@ -128,7 +128,7 @@ export default function RegistroDeProdutos({ navigation }) {
 
           <View style={style.boxContainer}>
             <View style={style.boxDescription}>
-              <Text style={style.text}>Tipo de Produto</Text>
+              <Text style={style.text}>Tipo de Tamanho</Text>
               <Dropdown
                 style={style.dropdown}
                 placeholderStyle={style.placeholderStyle}
