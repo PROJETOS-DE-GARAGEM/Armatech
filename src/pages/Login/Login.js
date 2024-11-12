@@ -14,14 +14,31 @@ import {
 import styles from "./LoginStyle";
 import * as Animatable from "react-native-animatable";
 import UsuarioService from "../../../service/UsuarioService";
+import ModalForgotPassword from "../../components/RecuperacaoSenhaModal/RecuperacaoSenha"
 
 const usuarioService = new UsuarioService();
 //Componente recebe a propriedade navigation para utilizar suas funcionalidades
 export default function Login({ navigation }) {
+
+
+
   //Armazena e atualiza o estado dos dados informado pelo usuário
   const [email, setEmail] = useState("test3@gmail.com");
   const [senha, setSenha] = useState("1234");
   const [loading, setLoading] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
+
+  //Função para abiri o modal
+  const abrirModal = () => {
+    setModalVisible(true);
+  }
+
+  //Função para enviar o email de recuperação de senha
+  const enviarEmail = () => {
+    console.alert("Email de recuperação de senha enviado! Verique a sua mailbox.");
+    setModalVisible(false);
+
+  }
 
   const handleLogin = async () => {
     if (!email || !senha) {
@@ -103,8 +120,20 @@ export default function Login({ navigation }) {
               style={styles.buttonRegister}
             >
               <Text style={styles.registerText}>
-                Não possui uma conta? Cadastre-se
+                Não possui uma conta? Cadastre-se.
               </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+            style={styles.buttonForgotPassword}
+            onPress={abrirModal}
+            >
+              
+              <Text style={styles.registerText}>Esqueceu a sua senha?</Text>
+              <ModalForgotPassword
+              modalVisible={modalVisible}
+              setModalVisible={setModalVisible}
+              enviar={enviarEmail}
+              />
             </TouchableOpacity>
           </Animatable.View>
         </View>

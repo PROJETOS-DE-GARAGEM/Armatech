@@ -59,7 +59,11 @@ const styles = StyleSheet.create({
   },
   //Style do botão para fazer o cadastro
   buttonRegister: {
-    marginTop: 14,
+    marginTop: 10,
+    alignSelf: "center",
+  },
+
+  buttonForgotPassword: {
     alignSelf: "center",
   },
 
