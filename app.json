@@ -2,6 +2,7 @@
   "expo": {
     "name": "armatech",
     "slug": "test",
+    "scheme": "armatech",
     "version": "1.0.0",
     "orientation": "portrait",
     "userInterfaceStyle": "automatic",

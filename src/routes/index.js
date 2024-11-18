@@ -16,6 +16,7 @@ import IntegracaoDeVendas from "../pages/IntegracaoDeVendas/IntegracaoDeVendas";
 import UsuariosEPermissoes from "../pages/UsuariosEPermissoes/UsuariosEPermissoes";
 import ProcessamentoDeCompras from "../pages/ProcessamentoDeCompras/ProcessamentoDeCompras";
 import BottomTabNavigator from './BottomTabNavigator';
+import ResetPassword from "../pages/ResetPassword/ResetPassword";
 
 
 //Passando a função para uma constante para utilizar as suas funcionalidades
@@ -144,6 +145,11 @@ export default function Routes() {
             gestureEnabled: false, // Desativa o gesto de voltar
           }}
         />
+         <Stack.Screen
+        name="ResetPassword" // Rota para redefinição de senha
+        component={ResetPassword} // Componente criado para redefinir senha
+        options={{ headerShown: false }} // Pode personalizar o cabeçalho
+      />
       </Stack.Navigator>
   );
 }
