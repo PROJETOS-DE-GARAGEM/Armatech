@@ -2,7 +2,8 @@ import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 //URL principal
-const API_URL = "http://192.168.100.28:8080"; // URL base da API
+
+const API_URL = "http://192.168.18.14:8080"; // URL base da API
 
 //Classe para realizar requisições pegando os dados a partir da URL principal
 export class CoreService {
@@ -90,7 +91,7 @@ export class CoreService {
     }
   }
 
-  async listarLancamento(startDate, endDate) {
+  async listarLancamento(dataComeco, dataFim) {
     try {
       const token = await AsyncStorage.getItem("token");
       const response = await axios.get(`${API_URL}${this.resource}`, {
@@ -99,8 +100,8 @@ export class CoreService {
           "Content-Type": "application/json",
         },
         params: {
-          startDate,
-          endDate,
+          dataComeco,
+          dataFim,
         },
       });
       return response.data;

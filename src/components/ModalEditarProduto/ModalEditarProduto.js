@@ -52,11 +52,13 @@ const ModalEditarProduto = ({
             <View style={styles.boxDescription}>
               <Text style={styles.text}>Preço</Text>
               <TextInput
-                value={produtoEditado?.preco?.toFixed(2) || ""}
+                value={produtoEditado?.preco.toString() || ""}
+                onChangeText={(valor) =>
+                  atualizarProduto("preco", valor)
+                }
                 placeholder="Preco"
                 keyboardType="numeric"
                 style={styles.TextInput}
-                editable={false}
               />
             </View>
 

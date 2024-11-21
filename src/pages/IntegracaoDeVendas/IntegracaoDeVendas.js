@@ -190,9 +190,9 @@ export default function IntegracaoDeVendas({ navigation }) {
             />
           </View>
           {isSearchEnable && tipoLancamento === 1 && (
-            <View>
+            <View style={styles.dropdownContainer}>
               <Text style={styles.text}>Pesquisar Produto: </Text>
-              {/* Dropdown */}
+              {/* Dropdown Pesquisar Produto*/}
               <Dropdown
                 style={styles.dropdown}
                 placeholderStyle={styles.placeholderStyle}
@@ -308,7 +308,7 @@ export default function IntegracaoDeVendas({ navigation }) {
           {/* Adicionar Estoque */}
           {tipoLancamento === 0 && (
             <View>
-              <View>
+              <View style={styles.dropdownContainer}>
                 <Text style={styles.text}>Selecione o Produto: </Text>
                 <Dropdown
                   style={styles.dropdown}
@@ -357,7 +357,7 @@ export default function IntegracaoDeVendas({ navigation }) {
                       value={
                         produtoSelecionado
                           ? produtoSelecionado.descricao
-                          : "Nenhum tamanho selecionado"
+                          : "Não há informações sobre o produto"
                       }
                       editable={false}
                     />

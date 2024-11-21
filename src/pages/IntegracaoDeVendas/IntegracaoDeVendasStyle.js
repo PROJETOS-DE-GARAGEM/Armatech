@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
   },
   boxSell: {
     backgroundColor: "#fff",
-    width: 370,
+    width: '90%',
     height: Platform.OS === 'ios' ? 250 : 295,
     borderRadius: 10,
     padding: "4%",
@@ -105,7 +105,7 @@ const styles = StyleSheet.create({
   },
   boxTransaction: {
     backgroundColor: "#fff",
-    width: 370,
+    width: '90%',
     height: Platform.OS === 'ios' ? 200 : 230,
     borderRadius: 10,
     padding: "4%",
@@ -136,7 +136,7 @@ const styles = StyleSheet.create({
   },
 
   buttonText: {
-    fontSize: 15,
+    fontSize: 17,
     fontWeight: "bold",
     color: '#fff'
   },
@@ -162,7 +162,7 @@ const styles = StyleSheet.create({
   },
   boxTransactionAdd: {
     backgroundColor: "#fff",
-    width: 370,
+    width: '90%',
     borderRadius: 10,
     padding: "4%",
   },
@@ -189,6 +189,9 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     gap: 50,
     marginTop: 15,
+  },
+  dropdownContainer: {
+    marginTop: -15,
   },
 });
 
