@@ -39,6 +39,7 @@ const styles = StyleSheet.create({
     height: 40,
     marginBottom: 12,
     fontSize: 16,
+    width: "100%",
   },
 
   //Style do botão do formulario
@@ -66,6 +67,16 @@ const styles = StyleSheet.create({
   //Style do texto do botão
   registerText: {
     color: "#a1a1a1",
+  },
+
+  inputContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  eyeIcon: {
+    right: 25,
+    alignSelf: "center",
+    marginBottom: 10
   },
 });
 

@@ -35,6 +35,7 @@ const styles = StyleSheet.create({
     height: 40,
     marginBottom: 12,
     fontSize: 16,
+    width: "100%"
   },
   button: {
     backgroundColor: "#283949",
@@ -50,7 +51,16 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontSize: 18,
     fontWeight: "bold",
-  }
+  },
+  inputContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  eyeIcon: {
+    right: 25,
+    alignSelf: "center",
+    marginBottom: 10
+  },
 });
 
 export default styles;

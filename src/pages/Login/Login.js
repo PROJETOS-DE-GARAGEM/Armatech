@@ -8,12 +8,13 @@ import {
   KeyboardAvoidingView,
   Platform,
   Alert,
-  ActivityIndicator
+  ActivityIndicator,
 } from "react-native";
 // import { autenticarUsuario } from "../../../service/AutenticarUsuario";
 import styles from "./LoginStyle";
 import * as Animatable from "react-native-animatable";
 import UsuarioService from "../../../service/UsuarioService";
+import { Ionicons } from "@expo/vector-icons"; // Ícones do Expo
 
 const usuarioService = new UsuarioService();
 //Componente recebe a propriedade navigation para utilizar suas funcionalidades
@@ -21,6 +22,7 @@ export default function Login({ navigation }) {
   //Armazena e atualiza o estado dos dados informado pelo usuário
   const [email, setEmail] = useState("test3@gmail.com");
   const [senha, setSenha] = useState("1234");
+  const [senhaVisivel, setSenhaVisivel] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const handleLogin = async () => {
@@ -82,13 +84,26 @@ export default function Login({ navigation }) {
               autoCapitalize="none" //Evita a capitalização automática no início
             />
             <Text style={styles.title}>Senha</Text>
-            <TextInput
-              placeholder="Digite sua senha..."
-              style={styles.input}
-              value={senha} //Define o valor do TextInput com o estado de
-              onChangeText={setSenha} //Atualiza o estado da senha
-              secureTextEntry={true} //Ocultar a senha digitada pelo usuário
-            />
+            <View style={styles.inputContainer}>
+        <TextInput
+          placeholder="Digite sua senha..."
+          style={styles.input}
+          value={senha}
+          onChangeText={setSenha}
+          secureTextEntry={!senhaVisivel} // Alterna visibilidade da senha
+        />
+        <TouchableOpacity
+          onPress={() => setSenhaVisivel(!senhaVisivel)}
+          // style={styles.eyeIcon}
+        >
+          <Ionicons
+          style={styles.eyeIcon}
+            name={senhaVisivel ? "eye" : "eye-off"} // Ícone alternado
+            size={24}
+            color="gray"
+          />
+        </TouchableOpacity>
+      </View>
 
             {/* Exibe o indicador de carregamento enquanto `loading` for verdadeiro */}
             {loading ? (
