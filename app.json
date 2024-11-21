@@ -11,16 +11,18 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "armatech.ios.test"
+      "bundleIdentifier": "armatech.ios.test",
+      "newArchEnabled": false
     },
     "android": {
+      "newArchEnabled": false,
       "adaptiveIcon": {
         "backgroundColor": "#ffffff"
       },
       "package": "armatech.android.test"
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": null
     },
     "extra": {
       "eas": {
