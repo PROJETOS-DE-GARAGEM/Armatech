@@ -1,6 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { useFocusEffect } from '@react-navigation/native'; // Importando useFocusEffect
-import { View, Text, TouchableOpacity, FlatList, Alert } from "react-native";
+import { useFocusEffect } from "@react-navigation/native"; // Importando useFocusEffect
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  FlatList,
+  Alert,
+  ScrollView,
+} from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { Dropdown } from "react-native-element-dropdown";
@@ -25,10 +32,7 @@ export default function GerenciamentoDeEstoque({ navigation }) {
     try {
       //const produtoService = new ProdutoService();
       const produtoListados = await produtoService.listarProdutos(); //Buscar os produtos da API
-      setProdutos([
-        { id: 0, nome: "Todos os Produtos" },
-        ...produtoListados,
-      ]); // Adiciona a opção "Todos os Produtos"
+      setProdutos([{ id: 0, nome: "Todos os Produtos" }, ...produtoListados]); // Adiciona a opção "Todos os Produtos"
       setProdutosFiltrados(produtoListados); //Inicia exibindo todos os produtos mas poderá ao pesquisar um produto especifico
     } catch (error) {
       setErro("Erro ao carregar produtos");
@@ -49,7 +53,8 @@ export default function GerenciamentoDeEstoque({ navigation }) {
 
   // Abrir o modal de edição ao clicar no ícone de edição
   const abrirModalEdicao = (produto) => {
-    console.log("produto selecionad: ", produto);
+    //produto.preco.toString();
+    console.log("produto selecionado: ", produto);
     setprodutoEditado(produto); // Define o produto a ser editado
     setModalVisible(true); // Exibe o modal
   };
@@ -59,8 +64,11 @@ export default function GerenciamentoDeEstoque({ navigation }) {
     try {
       await produtoService.editarProduto(produtoEditado.id, produtoEditado); // Chama o serviço para editar o produto
       setModalVisible(false); // Fecha o modal após salvar // Atualiza a lista de produtos após a edição
-      setProdutos((produtos) => // Atualiza a lista de produtos após a edição
-        produtos.map((p) => (p.id === produtoEditado.id ? produtoEditado : p))
+      setProdutos(
+        (
+          produtos // Atualiza a lista de produtos após a edição
+        ) =>
+          produtos.map((p) => (p.id === produtoEditado.id ? produtoEditado : p))
       );
       Alert.alert("Sucesso", "Produto atualizado com sucesso!");
       carregarProdutos();
@@ -114,7 +122,9 @@ export default function GerenciamentoDeEstoque({ navigation }) {
           <Text style={style.nameList}>{item.nome}</Text>
           <Text style={style.detailsList}>Descrição: {item.descricao}</Text>
           <Text style={style.detailsList}>Tamanho: {item.tamanho}</Text>
-          <Text style={style.detailsList}>Preço: {item.preco.toFixed(2)}R$</Text>
+          <Text style={style.detailsList}>
+            Preço: R${item.preco.toFixed(2)}
+          </Text>
           <Text style={style.detailsList}>
             Estoque Disponível: {item.quantidade} Unidades
           </Text>
@@ -152,16 +162,12 @@ export default function GerenciamentoDeEstoque({ navigation }) {
   return (
     <View style={style.container}>
       <Header titulo="Gerenciamento de Estoque" navigation={navigation} />
-
       <View style={style.ViewTitle}>
         <Text style={style.textTitle}>Lista de Produtos</Text>
-        {/* <TouchableOpacity style={style.buttonAddProduct}>
-          <Text style={style.textButton}>Adicionar</Text>
-        </TouchableOpacity> */}
       </View>
+
       <View style={style.containerDropdown}>
         <Text style={style.text}>Pesquisar Produto: </Text>
-
         <Dropdown
           style={style.dropdown}
           placeholderStyle={style.placeholderStyle}
@@ -186,14 +192,13 @@ export default function GerenciamentoDeEstoque({ navigation }) {
 
       {/* Exibe erro caso exista */}
       {erro ? <Text style={style.errorText}>{erro}</Text> : null}
-
-      <View style={style.ViewFlatlist}>
-        <FlatList
-          data={produtosFiltrados} //Mostra apenas os três primeiros produtos
-          keyExtractor={(item) => String(item.id)}
-          renderItem={({ item }) => renderOption(item)}
-        />
-      </View>
+        <View style={style.ViewFlatlist}>
+          <FlatList
+            data={produtosFiltrados}
+            keyExtractor={(item) => String(item.id)}
+            renderItem={({ item }) => renderOption(item)}
+          />
+        </View>
 
       {/* Modal de edição */}
       <ModalEditarProduto
