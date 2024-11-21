@@ -24,18 +24,32 @@ const style = StyleSheet.create({
     fontSize: 15,
     textAlign: "justify",
   },
-  boxIcons: {
-    gap: 50,
-    marginTop: 15,
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
+  boxDetails: {
+    marginTop: 20,
+    backgroundColor: '#fff',
+    width: '90%',
+    marginEnd: '5%',
+    marginStart: '5%',
+    borderRadius: 10,
   },
-  textLinking: {
-    marginTop: 30,
-    color: "#fff",
-    fontSize: 15,
-    textAlign: "justify",
+  titleBox: {
+    margin: 15,
+    gap: 10,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  textTitleBox: {
+    color: '#283949',
+    fontSize: 17,
+    fontWeight: 'bold',
+    fontStyle: 'italic',
+  },
+  textDetailsBox: {
+    color: '#283949',
+    fontSize: 16,
+    alignItems: 'center',
+    textAlign: 'justify',
+    margin: 10
   },
 });
 
