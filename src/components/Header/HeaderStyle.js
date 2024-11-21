@@ -5,7 +5,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "space-between",
+    justifyContent: "center",
     paddingHorizontal: 15,
     borderBottomLeftRadius: 10,
     borderBottomRightRadius: 10,
@@ -14,8 +14,10 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "bold",
   },
+  iconContainer: {
+    position: "absolute", // Faz o ícone ficar à esquerda
+    left: 20, // Ajuste conforme necessário para distanciar do início
+  },
 });
 
 export default styles;
-
-

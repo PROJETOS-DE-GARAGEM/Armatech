@@ -5,21 +5,18 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#283949",
   },
-
-  //Style do container do header
-  containerHeader: {
+  titleContainer: {
     marginTop: "18%",
     marginBottom: "8%",
     paddingStart: "5%",
   },
-  //Style da Mensagem
-  message: {
+
+  title: {
     fontSize: 28,
     fontWeight: "bold",
     color: "#fff",
   },
 
-  //Style do formulario do login
   containerForm: {
     flex: 1,
     backgroundColor: "#fff",
@@ -28,21 +25,18 @@ const styles = StyleSheet.create({
     paddingStart: "5%",
     paddingEnd: "5%",
   },
-  //Style do login e senha
-  title: {
+  text: {
     fontSize: 20,
     marginTop: 28,
   },
-  //Style do input do login e senha
+
   input: {
     borderBottomWidth: 1,
     height: 40,
     marginBottom: 12,
     fontSize: 16,
-    width: "100%",
+    width: "100%"
   },
-
-  //Style do botão do formulario
   button: {
     backgroundColor: "#283949",
     width: "100%",
@@ -52,23 +46,12 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-  //Style do texto do botão
+
   buttonText: {
     color: "#fff",
     fontSize: 18,
     fontWeight: "bold",
   },
-  //Style do botão para fazer o cadastro
-  buttonRegister: {
-    marginTop: 14,
-    alignSelf: "center",
-  },
-
-  //Style do texto do botão
-  registerText: {
-    color: "#a1a1a1",
-  },
-
   inputContainer: {
     flexDirection: "row",
     alignItems: "center",

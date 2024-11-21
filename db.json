@@ -1,0 +1,58 @@
+{
+  "users": [
+    {
+      "id": "1",
+      "email": "john@example.com",
+      "senha": "123"
+    }
+  ],
+  "produtos": [
+    {
+      "id": "8dc8",
+      "nomeDoProduto": "Saia ",
+      "descricao": "Azul",
+      "preco": 20,
+      "quantidade": "2"
+    },
+    {
+      "id": "2ec4",
+      "nomeDoProduto": "Pants ",
+      "descricao": "Gfcv",
+      "preco": "20.00",
+      "quantidade": "5",
+      "tamanho": "1",
+      "tipo": "2"
+    },
+    {
+      "id": "827b",
+      "nomeDoProduto": "Saia Zara",
+      "descricao": "Crepe Barbie Rosa",
+      "preco": "20.00",
+      "quantidade": "5",
+      "tamanho": "1",
+      "tipo": "1"
+    }
+  ],
+  "posts": [
+    {
+      "id": "1",
+      "title": "Hello World",
+      "content": "This is a post."
+    },
+    {
+      "id": "1188"
+    }
+  ],
+  "vendas": [
+    {
+      "id": "b8c1"
+    },
+    {
+      "id": "04e6",
+      "produto": "Pants ",
+      "tamanho": "M",
+      "quantidade": "4",
+      "precoTotal": 80
+    }
+  ]
+}
