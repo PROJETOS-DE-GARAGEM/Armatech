@@ -8,11 +8,12 @@ import {
   ScrollView,
   Platform,
   Alert,
-  ActivityIndicator
+  ActivityIndicator,
 } from "react-native";
 import styles from "./CadastroContaStyle";
 import * as Animatable from "react-native-animatable";
 import UsuarioService from "../../../service/UsuarioService";
+import { Ionicons } from "@expo/vector-icons";
 
 const usuarioService = new UsuarioService();
 
@@ -21,7 +22,9 @@ export default function CadastroConta({ navigation }) {
   const [email, setEmail] = useState();
   const [senha, setSenha] = useState();
   const [confirmarSenha, setConfirmarSenha] = useState();
-  const [loading, setLoading] = useState(false); 
+  const [senhaVisivel, setSenhaVisivel] = useState(false);
+  const [confirmarSenhaVisivel, setConfirmarSenhaVisivel] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   // Função de validação de email com o regex
   const validarEmail = (email) => {
@@ -49,22 +52,22 @@ export default function CadastroConta({ navigation }) {
       return;
     }
 
-        // Ativa o carregamento
-        setLoading(true);
+    // Ativa o carregamento
+    setLoading(true);
 
     try {
       //Chama o serviço para registrar o usuário
       const result = await usuarioService.registrarUsuario(nome, email, senha);
       if (result.status === 200 || result.status === 201) {
         console.log("Usuário cadastrado com sucesso!");
-         // Limpa os campos após o cadastro bem-sucedido
-         setNome("");
-         setEmail("");
-         setSenha("");
-         setConfirmarSenha("");
- 
-         // Navega para a tela de login
-         navigation.navigate("Login");
+        // Limpa os campos após o cadastro bem-sucedido
+        setNome("");
+        setEmail("");
+        setSenha("");
+        setConfirmarSenha("");
+
+        // Navega para a tela de login
+        navigation.navigate("Login");
       }
     } catch (error) {
       //Verifica se o erro vem de um email já existente
@@ -124,23 +127,46 @@ export default function CadastroConta({ navigation }) {
               autoCapitalize="none"
             />
             <Text style={styles.text}>Senha</Text>
-            <TextInput
-              style={styles.input}
-              placeholder="Senha"
-              value={senha}
-              onChangeText={setSenha}
-              secureTextEntry={true}
-            />
+            <View style={styles.inputContainer}>
+              <TextInput
+                style={styles.input}
+                placeholder="Senha"
+                value={senha}
+                onChangeText={setSenha}
+                secureTextEntry={!senhaVisivel}
+              />
+              <TouchableOpacity onPress={() => setSenhaVisivel(!senhaVisivel)}>
+                <Ionicons
+                  style={styles.eyeIcon}
+                  name={senhaVisivel ? "eye" : "eye-off"}
+                  size={24}
+                  color="gray"
+                />
+              </TouchableOpacity>
+            </View>
             <Text style={styles.text}>Confirmar Senha</Text>
-            <TextInput
-              style={styles.input}
-              placeholder="Confrimar senha"
-              value={confirmarSenha}
-              onChangeText={setConfirmarSenha}
-              secureTextEntry={true}
-            />
-             {/* Exibe o indicador de carregamento se `loading` for verdadeiro */}
-             {loading ? (
+            <View style={styles.inputContainer}>
+              <TextInput
+                style={styles.input}
+                placeholder="Confrimar senha"
+                value={confirmarSenha}
+                onChangeText={setConfirmarSenha}
+                secureTextEntry={!confirmarSenhaVisivel}
+              />
+              <TouchableOpacity
+                onPress={() => setConfirmarSenhaVisivel(!confirmarSenhaVisivel)}
+              >
+                <Ionicons
+                  style={styles.eyeIcon}
+                  name={confirmarSenhaVisivel ? "eye" : "eye-off"}
+                  size={24}
+                  color="gray"
+                />
+              </TouchableOpacity>
+            </View>
+
+            {/* Exibe o indicador de carregamento se `loading` for verdadeiro */}
+            {loading ? (
               <ActivityIndicator size="large" color="#007BFF" />
             ) : (
               <TouchableOpacity style={styles.button} onPress={handledCadastro}>
