@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useFocusEffect } from "@react-navigation/native";
 import {
   View,
   Text,
@@ -40,7 +41,8 @@ export default function IntegracaoDeVendas({ navigation }) {
   const lancamentoService = new LancamentoService(); // Insancia o serviço realizar os lançamentos
 
   // useEffect para carregar os produtos assim que os produtos é motado
-  useEffect(() => {
+  useFocusEffect(
+    React.useCallback(() => {
     service
       .listarProdutos() //Função para busca os produtos no servidor
       .then((response) => {
@@ -57,7 +59,7 @@ export default function IntegracaoDeVendas({ navigation }) {
       .catch((error) => {
         Alert.alert("Erro ao carregar os produtos", error.message);
       }); //Caso ocorra erro, exibe o alerta
-  }, [reload]); //A cada lançamento realizado o estado  de "reload" muda e chama UseEffect
+  }, [reload])); //A cada lançamento realizado o estado  de "reload" muda e chama UseEffect
 
   // 3.Função para calcular o preço total com base na quantidade e no produto selecionado
   function calcularPrecoTotal(quantidade) {
