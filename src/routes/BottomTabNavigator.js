@@ -1,10 +1,11 @@
 import React from "react"
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";   
 import { Ionicons } from '@expo/vector-icons';
+import Entypo from '@expo/vector-icons/Entypo';
 
 import Perfil from "../pages/Perfil/Perfil";
 import TelaMenu from "../pages/Menu/TelaMenu";
-import Ajustes from "../pages/Ajustes/Ajustes";
+import About from "../pages/Sobre/About";
 
 const Tab = createBottomTabNavigator();
 
@@ -42,11 +43,11 @@ export default function BottomTabNavigator(){
           }}
           />
         <Tab.Screen
-            name="Ajustes"
-            component={Ajustes}
+            name="About"
+            component={About}
             options={{
               tabBarIcon: ({ color, size}) => {
-                return <Ionicons name="settings" size={size} color={color}/>
+                return <Entypo name="info-with-circle" size={size} color={color}/>
               }
           }}
           />
