@@ -2,6 +2,7 @@ import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
     header: {
+      marginTop: -5,
       alignItems: "center",
       paddingVertical: 20,
       backgroundColor: "#283949", // Cor de fundo do cabeçalho

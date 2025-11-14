@@ -5,6 +5,8 @@ import Header from "../../components/Header/Header";
 import DateRelatorio from "../../components/DateRelatorio/DateRelatorio";
 import { ProdutoService } from "../../../service/CasdastrarProdutos";
 import { LancamentoService } from "../../../service/LancamentoService";
+import { parse, format, setHours, setMinutes, setSeconds } from 'date-fns';
+
 
 // Função para formatar datas
 const formatDate = (dateString) => {
@@ -23,7 +25,9 @@ export default function RelatoriosEAnalises({ navigation }) {
 
   // Função para buscar dados de produtos e lançamentos
   const filtrarLacamento = async (startDate, endDate) => {
-    console.log(`Filtrar Lançamento chamado: data inicial: ${startDate} data final: ${endDate}`);
+    console.log(
+      `Filtrar Lançamento chamado: data inicial: ${startDate} data final: ${endDate}`
+    );
     //Valida se as datas estao definidas
     if (!startDate || !endDate) {
       console.warn("Datas não definidas. Selecione uma data inicial e final.");
@@ -32,15 +36,19 @@ export default function RelatoriosEAnalises({ navigation }) {
 
     try {
       // Converte as datas para o formato esperado pelo backend
-      const dataComeco = new Date(startDate.split("/").reverse().join("-"))
-        .toISOString()
-        .replace("T", " ")
-        .slice(0, 19);
-
+      const dataComeco = format(
+        parse(startDate, 'dd/MM/yyyy', new Date()), // Parse do formato "dd/MM/yyyy"
+        'yyyy-MM-dd HH:mm:ss' // Formato esperado pelo backend
+      );
+      
       // Converte a data final e ajusta o horário para 23:59:59
-      const dataFimISO = new Date(endDate.split("/").reverse().join("-"));
-      dataFimISO.setHours(23, 59, 59); // Ajusta o horário para o fim do dia
-      const dataFim = dataFimISO.toISOString().replace("T", " ").slice(0, 19);
+      const parsedEndDate = parse(endDate, 'dd/MM/yyyy', new Date()); // Parse do formato "dd/MM/yyyy"
+      const dataFimISO = setSeconds(setMinutes(setHours(parsedEndDate, 23), 59), 59); // Ajusta para 23:59:59
+      const dataFim = format(dataFimISO, 'yyyy-MM-dd HH:mm:ss'); // Formata para o backend
+
+      console.log(`Dados formatados para o backend:`);
+      console.log(`  Data Início: ${dataComeco}`);
+      console.log(`  Data Fim: ${dataFim}`);
 
       //Busca os produtos para mapeamento posterior
       const produtosResponse = await produtoService.listarProdutos();
@@ -53,8 +61,10 @@ export default function RelatoriosEAnalises({ navigation }) {
 
       //Verifiar se ha lancamentos no periodo
       if (!lancamentosResponse || lancamentosResponse.length === 0) {
-        Alert.alert("Nenhuma informação encontrada para o período selecionado.");
-        console.log("Nenhuma informação encontrada para o período selecionado")
+        Alert.alert(
+          "Nenhuma informação encontrada para o período selecionado."
+        );
+        console.log("Nenhuma informação encontrada para o período selecionado");
         setDados([]); //Limpa os dados exibidos
         return;
       }
@@ -77,7 +87,7 @@ export default function RelatoriosEAnalises({ navigation }) {
       //Atualiza o estado com os dados enriquecidos
       setDados(lancamentosComDetalhes);
 
-      //Console para verificar os dados que esta sendo filtrado 
+      //Console para verificar os dados que esta sendo filtrado
       console.log(`--------------------------------------------`);
       lancamentosComDetalhes.forEach((lancamento, index) => {
         console.log(`Lançamento ${index + 1}:`);
